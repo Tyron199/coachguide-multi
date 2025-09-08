@@ -10,7 +10,7 @@
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem, type Company } from '@/types';
 import { Building2, Users } from 'lucide-vue-next';
-import companies from '@/routes/tenant/companies';
+import companies from '@/routes/tenant/coach/companies';
 
 const props = defineProps<{
     company: Company

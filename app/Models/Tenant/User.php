@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-use App\Enums\Tenant\CalendarIntegrationProvider;
+use App\Services\OAuth\OauthProviderType;
 
 class User extends Authenticatable
 {
@@ -60,6 +60,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'status' => UserRegistrationStatus::class,
+            'provider' => OauthProviderType::class,
             'archived' => 'boolean',
         ];
     }
@@ -81,20 +82,20 @@ class User extends Authenticatable
 
     public function hasMicrosoftCalendar(): bool
     {
-        return $this->calendarIntegrations()->where('provider', CalendarIntegrationProvider::MICROSOFT)->exists();
+        return $this->calendarIntegrations()->where('provider', OauthProviderType::MICROSOFT)->exists();
     }
 
     public function hasGoogleCalendar(): bool
     {
-        return $this->calendarIntegrations()->where('provider', CalendarIntegrationProvider::GOOGLE)->exists();
+        return $this->calendarIntegrations()->where('provider', OauthProviderType::GOOGLE)->exists();
     }
 
-    public function hasSocialAccount(string $provider): bool
+    public function hasSocialAccount(OauthProviderType $provider): bool
     {
         return $this->socialAccounts()->where('provider', $provider)->exists();
     }
 
-    public function getSocialAccount(string $provider): ?SocialAccount
+    public function getSocialAccount(OauthProviderType $provider): ?SocialAccount
     {
         return $this->socialAccounts()->where('provider', $provider)->first();
     }

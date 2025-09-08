@@ -2,7 +2,7 @@
 
 namespace App\Models\Tenant;
 
-use App\Enums\Tenant\CalendarIntegrationProvider;
+use App\Services\OAuth\OauthProviderType;
 use Illuminate\Database\Eloquent\Model;
 
 class CalendarIntegration extends Model
@@ -18,7 +18,7 @@ class CalendarIntegration extends Model
 
     protected $casts = [
         'expires_at' => 'datetime',
-        'provider' => CalendarIntegrationProvider::class,
+        'provider' => OauthProviderType::class,
         'access_token' => 'encrypted',
         'refresh_token' => 'encrypted',
     ];

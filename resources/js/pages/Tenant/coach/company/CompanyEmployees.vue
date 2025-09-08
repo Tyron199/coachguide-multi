@@ -34,8 +34,8 @@ import { Button } from '@/components/ui/button';
 import PageHeader from '@/components/PageHeader.vue';
 import { Plus } from 'lucide-vue-next';
 import { create as createClientAction } from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
-import companiesRoutes from '@/routes/tenant/companies';
-import clientsRoutes from '@/routes/tenant/clients';
+import companiesRoutes from '@/routes/tenant/coach/companies';
+import clientsRoutes from '@/routes/tenant/coach/clients';
 interface Props {
     company: Company;
     clients: PaginatedClients;

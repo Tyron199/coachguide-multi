@@ -50,7 +50,7 @@ class SendClientInvitation extends Notification implements ShouldQueue
         $token = $tokenService->generateToken($this->user->name, $this->user->email);
         
         // Create registration URL with token
-        $registrationUrl = url("/register?token={$token}");
+        $registrationUrl = tenant()->getRoute('tenant.register', ['token' => $token]);
         
         return (new MailMessage)
             ->subject("You're invited to join {$appName}")

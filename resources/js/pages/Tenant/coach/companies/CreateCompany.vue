@@ -147,7 +147,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { type BreadcrumbItem } from '@/types';
-import companies from '@/routes/tenant/companies';
+import companies from '@/routes/tenant/coach/companies';
 import CompanyController from '@/actions/App/Http/Controllers/Tenant/Coach/CompanyController';
 import { LoaderCircle, Plus } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';

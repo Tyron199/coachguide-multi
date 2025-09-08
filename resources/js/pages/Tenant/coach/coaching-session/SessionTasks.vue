@@ -31,7 +31,7 @@ import PageHeader from '@/components/PageHeader.vue';
 import TasksList from '@/components/TasksList.vue';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type CoachingSession, type CoachingTask } from '@/types';
-import sessions from '@/routes/tenant/coaching-sessions';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
 
 import { Plus } from 'lucide-vue-next';
 import CoachingTaskController from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingTaskController';

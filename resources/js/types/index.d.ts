@@ -25,6 +25,11 @@ export type AppPageProps<T extends Record<string, unknown> = Record<string, unkn
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    tenant: {
+        id: string;
+        domain: string;
+        subscribed: boolean;
+    };
     sidebarOpen: boolean;
     flash: {
         success: string;

@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Central\HomeController;
 use App\Http\Controllers\Central\RegistrationController;
 use App\Http\Controllers\Central\LoginController;
+use App\Http\Controllers\Central\OathController;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->name('central.')->group(function () {
@@ -17,6 +18,16 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::post('/register', [RegistrationController::class, 'store'])->name('register.store');
         Route::get('/login', [LoginController::class, 'index'])->name('login');
         Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+        Route::get('/login/tenants', [LoginController::class, 'showSelectTenant'])->name('login.tenants.show');
+        Route::post('/login/tenants', [LoginController::class, 'selectTenant'])->name('login.tenants.select');
+        Route::get('/verify', [RegistrationController::class, 'verify'])->name('registration.verify');
+        Route::get('/confirm/{token}', [RegistrationController::class, 'showConfirm'])->name('registration.confirm.show');
+        Route::post('/confirm/{token}', [RegistrationController::class, 'submitConfirm'])->name('registration.confirm.submit');
+        
+        // OAuth callback routes
+        Route::get('/oauth/{provider}/callback', [OathController::class, 'callback'])
+            ->where('provider', 'microsoft|google')
+            ->name('oauth.callback');
 
     });
 }

@@ -195,8 +195,8 @@ import {
 } from '@/components/ui/table';
 import { PaginationComplete } from '@/components/ui/pagination';
 import SessionFilters from '@/components/SessionFilters.vue';
-import clientRoutes from '@/routes/tenant/clients';
-import sessionRoutes from '@/routes/tenant/coaching-sessions';
+import clientRoutes from '@/routes/tenant/coach/clients';
+import sessionRoutes from '@/routes/tenant/coach/coaching-sessions';
 
 interface CoachingSession {
     id: number;

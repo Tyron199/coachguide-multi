@@ -170,9 +170,9 @@ class CoachingNoteController extends Controller
         
         // Redirect based on context
         if ($request->session_id) {
-            return to_route('tenant.coaching-sessions.notes', $request->session_id);
+            return to_route('tenant.coach.coaching-sessions.notes', $request->session_id);
         } else {
-            return to_route('tenant.clients.notes', $request->client_id);
+            return to_route('tenant.coach.clients.notes', $request->client_id);
         }
     }
 
@@ -246,9 +246,9 @@ class CoachingNoteController extends Controller
         
         // Redirect based on context
         if ($note->session_id) {
-            return to_route('tenant.coaching-sessions.notes', $note->session_id);
+            return to_route('tenant.coach.coaching-sessions.notes', $note->session_id);
         } else {
-            return to_route('tenant.clients.notes', $note->client_id);
+            return to_route('tenant.coach.clients.notes', $note->client_id);
         }
     }
 
@@ -267,9 +267,9 @@ class CoachingNoteController extends Controller
         
         // Redirect based on context
         if ($sessionId) {
-            return to_route('tenant.coaching-sessions.notes', $sessionId);
+            return to_route('tenant.coach.coaching-sessions.notes', $sessionId);
         } else {
-            return to_route('tenant.clients.notes', $clientId);
+            return to_route('tenant.coach.clients.notes', $clientId);
         }
     }
 }

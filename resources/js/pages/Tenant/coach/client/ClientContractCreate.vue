@@ -236,8 +236,8 @@ import {
     LoaderCircle
 } from 'lucide-vue-next';
 import { type BreadcrumbItem, type Client } from '@/types';
-import clients from '@/routes/tenant/clients';
-import contracts from '@/routes/tenant/clients/contracts';
+import clients from '@/routes/tenant/coach/clients';
+import contracts from '@/routes/tenant/coach/clients/contracts';
 import PageHeader from '@/components/PageHeader.vue';
 import axios from 'axios';
 

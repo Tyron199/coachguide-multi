@@ -12,6 +12,7 @@ class PlatformBranding extends Model
         'logo_path',
         'icon_path',
         'custom_css',
+        'company_name',
     ];
 
     /**
@@ -20,7 +21,7 @@ class PlatformBranding extends Model
     public static function current(): self
     {
         // Use tenant-aware cache key (tenant context is handled by tenancy package)
-        return Cache::store('database')->remember('platform_branding', 3600, function () {
+        return Cache::remember('platform_branding', 3600, function () {
             return self::firstOrCreate([]);
         });
     }
@@ -30,7 +31,7 @@ class PlatformBranding extends Model
      */
     public static function clearCache(): void
     {
-        Cache::store('database')->forget('platform_branding');
+        Cache::forget('platform_branding');
     }
 
     /**

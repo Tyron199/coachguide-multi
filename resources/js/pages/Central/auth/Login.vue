@@ -21,7 +21,8 @@ import { store as loginAction } from '@/actions/App/Http/Controllers/Central/Log
 
 
 
-        <Form v-bind="loginAction.form()" v-slot="{ errors, processing }" class="flex flex-col gap-6">
+        <Form v-bind="loginAction.form()" v-slot="{ errors, processing }" class="flex flex-col gap-6"
+            disableWhileProcessing>
             <div class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>

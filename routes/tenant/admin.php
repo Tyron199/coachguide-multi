@@ -3,11 +3,13 @@
 
 use App\Http\Controllers\Tenant\Admin\ThemeController;
 use App\Http\Controllers\Tenant\Admin\LogoController;
+use App\Http\Controllers\Tenant\Admin\SubscriptionController;
+
 
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
 
     Route::get('platform-settings/theme', [ThemeController::class, 'index'])->name('platform-settings.theme');
@@ -19,5 +21,11 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->group(fun
     Route::get('platform-settings/logo', [LogoController::class, 'index'])->name('platform-settings.logo');
     Route::post('platform-settings/logo/upload', [LogoController::class, 'upload'])->name('platform-settings.logo.upload');
     Route::post('platform-settings/logo/reset', [LogoController::class, 'reset'])->name('platform-settings.logo.reset');
+
+
+    // Subscription management routes
+    Route::get('subscription/manage', [SubscriptionController::class, 'manage'])->name('subscription.manage');
+    Route::get('subscription/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
+    Route::get('subscription/receipt', [SubscriptionController::class, 'receipt'])->name('subscription.receipt');
 
 });

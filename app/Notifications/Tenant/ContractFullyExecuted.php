@@ -44,24 +44,31 @@ class ContractFullyExecuted extends Notification implements ShouldQueue
         
         // Determine the appropriate URL based on the recipient's role
         if ($notifiable->hasRole('coach')) {
-            $contractUrl = route('tenant.coach.contracts.sign', ['token' => $this->signature->token]);
-            $otherParty = $clientName;
-            $relationship = 'client';
-        } else {
-            $contractUrl = route('tenant.contracts.sign', ['token' => $this->signature->token]);
-            $otherParty = $coachName;
-            $relationship = 'coach';
-        }
-
-        return (new MailMessage)
+  
+              return (new MailMessage)
             ->subject('Contract Fully Executed - Download Available')
             ->greeting("Hello {$notifiable->name},")
-            ->line("Great news! The coaching contract between you and {$otherParty} has been fully executed.")
+            ->line("Great news! The coaching contract between you and {$clientName} has been fully executed.")
             ->line('Both parties have now signed the contract, making it legally binding.')
             ->line('You can now download your signed copy of the contract for your records.')
-            ->action('View and Download Contract', $contractUrl)
+            ->action('View and Download Contract', tenant()->getRoute('tenant.coach.contracts.sign', ['token' => $this->signature->token]))
+            ->action('View Contract', tenant()->getRoute('tenant.coach.clients.contracts.show', ['client' => $this->contract->client->id, 'contract' => $this->contract->id]))
             ->line('We recommend keeping a copy of this signed contract in a safe place.')
             ->line('Thank you for completing the contract signing process!');
+
+        } else {
+            
+            return (new MailMessage)
+            ->subject('Contract Fully Executed - Download Available')
+            ->greeting("Hello {$notifiable->name},")
+            ->line("Great news! The coaching contract between you and {$coachName} has been fully executed.")
+            ->line('Both parties have now signed the contract, making it legally binding.')
+            ->line('You can now download your signed copy of the contract for your records.')
+            ->action('View and Download Contract', tenant()->getRoute('tenant.client.contracts.sign', ['token' => $this->signature->token]))
+            ->line('Thank you for completing the contract signing process!');
+        }
+
+      
     }
 
     /**

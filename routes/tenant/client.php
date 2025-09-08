@@ -8,7 +8,7 @@ use Inertia\Inertia;
 
 //Public route to sign contract.
 
-Route::prefix('client')->group(function () {
+Route::prefix('client')->name('client.')->group(function () {
     // Contract signing routes with different throttling for different actions
     Route::get('sign-contract/{token}', [ContractController::class, 'sign'])
         ->middleware('throttle:contract-view')
@@ -28,6 +28,6 @@ Route::prefix('client')->group(function () {
 });
 
 
-Route::middleware('auth','verified','role:client')->prefix('client')->group(function () {
+Route::middleware('auth','verified','role:client')->prefix('client')->name('client.')->group(function () {
   
 });

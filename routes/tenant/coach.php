@@ -11,10 +11,11 @@ use App\Http\Controllers\Tenant\Coach\ContractController;
 
 use Illuminate\Support\Facades\Route;
 
-// Client resource routes with Route Model Binding
-Route::middleware(['auth', 'verified','role:coach'])->prefix('coach')->group(function () {
+Route::prefix('coach')->name('coach.')->middleware(['role:coach'])->group(function () {
 
-    
+    //Auth grouped
+    Route::middleware(['auth', 'verified'])->group(function () {
+
         Route::get('clients/archived', [ClientController::class, 'archived'])->name('clients.archived');
         Route::get('clients/{client}/objectives', [ClientController::class, 'objectives'])->name('clients.objectives');
         Route::get('clients/{client}/objectives/edit', [ClientController::class, 'editObjectives'])->name('clients.objectives.edit');
@@ -63,28 +64,31 @@ Route::middleware(['auth', 'verified','role:coach'])->prefix('coach')->group(fun
         Route::get('/clients/{client}/contracts/{contract}/pdf', [ContractController::class, 'pdf'])->name('clients.contracts.pdf');
         Route::delete('/clients/{client}/contracts/{contract}', [ContractController::class, 'destroy'])->name('clients.contracts.destroy');
         Route::patch('/clients/{client}/contracts/{contract}/send', [ContractController::class, 'send'])->name('clients.contracts.send');
-     
-   
-   
+
+    });
+
+
+    // Coach contract signing routes (outside auth middleware for token access)
+    Route::group([], function () {
+        Route::get('sign-contract/{token}', [ContractController::class, 'sign'])
+            ->middleware('throttle:contract-view')
+            ->name('contracts.sign');
+        
+        Route::post('sign-contract/{token}', [ContractController::class, 'storeSignature'])
+            ->middleware('throttle:contract-sign')
+            ->name('contracts.store');
+        
+        Route::get('sign-contract/{token}/preview', [ContractController::class, 'signPreview'])
+            ->middleware('throttle:contract-view')
+            ->name('contracts.sign.preview');
+
+        Route::get('sign-contract/{token}/pdf', [ContractController::class, 'pdfToken'])
+            ->middleware('throttle:contract-download')
+            ->name('contracts.sign.pdf');
+    });
+
 
 
 });
 
-// Coach contract signing routes (outside auth middleware for token access)
-Route::prefix('coach')->group(function () {
-    Route::get('sign-contract/{token}', [ContractController::class, 'sign'])
-        ->middleware('throttle:contract-view')
-        ->name('coach.contracts.sign');
-    
-    Route::post('sign-contract/{token}', [ContractController::class, 'storeSignature'])
-        ->middleware('throttle:contract-sign')
-        ->name('coach.contracts.store');
-    
-    Route::get('sign-contract/{token}/preview', [ContractController::class, 'signPreview'])
-        ->middleware('throttle:contract-view')
-        ->name('coach.contracts.sign.preview');
 
-           Route::get('sign-contract/{token}/pdf', [ContractController::class, 'pdfToken'])
-        ->middleware('throttle:contract-download')
-        ->name('coach.contracts.sign.pdf');
-});

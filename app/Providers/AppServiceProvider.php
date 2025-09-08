@@ -13,6 +13,7 @@ use App\Models\Tenant\CoachingTask;
 use App\Policies\Tenant\ClientPolicy;
 use App\Policies\Tenant\CompanyPolicy;
 use App\Policies\Tenant\CoachingTaskPolicy;
+use Illuminate\Support\Facades\Event;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        // Register Socialite providers
+        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('microsoft', \SocialiteProviders\Microsoft\Provider::class);
+            $event->extendSocialite('google', \SocialiteProviders\Google\Provider::class);
+        });
+
+
         // Register policies
         Gate::policy(User::class, ClientPolicy::class);
         Gate::policy(Company::class, CompanyPolicy::class);
@@ -59,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
                     ], 429);
                 }),
                 // Per token limit - prevents multiple rapid submissions for same contract
-                Limit::perHour(5)->by($request->route('tenant.token')),
+               // Limit::perHour(5)->by($request->route('tenant.token')),
             ];
         });
 

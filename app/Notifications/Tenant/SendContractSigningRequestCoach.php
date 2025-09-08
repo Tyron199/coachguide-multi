@@ -37,7 +37,7 @@ class SendContractSigningRequestCoach extends Notification implements ShouldQueu
     public function toMail(object $notifiable): MailMessage
     {
         $clientName = $this->contract->client->name;
-        $signingUrl = route('tenant.coach.contracts.sign', ['token' => $this->signature->token]);
+        $signingUrl = tenant()->getRoute('tenant.coach.contracts.sign', ['token' => $this->signature->token]);
 
         return (new MailMessage)
             ->subject('Client Signed - Contract Ready for Your Countersignature')

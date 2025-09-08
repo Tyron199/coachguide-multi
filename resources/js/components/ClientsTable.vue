@@ -140,7 +140,7 @@
                         <div v-if="props.canSeeCoachColumn" class="flex items-center justify-between gap-4">
                             <span class="text-muted-foreground">Coach</span>
                             <span class="font-medium text-right truncate">{{ client.assigned_coach?.name || 'No Coach'
-                                }}</span>
+                            }}</span>
                         </div>
 
                         <div class="flex items-center justify-between gap-4">
@@ -192,8 +192,8 @@ import {
     SortableTableHead,
 } from '@/components/ui/table';
 import { PaginationComplete } from '@/components/ui/pagination';
-import clientRoutes from '@/routes/tenant/clients';
-import companyRoutes from '@/routes/tenant/companies';
+import clientRoutes from '@/routes/tenant/coach/clients';
+import companyRoutes from '@/routes/tenant/coach/companies';
 import { type PaginatedClients, type Company, type ClientFilters } from '@/types';
 
 

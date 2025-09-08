@@ -120,7 +120,7 @@
                                         <File class="h-4 w-4 flex-shrink-0" />
                                         <span class="truncate">{{ attachment.original_name }}</span>
                                         <span class="text-xs text-muted-foreground">({{ attachment.formatted_size
-                                            }})</span>
+                                        }})</span>
                                     </a>
                                 </div>
                             </div>
@@ -153,9 +153,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { type BreadcrumbItem, type CoachingTask } from '@/types';
-import clients from '@/routes/tenant/clients';
-import sessions from '@/routes/tenant/coaching-sessions';
-import taskRoutes from '@/routes/tenant/coaching-tasks';
+import clients from '@/routes/tenant/coach/clients';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
+import taskRoutes from '@/routes/tenant/coach/coaching-tasks';
 import { Calendar, Clock, Bell, MessageSquare, User, Paperclip, File, Edit } from 'lucide-vue-next';
 
 const props = defineProps<{

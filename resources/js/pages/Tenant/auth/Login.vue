@@ -12,9 +12,10 @@ import { request } from '@/routes/tenant/password';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
-defineProps<{
+const props = defineProps<{
     status?: string;
     canResetPassword: boolean;
+    email?: string;
 }>();
 </script>
 
@@ -33,7 +34,7 @@ defineProps<{
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
                     <Input id="email" type="email" name="email" required autofocus :tabindex="1" autocomplete="email"
-                        placeholder="email@example.com" />
+                        placeholder="email@example.com" :defaultValue="props.email" />
                     <InputError :message="errors.email" />
                     <!-- Show registration link for pending accounts -->
                     <TextLink :href="register()" class="text-center text-sm text-muted-foreground"

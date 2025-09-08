@@ -35,7 +35,7 @@ import PageHeader from '@/components/PageHeader.vue';
 import NotesList from '@/components/NotesList.vue';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type Client, type CoachingNote } from '@/types';
-import clients from '@/routes/tenant/clients';
+import clients from '@/routes/tenant/coach/clients';
 import { create as createNoteAction } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingNoteController';
 import { Plus, Bot } from 'lucide-vue-next';
 

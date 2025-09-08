@@ -82,7 +82,7 @@
                         <div class="flex items-center justify-between gap-4">
                             <span class="text-muted-foreground">Contact Person</span>
                             <span class="font-medium text-right truncate">{{ company.contact_person_name || '-'
-                                }}</span>
+                            }}</span>
                         </div>
 
                         <div class="flex items-center justify-between gap-4">
@@ -132,7 +132,7 @@ import {
 } from '@/components/ui/table';
 import { PaginationComplete } from '@/components/ui/pagination';
 import { type PaginatedCompanies, type CompanyFilters } from '@/types';
-import companyRoutes from '@/routes/tenant/companies';
+import companyRoutes from '@/routes/tenant/coach/companies';
 
 
 interface Props {

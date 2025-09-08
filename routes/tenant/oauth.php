@@ -9,9 +9,7 @@ Route::middleware('auth')->prefix('calendar/oauth')->name('calendar.oauth.')->gr
     Route::get('{provider}/initiate', [CalendarIntegrationController::class, 'initiate'])
         ->where('provider', 'microsoft|google')
         ->name('initiate');
-    Route::get('{provider}/callback', [CalendarIntegrationController::class, 'callback'])
-        ->where('provider', 'microsoft|google')
-        ->name('callback');
+    // Note: OAuth callbacks are handled by the central app due to subdomain limitations
     Route::delete('{provider}/disconnect', [CalendarIntegrationController::class, 'disconnect'])
         ->where('provider', 'microsoft|google')
         ->name('disconnect');

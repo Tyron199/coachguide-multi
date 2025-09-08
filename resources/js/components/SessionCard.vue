@@ -64,7 +64,7 @@ import { Link } from '@inertiajs/vue3';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import coachingSessions from '@/routes/tenant/coaching-sessions';
+import coachingSessions from '@/routes/tenant/coach/coaching-sessions';
 
 interface CoachingSession {
     id: number;

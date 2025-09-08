@@ -120,7 +120,7 @@ class CompanyController extends Controller
 
         Company::create($validatedData);
 
-        return to_route('tenant.companies.index');
+        return to_route('tenant.coach.companies.index');
     }
 
     /**
@@ -179,7 +179,7 @@ class CompanyController extends Controller
 
         $company->update($validatedData);
         
-        return to_route('tenant.companies.show', $company)->with('success', 'Company updated successfully');
+        return to_route('tenant.coach.companies.show', $company)->with('success', 'Company updated successfully');
     }
 
     /**
@@ -199,7 +199,7 @@ class CompanyController extends Controller
         
         $company->delete();
         
-        return to_route('tenant.companies.index')->with('success', 'Company deleted successfully');
+        return to_route('tenant.coach.companies.index')->with('success', 'Company deleted successfully');
     }
 
     /**
@@ -219,7 +219,7 @@ class CompanyController extends Controller
             $company->delete();
         }
 
-        return to_route('tenant.companies.index')->with('success', 'Companies deleted successfully');
+        return to_route('tenant.coach.companies.index')->with('success', 'Companies deleted successfully');
     }
 
     public function employees(Company $company)

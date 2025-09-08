@@ -217,7 +217,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { type BreadcrumbItem, type Client, type Company } from '@/types';
-import clients from '@/routes/tenant/clients';
+import clients from '@/routes/tenant/coach/clients';
 import ClientController from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
 import { Plus, X, LoaderCircle, SaveIcon } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';

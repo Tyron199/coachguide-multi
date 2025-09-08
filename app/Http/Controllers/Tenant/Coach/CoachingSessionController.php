@@ -362,7 +362,7 @@ class CoachingSessionController extends Controller
             'client_attended' => true, // Default to true, assuming attendance
         ]);
 
-        return to_route('tenant.coaching-sessions.show', $session)
+        return to_route('tenant.coach.coaching-sessions.show', $session)
             ->with('success', 'Session scheduled successfully.');
     }
 
@@ -458,7 +458,7 @@ class CoachingSessionController extends Controller
         
         $coachingSession->update($updateData);
 
-        return to_route('tenant.coaching-sessions.show', $coachingSession)
+        return to_route('tenant.coach.coaching-sessions.show', $coachingSession)
             ->with('success', 'Session updated successfully.');
     }
 
@@ -477,7 +477,7 @@ class CoachingSessionController extends Controller
         // Delete the coaching session
         $coachingSession->delete();
         
-        return to_route('tenant.coaching-sessions.index')->with('success', 'Session deleted successfully.');
+        return to_route('tenant.coach.coaching-sessions.index')->with('success', 'Session deleted successfully.');
     }
 
     /**

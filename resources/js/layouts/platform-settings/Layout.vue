@@ -28,7 +28,7 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
 
 <template>
     <div class="px-4 py-6">
-        <Heading title="Platform settings" description="Manage your platform settings" />
+        <Heading title="Platform branding" description="Manage your platform branding" />
 
         <div class="flex flex-col lg:flex-row lg:space-x-12">
             <aside class="w-full max-w-xl lg:w-48">

@@ -19,7 +19,7 @@ const logoUrls = computed(() => page.props.logo as { logoUrl: string; iconUrl: s
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
-        title: 'Platform settings',
+        title: 'Platform branding',
         href: LogoController.index().url,
     },
     {

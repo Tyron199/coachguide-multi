@@ -48,7 +48,12 @@ class SubdomainValidation implements ValidationRule
         $appDomain = parse_url(config('app.url'), PHP_URL_HOST);
         $fullDomain = $value . '.' . $appDomain;
         
-        if (Tenant::where('domain', $fullDomain)->exists()) {
+        // Check if any tenants already have this subdomain
+        $existingTenant = Tenant::whereHas('domains', function ($query) use ($fullDomain) {
+            $query->where('domain', $fullDomain);
+        })->exists();
+        
+        if ($existingTenant) {
             $fail('This subdomain is already taken.');
             return;
         }

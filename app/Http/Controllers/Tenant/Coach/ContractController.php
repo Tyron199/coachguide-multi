@@ -69,7 +69,7 @@ class ContractController extends Controller
             'content' => $renderedContent,
         ]);
 
-        return redirect()->route('tenant.clients.contracts.show', [$client, $contract])
+        return redirect()->route('tenant.coach.clients.contracts.show', [$client, $contract])
             ->with('success', 'Contract created successfully!');
     }
 
@@ -130,7 +130,7 @@ class ContractController extends Controller
         $this->authorize('update', $contract);
         
         if (!$contract->canBeEdited()) {
-            return redirect()->route('tenant.clients.contracts.show', [$client, $contract])
+            return redirect()->route('tenant.coach.clients.contracts.show', [$client, $contract])
                 ->with('error', 'This contract cannot be edited in its current status.');
         }
         
@@ -178,7 +178,7 @@ class ContractController extends Controller
         // Update contract variables and clear rendered content
         $this->contractService->updateContractVariables($contract, $validated);
         
-        return redirect()->route('tenant.clients.contracts.show', [$client, $contract])
+        return redirect()->route('tenant.coach.clients.contracts.show', [$client, $contract])
             ->with('success', 'Contract updated successfully!');
     }
 
@@ -421,7 +421,7 @@ class ContractController extends Controller
         
         $contract->delete();
         
-        return redirect()->route('tenant.clients.contracts.index', $client)
+        return redirect()->route('tenant.coach.clients.contracts.index', $client)
             ->with('success', 'Contract deleted successfully!');
     }
 
@@ -469,7 +469,7 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return redirect()->route('tenant.clients.contracts.index', $client);
+        return redirect()->route('tenant.coach.clients.contracts.index', $client);
     }
 
     /**

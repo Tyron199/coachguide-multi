@@ -34,7 +34,7 @@ class Attachment extends Model
      */
     public function getUrlAttribute(): string
     {
-        return route('tenant.attachments.download', $this->id);
+        return route('tenant.coach.attachments.download', $this->id);
     }
 
     /**

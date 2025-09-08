@@ -136,7 +136,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { type BreadcrumbItem, type Company } from '@/types';
-import clients from '@/routes/tenant/clients';
+import clients from '@/routes/tenant/coach/clients';
 import ClientController from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
 import { LoaderCircle, Plus } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';

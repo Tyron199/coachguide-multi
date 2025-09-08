@@ -52,16 +52,17 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user()?->toInertia(),
             ],
-            'tenant' => [
+            'tenant' => tenant() ? [
                 'id' => tenant('id'),
                 'domain' => tenant('domain'),
-            ],
+                'subscribed' => tenant()->subscribed(),
+            ] : null,
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-                 'flash' => [
-                'success' => session('success'),
-                'error' => session('error'),
-                'info' => session('info'),
-                'warning' => session('warning'),
+            'flash' => [
+                'success' => session('success') ?: $request->query('success'),
+                'error' => session('error') ?: $request->query('error'),
+                'info' => session('info') ?: $request->query('info'),
+                'warning' => session('warning') ?: $request->query('warning'),
             ],
               'logo' => $this->logoService->getAllLogoUrls()
         ];

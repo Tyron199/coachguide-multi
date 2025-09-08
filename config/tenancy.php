@@ -26,13 +26,12 @@ return [
      *
      * To configure their behavior, see the config keys below.
      */
-    'bootstrappers' => [
-        Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper::class,
-        Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper::class,
-        Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper::class,
-        Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper::class,
-        // Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper::class, // Note: phpredis is needed
-    ],
+'bootstrappers' => array_filter([
+    Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper::class,
+    config('app.env') === 'production' ? Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper::class : null,
+    Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper::class,
+    Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper::class,
+]),
 
     /**
      * Database tenancy config. Used by DatabaseTenancyBootstrapper.
@@ -50,7 +49,7 @@ return [
          * Tenant database names are created like this:
          * prefix + tenant_id + suffix.
          */
-        'prefix' => 'tenant',
+        'prefix' => 'tenant_',
         'suffix' => '_' . now()->format('YmdHis'),
 
         /**
@@ -166,7 +165,7 @@ return [
         // Stancl\Tenancy\Features\TelescopeTags::class,
         // Stancl\Tenancy\Features\UniversalRoutes::class,
         // Stancl\Tenancy\Features\TenantConfig::class, // https://tenancyforlaravel.com/docs/v3/features/tenant-config
-        // Stancl\Tenancy\Features\CrossDomainRedirect::class, // https://tenancyforlaravel.com/docs/v3/features/cross-domain-redirect
+        Stancl\Tenancy\Features\CrossDomainRedirect::class, // https://tenancyforlaravel.com/docs/v3/features/cross-domain-redirect
          Stancl\Tenancy\Features\ViteBundler::class,
     ],
 

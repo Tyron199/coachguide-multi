@@ -88,7 +88,7 @@ import { Textarea } from '@/components/ui/textarea';
 import ClientController from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
 
 import { type BreadcrumbItem, type Client } from '@/types';
-import clients from '@/routes/tenant/clients';
+import clients from '@/routes/tenant/coach/clients';
 
 import { LoaderCircle } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';

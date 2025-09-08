@@ -92,7 +92,7 @@
                                 :class="`h-4 w-4 flex-shrink-0 ${getAttachmentIcon(attachment).color}`" />
                             <span class="truncate flex-1 min-w-0">{{ attachment.original_name }}</span>
                             <span class="text-xs text-muted-foreground flex-shrink-0">({{ attachment.formatted_size
-                                }})</span>
+                            }})</span>
                         </a>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ import { edit as editNoteAction, destroy as destroyNoteAction } from '@/actions/
 import { FileText, Calendar, User, ChevronDown, Edit, Trash2, Paperclip, FileImage, FileSpreadsheet, File, Presentation, Archive, Video, Music, Code } from 'lucide-vue-next';
 import { alertConfirm } from '@/plugins/alert';
 import { getFileIcon } from '@/lib/utils';
-import sessions from '@/routes/tenant/coaching-sessions';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
 
 interface Props {
     notes: CoachingNote[];

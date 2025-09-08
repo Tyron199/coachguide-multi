@@ -34,5 +34,26 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'recaptcha' => [
+        'key' => env('RECAPTCHA_KEY'),
+        'secret' => env('RECAPTCHA_SECRET'),
+    ],
+    'microsoft' => [
+        'client_id' => env('MICROSOFT_CLIENT_ID'),
+        'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
+        'redirect' => env('MICROSOFT_REDIRECT_URI', env('APP_URL') . '/oauth/microsoft/callback'),
+        'scopes' => [
+            'calendar' => ['offline_access', 'Calendars.ReadWrite', 'User.Read'],
+            'auth' => ['User.Read', 'offline_access']
+        ]
+    ],
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI', env('APP_URL') . '/oauth/google/callback'),
+        'scopes' => [
+            'calendar' => ['openid', 'email', 'profile', 'https://www.googleapis.com/auth/calendar'],
+            'auth' => ['openid', 'email', 'profile']
+        ]
+    ]
 ];

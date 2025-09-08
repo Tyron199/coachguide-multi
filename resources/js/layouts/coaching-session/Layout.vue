@@ -11,7 +11,7 @@
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem } from '@/types';
 import { Clock, FileText, CheckSquare } from 'lucide-vue-next';
-import sessions from '@/routes/tenant/coaching-sessions';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
 import { type CoachingSession } from '@/types';
 
 const props = defineProps<{

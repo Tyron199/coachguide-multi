@@ -163,9 +163,9 @@ import {
 } from '@/components/ui/select';
 import InputError from '@/components/InputError.vue';
 import { type BreadcrumbItem, type CoachingTask } from '@/types';
-import clients from '@/routes/tenant/clients';
-import sessions from '@/routes/tenant/coaching-sessions';
-import taskRoutes from '@/routes/tenant/coaching-tasks';
+import clients from '@/routes/tenant/coach/clients';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
+import taskRoutes from '@/routes/tenant/coach/coaching-tasks';
 import { Calendar, LoaderCircle } from 'lucide-vue-next';
 
 const props = defineProps<{

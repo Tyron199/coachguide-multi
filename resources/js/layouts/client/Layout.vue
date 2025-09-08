@@ -11,8 +11,8 @@
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem, type Client } from '@/types';
 import { User, Target, FileText, CheckSquare, HandshakeIcon } from 'lucide-vue-next';
-import clients from '@/routes/tenant/clients';
-import contracts from '@/routes/tenant/clients/contracts';
+import clients from '@/routes/tenant/coach/clients';
+import contracts from '@/routes/tenant/coach/clients/contracts';
 import { computed } from 'vue';
 
 const props = defineProps<{

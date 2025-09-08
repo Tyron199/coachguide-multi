@@ -32,7 +32,7 @@ import PageHeader from '@/components/PageHeader.vue';
 import NotesList from '@/components/NotesList.vue';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type CoachingSession, type CoachingNote } from '@/types';
-import sessions from '@/routes/tenant/coaching-sessions';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
 import { create as createNote } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingNoteController';
 import { Plus } from 'lucide-vue-next';
 

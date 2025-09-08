@@ -141,9 +141,9 @@ class CoachingTaskController extends Controller
         
         // Redirect based on context
         if ($request->session_id) {
-            return to_route('tenant.coaching-sessions.tasks', $request->session_id);
+            return to_route('tenant.coach.coaching-sessions.tasks', $request->session_id);
         } else {
-            return to_route('tenant.clients.tasks', $request->client_id);
+            return to_route('tenant.coach.clients.tasks', $request->client_id);
         }
     }
 
@@ -223,9 +223,9 @@ class CoachingTaskController extends Controller
         
         // Redirect based on context
         if ($task->session_id) {
-            return to_route('tenant.coaching-sessions.tasks', $task->session_id);
+            return to_route('tenant.coach.coaching-sessions.tasks', $task->session_id);
         } else {
-            return to_route('tenant.clients.tasks', $task->client_id);
+            return to_route('tenant.coach.clients.tasks', $task->client_id);
         }
     }
 
@@ -244,9 +244,9 @@ class CoachingTaskController extends Controller
         
         // Redirect based on context
         if ($sessionId) {
-            return to_route('tenant.coaching-sessions.tasks', $sessionId);
+            return to_route('tenant.coach.coaching-sessions.tasks', $sessionId);
         } else {
-            return to_route('tenant.clients.tasks', $clientId);
+            return to_route('tenant.coach.clients.tasks', $clientId);
         }
     }
 

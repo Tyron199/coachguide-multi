@@ -10,7 +10,7 @@
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem } from '@/types';
 import { Calendar1Icon, Clock, Calendar } from 'lucide-vue-next';
-import sessions from '@/routes/tenant/coaching-sessions';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
 
 const sidebarNavItems: NavItem[] = [
     {

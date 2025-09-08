@@ -194,8 +194,8 @@ import {
     Share
 } from 'lucide-vue-next';
 import { type BreadcrumbItem, type Client } from '@/types';
-import clients from '@/routes/tenant/clients';
-import contractRoutes from '@/routes/tenant/clients/contracts';
+import clients from '@/routes/tenant/coach/clients';
+import contractRoutes from '@/routes/tenant/coach/clients/contracts';
 import ContractController from '@/actions/App/Http/Controllers/Tenant/Coach/ContractController';
 import PageHeader from '@/components/PageHeader.vue';
 import { alertConfirm } from '@/plugins/alert';

@@ -15,7 +15,7 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedClient">{{ selectedClient.name }} ({{ selectedClient.email
-                                        }})</span>
+                                            }})</span>
                                         <span v-else class="text-muted-foreground">Select a client</span>
                                     </SelectValue>
                                 </SelectTrigger>
@@ -159,7 +159,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { type BreadcrumbItem } from '@/types';
-import coachingSessions from '@/routes/tenant/coaching-sessions';
+import coachingSessions from '@/routes/tenant/coach/coaching-sessions';
 import { store as storeSessionAction } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 import { LoaderCircle, Calendar, Clock, Users, Video, MonitorSpeaker } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';

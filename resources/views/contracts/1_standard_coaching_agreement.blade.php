@@ -44,7 +44,7 @@
                         "label": "Session Duration (minutes)",
                         "type": "select",
                         "required": true,
-                        "options": ["30", "45", "60", "90", "120"],
+                        "options": [30, 45, 60, 90, 120],
                         "default": 60
                     },
                     "session_format": {
@@ -221,13 +221,13 @@
                 <strong>Coach:</strong><br>
                 <span class="variable">{{ $coach->name }}</span><br>
                 <span class="variable">{{ $coach->email }}</span><br>
-                <span class="variable">{{ $coach->phone ?? 'Not provided' }}</span>
+               @if(isset($coach->phone)) <span class="variable">{{ $coach->phone ?? 'Not provided' }}</span> @endif
             </div>
             <div class="party">
                 <strong>Client:</strong><br>
                 <span class="variable">{{ $client->name }}</span><br>
                 <span class="variable">{{ $client->email }}</span><br>
-                <span class="variable">{{ $client->phone ?? 'Not provided' }}</span>
+                @if(isset($client->phone)) <span class="variable">{{ $client->phone ?? 'Not provided' }}</span> @endif
             </div>
         </div>
         <p>Both parties agree to enter into a coaching relationship designed to facilitate the development of personal, professional, or business goals.</p>

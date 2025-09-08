@@ -228,7 +228,7 @@ class ClientController extends Controller
             $client->notify(new SendClientInvitation($client));
         }
 
-        return to_route('tenant.clients.show', $client);
+        return to_route('tenant.coach.clients.show', $client);
     }
 
     /**
@@ -353,7 +353,7 @@ class ClientController extends Controller
             $client->profile()->create($profileData);
         }
 
-        return to_route('tenant.clients.show', $client)->with('success', 'Client updated successfully.');
+        return to_route('tenant.coach.clients.show', $client)->with('success', 'Client updated successfully.');
     }
 
     /**
@@ -413,7 +413,7 @@ class ClientController extends Controller
             Log::info('Created new profile for client:', ['client_id' => $client->id]);
         }
 
-        return to_route('tenant.clients.objectives', $client)->with('success', 'Objectives updated successfully.');
+        return to_route('tenant.coach.clients.objectives', $client)->with('success', 'Objectives updated successfully.');
     }
 
     /**
@@ -427,7 +427,7 @@ class ClientController extends Controller
         // Update the archived status
         $client->update(['archived' => true]);
         
-        return to_route('tenant.clients.show', $client)->with('success', 'Client archived successfully.');
+        return to_route('tenant.coach.clients.show', $client)->with('success', 'Client archived successfully.');
     }
 
     /**
@@ -448,7 +448,7 @@ class ClientController extends Controller
             $client->update(['archived' => true]);
         }
         
-        return to_route('tenant.clients.index')->with('success', 'Clients archived successfully.');
+        return to_route('tenant.coach.clients.index')->with('success', 'Clients archived successfully.');
     }
 
     /**
@@ -462,7 +462,7 @@ class ClientController extends Controller
         // Update the archived status
         $client->update(['archived' => false]);
         
-        return to_route('tenant.clients.show', $client)->with('success', 'Client unarchived successfully.');
+        return to_route('tenant.coach.clients.show', $client)->with('success', 'Client unarchived successfully.');
     }
 
     /**
@@ -483,7 +483,7 @@ class ClientController extends Controller
             $client->update(['archived' => false]);
         }
         
-        return to_route('tenant.clients.archived')->with('success', 'Clients unarchived successfully.');
+        return to_route('tenant.coach.clients.archived')->with('success', 'Clients unarchived successfully.');
     }   
 
     /**
@@ -511,7 +511,7 @@ class ClientController extends Controller
         // Soft delete the client model
         $client->delete();
         
-        return to_route('tenant.clients.archived')->with('success', 'Client deleted successfully.');
+        return to_route('tenant.coach.clients.archived')->with('success', 'Client deleted successfully.');
     }
 
     /**
@@ -532,7 +532,7 @@ class ClientController extends Controller
             $client->delete();
         }
         
-        return to_route('tenant.clients.archived')->with('success', 'Clients deleted successfully.');
+        return to_route('tenant.coach.clients.archived')->with('success', 'Clients deleted successfully.');
     }   
     
 
@@ -548,7 +548,7 @@ class ClientController extends Controller
         
         $client->restore();
         
-        return to_route('tenant.clients.show', $client)->with('success', 'Client restored successfully.');
+        return to_route('tenant.coach.clients.show', $client)->with('success', 'Client restored successfully.');
     }
     
     /**
@@ -564,6 +564,6 @@ class ClientController extends Controller
         // Force delete permanently removes the record
         $client->forceDelete();
         
-        return to_route('tenant.clients.index')->with('success', 'Client permanently deleted.');
+        return to_route('tenant.coach.clients.index')->with('success', 'Client permanently deleted.');
     }
 }

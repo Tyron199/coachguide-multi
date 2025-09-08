@@ -210,7 +210,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { type BreadcrumbItem, type CoachingSession } from '@/types';
-import sessions from '@/routes/tenant/coaching-sessions';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
 
 import CoachingSessionController from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 import { LoaderCircle, SaveIcon, ChevronDown, Clock, Users, Video, MonitorSpeaker } from 'lucide-vue-next';

@@ -37,7 +37,7 @@ class SendContractSigningRequestClient extends Notification  implements ShouldQu
     public function toMail(object $notifiable): MailMessage
     {
         $coachName = $this->contract->coach->name;
-        $signingUrl = route('contracts.sign', ['token' => $this->signature->token]);
+        $signingUrl = tenant()->getRoute('tenant.client.contracts.sign', ['token' => $this->signature->token]);
 
         return (new MailMessage)
             ->subject('Contract Ready for Your Signature')

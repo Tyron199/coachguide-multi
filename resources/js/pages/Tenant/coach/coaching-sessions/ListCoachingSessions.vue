@@ -59,7 +59,7 @@ import SessionsTable from '@/components/SessionsTable.vue';
 import SessionsCalendar from '@/components/SessionsCalendar.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import { type BreadcrumbItem } from '@/types';
-import coachingSessions from '@/routes/tenant/coaching-sessions';
+import coachingSessions from '@/routes/tenant/coach/coaching-sessions';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, XCircle, Plus, Trash2 } from 'lucide-vue-next';
 import { computed, ref } from 'vue';

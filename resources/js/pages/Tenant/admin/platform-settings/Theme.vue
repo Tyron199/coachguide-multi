@@ -153,12 +153,12 @@
                                     <div class="space-y-2">
                                         <Input placeholder="Search..." class="h-9" />
                                         <div class="flex items-center gap-2">
-                                            <Checkbox id="preview-check" />
+                                            <Checkbox id="preview-check" :model-value="true" />
                                             <Label for="preview-check" class="text-sm">Enable notifications</Label>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <Label for="preview-toggle" class="text-sm">Dark mode</Label>
-                                            <Switch id="preview-toggle" />
+                                            <Label for="preview-toggle" class="text-sm">Switch</Label>
+                                            <Switch id="preview-toggle" :model-value="true" />
                                         </div>
                                     </div>
 
@@ -171,9 +171,9 @@
                                                 </Avatar>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium truncate">John Doe</p>
-                                                    <p class="text-xs text-muted-foreground">Client Manager</p>
+                                                    <p class="text-xs text-muted-foreground">Coach</p>
                                                 </div>
-                                                <Badge variant="outline" class="text-xs">Active</Badge>
+                                                <Badge variant="default" class="text-xs">Badge</Badge>
                                             </div>
                                         </CardContent>
                                     </Card>
@@ -221,7 +221,7 @@ const props = defineProps<Props>()
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
-        title: 'Platform settings',
+        title: 'Platform branding',
         href: ThemeController.index().url,
     },
     {

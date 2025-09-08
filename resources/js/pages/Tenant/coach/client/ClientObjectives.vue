@@ -71,7 +71,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import ClientLayout from '@/layouts/client/Layout.vue';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type Client } from '@/types';
-import clients from '@/routes/tenant/clients';
+import clients from '@/routes/tenant/coach/clients';
 import { editObjectives } from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
 import { Edit } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';

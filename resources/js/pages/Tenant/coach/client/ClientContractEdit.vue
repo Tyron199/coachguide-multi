@@ -163,7 +163,7 @@
                         <div class="grid gap-4 sm:grid-cols-2">
                             <div v-for="(value, key) in contract.variables" :key="key">
                                 <Label class="text-sm font-medium text-muted-foreground">{{ formatFieldLabel(key)
-                                    }}</Label>
+                                }}</Label>
                                 <p class="mt-1">{{ value || 'Not set' }}</p>
                             </div>
                         </div>
@@ -200,8 +200,8 @@ import {
     SaveIcon
 } from 'lucide-vue-next';
 import { type BreadcrumbItem, type Client } from '@/types';
-import clients from '@/routes/tenant/clients';
-import contracts from '@/routes/tenant/clients/contracts';
+import clients from '@/routes/tenant/coach/clients';
+import contracts from '@/routes/tenant/coach/clients/contracts';
 import PageHeader from '@/components/PageHeader.vue';
 import axios from 'axios';
 

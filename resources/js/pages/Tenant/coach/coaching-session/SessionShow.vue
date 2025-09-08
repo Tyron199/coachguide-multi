@@ -80,8 +80,8 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { type BreadcrumbItem, type CoachingSession } from '@/types';
-import sessions from '@/routes/tenant/coaching-sessions';
-import clients from '@/routes/tenant/clients';
+import sessions from '@/routes/tenant/coach/coaching-sessions';
+import clients from '@/routes/tenant/coach/clients';
 import { Edit } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
 

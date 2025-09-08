@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enums\Tenant;
+namespace App\Services\OAuth;
 
-enum CalendarIntegrationProvider: string
+enum OauthProviderType: string
 {
     case MICROSOFT = 'microsoft';
     case GOOGLE = 'google';

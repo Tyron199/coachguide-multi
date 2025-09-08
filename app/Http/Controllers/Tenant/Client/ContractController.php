@@ -120,7 +120,7 @@ class ContractController extends Controller
         $content = $this->contractService->renderContractFromModel($contract);
         $contract->update(['content' => $content]);
 
-        return to_route('tenant.contracts.sign', ['token' => $token])->with('success', 'Signature saved successfully');
+        return to_route('tenant.client.contracts.sign', ['token' => $token])->with('success', 'Signature saved successfully');
     }
 
     /**

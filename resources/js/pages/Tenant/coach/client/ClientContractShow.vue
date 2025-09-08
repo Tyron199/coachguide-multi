@@ -202,8 +202,8 @@ import {
     Check
 } from 'lucide-vue-next';
 import { type BreadcrumbItem, type Client } from '@/types';
-import clients from '@/routes/tenant/clients';
-import contracts from '@/routes/tenant/clients/contracts';
+import clients from '@/routes/tenant/coach/clients';
+import contracts from '@/routes/tenant/coach/clients/contracts';
 import PageHeader from '@/components/PageHeader.vue';
 import { alertConfirm } from '@/plugins/alert';
 import axios from 'axios';
@@ -324,7 +324,7 @@ const sendContract = async () => {
 };
 
 const downloadPdf = () => {
-    window.open(pdfAction['/coach/clients/{client}/contracts/{contract}/pdf']([props.client.id, props.contract.id]).url, '_blank');
+    window.open(pdfAction([props.client.id, props.contract.id]).url, '_blank');
 };
 
 const showCopyLinkDialog = () => {

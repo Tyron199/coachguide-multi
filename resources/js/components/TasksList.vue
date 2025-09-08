@@ -107,7 +107,7 @@ import { Badge } from '@/components/ui/badge';
 import { type CoachingTask } from '@/types';
 import { CheckSquare, Clock, Bell, MessageSquare, ChevronDown, Edit, Trash2, Eye } from 'lucide-vue-next';
 import { alertConfirm } from '@/plugins/alert';
-import taskRoutes from '@/routes/tenant/coaching-tasks';
+import taskRoutes from '@/routes/tenant/coach/coaching-tasks';
 
 interface Props {
     tasks: CoachingTask[];
