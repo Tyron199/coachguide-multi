@@ -32,15 +32,20 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+   
         <link rel="icon" href="{{ app(\App\Services\Tenant\LogoService::class)->getFaviconUrl() }}" sizes="any">
         <link rel="icon" href="{{ app(\App\Services\Tenant\LogoService::class)->getFaviconUrl() }}" type="image/svg+xml">
         <link rel="apple-touch-icon" href="{{ app(\App\Services\Tenant\LogoService::class)->getAppleTouchIconUrl() }}">
+
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
         @vite(['resources/js/app.ts', "resources/js/pages/{$page['component']}.vue"])
-          <link href="{{ app(\App\Services\Tenant\ThemeService::class)->getCurrentThemePath() }}" id='theme-css' rel="stylesheet">
+
+
+        <link href="{{ app(\App\Services\Tenant\ThemeService::class)->getCurrentThemePath() }}" id='theme-css' rel="stylesheet">
+
         @inertiaHead
     </head>
     <body class="font-sans antialiased">

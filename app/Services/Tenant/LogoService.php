@@ -25,6 +25,12 @@ class LogoService
      */
     public function getLogoUrl(string $type = 'logo'): string
     {
+        // If not in tenant context, return default logo
+        if (!tenant()) {
+            $defaultPath = $type === 'icon' ? self::DEFAULT_ICON_PATH : self::DEFAULT_LOGO_PATH;
+            return global_asset($defaultPath);
+        }
+        
         $branding = PlatformBranding::current();
         
         // Check if tenant has a custom logo/icon in database
@@ -76,6 +82,11 @@ class LogoService
      */
     public function hasCustomLogo(string $type = 'logo'): bool
     {
+        // If not in tenant context, no custom logos available
+        if (!tenant()) {
+            return false;
+        }
+        
         $branding = PlatformBranding::current();
         return $type === 'icon' ? $branding->hasCustomIcon() : $branding->hasCustomLogo();
     }
@@ -98,6 +109,20 @@ class LogoService
      */
     public function getLogoAsDataUri(string $type = 'logo'): ?string
     {
+        // If not in tenant context, use default logos
+        if (!tenant()) {
+            $defaultPath = $type === 'icon' ? self::DEFAULT_ICON_PATH : self::DEFAULT_LOGO_PATH;
+            $filePath = public_path($defaultPath);
+            
+            if (file_exists($filePath)) {
+                $imageData = file_get_contents($filePath);
+                $mimeType = mime_content_type($filePath);
+                return 'data:' . $mimeType . ';base64,' . base64_encode($imageData);
+            }
+            
+            return null;
+        }
+        
         $branding = PlatformBranding::current();
         $filePath = null;
         

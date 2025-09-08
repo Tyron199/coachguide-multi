@@ -9,7 +9,7 @@ const logoUrls = computed(() => page.props.logo as { logoUrl: string; iconUrl: s
 <template>
     <!-- Full logo - visible when sidebar is expanded -->
     <img :src="logoUrls.logoUrl" alt="CoachGuide"
-        class="h-12 w-auto object-contain transition-all duration-200 group-data-[collapsible=icon]:hidden" />
+        class="w-24 h-auto object-contain transition-all duration-200 group-data-[collapsible=icon]:hidden" />
 
     <!-- Icon logo - visible when sidebar is collapsed -->
     <img :src="logoUrls.iconUrl" alt="CoachGuide"

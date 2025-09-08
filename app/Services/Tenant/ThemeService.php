@@ -60,6 +60,11 @@ class ThemeService
      */
     public function getCurrentTheme(): string
     {
+        // If not in tenant context, return default theme
+        if (!tenant()) {
+            return 'default';
+        }
+        
         return PlatformBranding::current()->getThemeName();
     }
 
@@ -124,6 +129,11 @@ class ThemeService
      */
     public function updateTheme(string $themeName): void
     {
+        // Only allow theme updates in tenant context
+        if (!tenant()) {
+            throw new \InvalidArgumentException('Theme updates are only available in tenant context');
+        }
+        
         PlatformBranding::current()->updateBranding([
             'theme_name' => $themeName
         ]);
@@ -134,6 +144,11 @@ class ThemeService
      */
     public function resetTheme(): void
     {
+        // Only allow theme resets in tenant context
+        if (!tenant()) {
+            throw new \InvalidArgumentException('Theme resets are only available in tenant context');
+        }
+        
         PlatformBranding::current()->updateBranding([
             'theme_name' => 'default'
         ]);

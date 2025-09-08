@@ -115,11 +115,17 @@ export function useAppearance() {
         updateLayout(newLayout);
     }
 
+    function toggleAppearance() {
+        const newAppearance = appearance.value === 'light' ? 'dark' : 'light';
+        updateAppearance(newAppearance);
+    }
+
     return {
         appearance,
         updateAppearance,
         layout,
         updateLayout,
         toggleLayout,
+        toggleAppearance,
     };
 }
