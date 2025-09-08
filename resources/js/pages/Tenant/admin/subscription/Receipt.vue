@@ -1,12 +1,11 @@
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
 
-        <Head title="Subscribe" />
+        <Head title="Receipt" />
 
         <BillingLayout>
             <template #header>
-                <h1 class="text-2xl font-semibold text-foreground">Subscribe</h1>
-                <p class="text-muted-foreground">Subscribe to the platform to continue using it.</p>
+
             </template>
         </BillingLayout>
     </AppLayout>
