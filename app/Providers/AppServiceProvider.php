@@ -45,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
 
           // Configure rate limiting for contract endpoints
         $this->configureRateLimiting();
+
+        
     }
 
 
