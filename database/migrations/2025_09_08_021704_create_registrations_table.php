@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained('tenants')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('email');
             $table->string('company_name');
             $table->string('subdomain');
-            $table->integer('tenant_id')->nullable()->comment("Once this registration attempt gets turned into a tenant, we link it.");
-            $table->foreign('tenant_id')->references('id')->on('tenants');
+            
             $table->integer('status')->default(0);
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();
