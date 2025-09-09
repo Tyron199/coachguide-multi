@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Tenant\CoachingSession;
 use App\Jobs\Calendar\SyncCoachingSessionJob;
+use App\Jobs\Calendar\DeleteCalendarEventsJob;
 use Illuminate\Support\Facades\Log;
 
 class CoachingSessionObserver
@@ -61,16 +62,28 @@ class CoachingSessionObserver
      */
     public function deleted(CoachingSession $coachingSession): void
     {
-        // Always try to delete calendar events when session is deleted
-        if ($coachingSession->calendarEvents()->exists()) {
-            Log::info("Dispatching calendar sync job for deleted session", [
-                'session_id' => $coachingSession->id
+        // Collect calendar events before the session is deleted
+        $calendarEvents = $coachingSession->calendarEvents;
+        
+        if ($calendarEvents->isNotEmpty()) {
+            Log::info("Dispatching calendar events deletion job for deleted session", [
+                'session_id' => $coachingSession->id,
+                'events_count' => $calendarEvents->count()
             ]);
             
-            SyncCoachingSessionJob::dispatch(
-                $coachingSession,
-                'delete'
-            )->delay(now()->addSeconds(5));
+            // Convert calendar events to simple array data
+            $eventsToDelete = $calendarEvents->map(function ($event) use ($coachingSession) {
+                return [
+                    'external_event_id' => $event->external_event_id,
+                    'external_calendar_id' => $event->external_calendar_id,
+                    'provider' => $event->provider->value,
+                    'user_id' => $event->user_id,
+                    'session_id' => $coachingSession->id, // for logging only
+                ];
+            })->toArray();
+            
+            DeleteCalendarEventsJob::dispatch($eventsToDelete)
+                ->delay(now()->addSeconds(5));
         }
     }
 
@@ -97,16 +110,28 @@ class CoachingSessionObserver
      */
     public function forceDeleted(CoachingSession $coachingSession): void
     {
-        // Force delete should also clean up calendar events
-        if ($coachingSession->calendarEvents()->exists()) {
-            Log::info("Dispatching calendar sync job for force deleted session", [
-                'session_id' => $coachingSession->id
+        // Collect calendar events before the session is force deleted
+        $calendarEvents = $coachingSession->calendarEvents;
+        
+        if ($calendarEvents->isNotEmpty()) {
+            Log::info("Dispatching calendar events deletion job for force deleted session", [
+                'session_id' => $coachingSession->id,
+                'events_count' => $calendarEvents->count()
             ]);
             
-            SyncCoachingSessionJob::dispatch(
-                $coachingSession,
-                'delete'
-            );
+            // Convert calendar events to simple array data
+            $eventsToDelete = $calendarEvents->map(function ($event) use ($coachingSession) {
+                return [
+                    'external_event_id' => $event->external_event_id,
+                    'external_calendar_id' => $event->external_calendar_id,
+                    'provider' => $event->provider->value,
+                    'user_id' => $event->user_id,
+                    'session_id' => $coachingSession->id, // for logging only
+                ];
+            })->toArray();
+            
+            // No delay for force delete - do it immediately
+            DeleteCalendarEventsJob::dispatch($eventsToDelete);
         }
     }
 
