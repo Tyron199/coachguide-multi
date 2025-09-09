@@ -13,6 +13,10 @@ use App\Models\Tenant\CoachingTask;
 use App\Policies\Tenant\ClientPolicy;
 use App\Policies\Tenant\CompanyPolicy;
 use App\Policies\Tenant\CoachingTaskPolicy;
+use App\Services\Calendar\CalendarServiceManager;
+use App\Services\OAuth\OAuthProviderManager;
+use App\Models\Tenant\CoachingSession;
+use App\Observers\CoachingSessionObserver;
 use Illuminate\Support\Facades\Event;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,7 +26,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Register Calendar Service Manager
+        $this->app->singleton(CalendarServiceManager::class, function ($app) {
+            return new CalendarServiceManager($app->make(OAuthProviderManager::class));
+        });
+
+        // Register OAuth Provider Manager
+        $this->app->singleton(OAuthProviderManager::class, function ($app) {
+            return new OAuthProviderManager();
+        });
     }
 
     /**
@@ -43,7 +55,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Company::class, CompanyPolicy::class);
         Gate::policy(CoachingTask::class, CoachingTaskPolicy::class);
 
-          // Configure rate limiting for contract endpoints
+        // Register observers
+        CoachingSession::observe(CoachingSessionObserver::class);
+
+        // Configure rate limiting for contract endpoints
         $this->configureRateLimiting();
 
         

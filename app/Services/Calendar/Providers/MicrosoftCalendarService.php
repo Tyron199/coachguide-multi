@@ -62,11 +62,6 @@ class MicrosoftCalendarService extends BaseCalendarService
             'is_online_meeting' => $responseData['isOnlineMeeting'] ?? false,
             'online_meeting_provider' => $responseData['onlineMeetingProvider'] ?? null
         ]);
-        //Log all response data raw
-
-        Log::info('Microsoft Calendar event response data', [
-            'response_data' => $responseData
-        ]);
 
         return $this->extractEventData($responseData);
     }
