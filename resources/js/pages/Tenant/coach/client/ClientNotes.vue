@@ -21,7 +21,16 @@
                     </template>
                 </PageHeader>
 
-                <NotesList :notes="notes" :can-edit="can.update" :can-delete="can.delete" />
+                <NotesList :notes="notes" :can-edit="can.update" :can-delete="can.delete">
+                    <template #empty-actions>
+                        <Link :href="createNoteAction({ query: { client_id: client.id } }).url">
+                        <Button>
+                            <Plus class="mr-2 h-4 w-4" />
+                            Add Note
+                        </Button>
+                        </Link>
+                    </template>
+                </NotesList>
             </div>
         </ClientLayout>
     </AppLayout>

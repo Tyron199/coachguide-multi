@@ -168,7 +168,7 @@
                                 If you have any questions about this Privacy Policy, please contact us at:
                             </p>
                             <p>
-                                Email: privacy@coachguide.com<br>
+                                Email: privacy@coachguide.biz<br>
                                 Address: 123 Privacy Street, Business District, 12345
                             </p>
                         </section>

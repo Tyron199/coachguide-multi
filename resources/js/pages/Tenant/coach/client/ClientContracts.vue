@@ -5,7 +5,8 @@
     <AppLayout :breadcrumbs="breadcrumbs">
         <ClientLayout :client="client">
             <div class="space-y-6">
-                <PageHeader title="Contracts" description="Coaching agreements between you and your client">
+                <PageHeader title="Client Contracts" description="Coaching agreements between you and your client"
+                    :badge="`${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'}`">
                     <template #actions>
                         <Link v-if="can.create" :href="contractRoutes.create(client.id).url">
                         <Button>

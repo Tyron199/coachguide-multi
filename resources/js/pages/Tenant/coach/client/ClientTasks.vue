@@ -17,7 +17,17 @@
                     </template>
                 </PageHeader>
 
-                <TasksList :tasks="tasks" :can-edit="can.update" :can-delete="can.delete" />
+                <TasksList :tasks="tasks" :can-edit="can.update" :can-delete="can.delete">
+                    <template #empty-actions>
+                        <Link v-if="can.create"
+                            :href="CoachingTaskController.create({ query: { client_id: client.id } }).url">
+                        <Button>
+                            <Plus class="mr-2 h-4 w-4" />
+                            Add Task
+                        </Button>
+                        </Link>
+                    </template>
+                </TasksList>
             </div>
         </ClientLayout>
     </AppLayout>

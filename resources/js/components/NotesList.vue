@@ -2,11 +2,14 @@
     <div class="space-y-4">
         <!-- Empty state -->
         <div v-if="notes.length === 0" class="text-center py-12">
-            <FileText class="mx-auto h-12 w-12 text-muted-foreground" />
-            <h3 class="mt-2 text-sm font-medium text-foreground">No notes yet</h3>
-            <p class="mt-1 text-sm text-muted-foreground">
+            <div class="mx-auto w-12 h-12 bg-muted rounded-lg flex items-center justify-center mb-4">
+                <FileText class="h-6 w-6 text-muted-foreground" />
+            </div>
+            <h3 class="text-lg font-medium mb-2">No notes yet</h3>
+            <p class="text-muted-foreground mb-4">
                 Notes from coaching sessions will appear here.
             </p>
+            <slot name="empty-actions"></slot>
         </div>
 
         <!-- Notes list -->
@@ -92,7 +95,7 @@
                                 :class="`h-4 w-4 flex-shrink-0 ${getAttachmentIcon(attachment).color}`" />
                             <span class="truncate flex-1 min-w-0">{{ attachment.original_name }}</span>
                             <span class="text-xs text-muted-foreground flex-shrink-0">({{ attachment.formatted_size
-                            }})</span>
+                                }})</span>
                         </a>
                     </div>
                 </div>

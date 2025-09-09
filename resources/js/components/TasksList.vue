@@ -2,11 +2,14 @@
     <div class="space-y-4">
         <!-- Empty state -->
         <div v-if="tasks.length === 0" class="text-center py-12">
-            <CheckSquare class="mx-auto h-12 w-12 text-muted-foreground" />
-            <h3 class="mt-2 text-sm font-medium text-foreground">No tasks yet</h3>
-            <p class="mt-1 text-sm text-muted-foreground">
+            <div class="mx-auto w-12 h-12 bg-muted rounded-lg flex items-center justify-center mb-4">
+                <CheckSquare class="h-6 w-6 text-muted-foreground" />
+            </div>
+            <h3 class="text-lg font-medium mb-2">No tasks yet</h3>
+            <p class="text-muted-foreground mb-4">
                 Tasks created during coaching sessions will appear here.
             </p>
+            <slot name="empty-actions"></slot>
         </div>
 
         <!-- Tasks list -->
@@ -43,12 +46,12 @@
                             <span v-if="task.reminders && task.reminders.length > 0" class="flex items-center gap-1">
                                 <Bell class="h-3 w-3 flex-shrink-0" />
                                 <span>{{ task.reminders.length }} reminder{{ task.reminders.length === 1 ? '' : 's'
-                                }}</span>
+                                    }}</span>
                             </span>
                             <span v-if="task.actions_count && task.actions_count > 0" class="flex items-center gap-1">
                                 <MessageSquare class="h-3 w-3 flex-shrink-0" />
                                 <span>{{ task.actions_count }} submission{{ task.actions_count === 1 ? '' : 's'
-                                }}</span>
+                                    }}</span>
                             </span>
                         </div>
                     </div>

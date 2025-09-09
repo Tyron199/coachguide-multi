@@ -68,7 +68,7 @@
             </Button>
             <Button class="flex-1" @click="$emit('assign', framework)">
                 <Plus class="mr-2 h-4 w-4" />
-                Use with Session
+                Use
             </Button>
         </CardFooter>
     </Card>

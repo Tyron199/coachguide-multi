@@ -318,7 +318,7 @@
                                 If you have any questions about these Terms, please contact us at:
                             </p>
                             <p>
-                                Email: terms@coachguide.com<br>
+                                Email: terms@coachguide.biz<br>
                                 Address: 123 Terms Street, Business District, 12345
                             </p>
                         </section>
