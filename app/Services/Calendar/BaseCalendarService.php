@@ -127,14 +127,15 @@ abstract class BaseCalendarService implements CalendarServiceInterface
                 'role' => 'client'
             ];
         }
-        
-        if ($session->coach && $session->coach->email) {
-            $attendees[] = [
-                'email' => $session->coach->email,
-                'name' => $session->coach->name,
-                'role' => 'coach'
-            ];
-        }
+
+        //We dont need to include the coach here since this is already being added to their own calendar
+        // if ($session->coach && $session->coach->email) {
+        //     $attendees[] = [
+        //         'email' => $session->coach->email,
+        //         'name' => $session->coach->name,
+        //         'role' => 'coach'
+        //     ];
+        // }
         
         return $attendees;
     }
