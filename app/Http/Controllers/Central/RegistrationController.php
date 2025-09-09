@@ -224,7 +224,7 @@ class RegistrationController extends Controller
                 ->update(['status' => RegistrationStatus::FAILED]);
 
             // Redirect to the new tenant domain
-            return Inertia::location('https://' . $fullDomain . '/login?success=Platform created successfully! Login to continue.');
+            return Inertia::location('https://' . $fullDomain . '/login?success=Platform created successfully! Login to get started.');
 
         } catch (\Exception $e) {
             Log::error('Failed to create platform: ' . $e->getMessage());
