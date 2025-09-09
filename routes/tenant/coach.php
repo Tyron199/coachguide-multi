@@ -8,6 +8,11 @@ use App\Http\Controllers\Tenant\Coach\CoachingFrameworkController;
 use App\Http\Controllers\Tenant\Coach\CoachingFrameworkInstanceController;
 use App\Http\Controllers\Tenant\AttachmentController;
 use App\Http\Controllers\Tenant\Coach\ContractController;
+use App\Http\Controllers\Tenant\Coach\CoachingLogController;
+use App\Http\Controllers\Tenant\Coach\TrainingLogController;
+use App\Http\Controllers\Tenant\Coach\SupervisionLogController;
+use App\Http\Controllers\Tenant\Coach\ResourceLibraryController;
+use App\Http\Controllers\Tenant\Coach\ProfessionalCredentialController;
 
 
 
@@ -82,6 +87,22 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach'])->group(functi
         Route::get('/clients/{client}/contracts/{contract}/pdf', [ContractController::class, 'pdf'])->name('clients.contracts.pdf');
         Route::delete('/clients/{client}/contracts/{contract}', [ContractController::class, 'destroy'])->name('clients.contracts.destroy');
         Route::patch('/clients/{client}/contracts/{contract}/send', [ContractController::class, 'send'])->name('clients.contracts.send');
+
+
+        //Coaching log
+        Route::get('coaching-log', [CoachingLogController::class, 'index'])->name('coaching-log.index');
+
+        //Training log
+        Route::get('training-log', [TrainingLogController::class, 'index'])->name('training-log.index');
+
+        //Supervision log
+        Route::get('supervision-log', [SupervisionLogController::class, 'index'])->name('supervision-log.index');
+
+        //Resource lib
+        Route::get('resource-library', [ResourceLibraryController::class, 'index'])->name('resource-library.index');
+
+        //Professional credential
+        Route::get('professional-credential', [ProfessionalCredentialController::class, 'index'])->name('professional-credential.index');
 
     });
 

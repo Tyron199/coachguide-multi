@@ -24,7 +24,7 @@ const currentPath = typeof window !== undefined ? window.location.pathname + win
 
         </div>
         <div class="flex flex-col lg:flex-row lg:space-x-12">
-            <aside class="w-full max-w-xl lg:w-48">
+            <aside class="w-full max-w-xl lg:w-64">
                 <div class="flex flex-col mb-4">
                     <div id="avatar-img" v-if="avatar" class="flex  mb-4">
                         <img :src="avatar" :alt="title" class="w-32 h-auto overflow-hidden rounded-lg">

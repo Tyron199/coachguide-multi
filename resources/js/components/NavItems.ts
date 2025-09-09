@@ -1,12 +1,12 @@
 import { type NavItem } from "@/types";
-import { BookOpen, Calendar1Icon, Settings2, Folder, LayoutGrid, Users, UserStar, CreditCard, Hammer } from "lucide-vue-next";
+import { BookOpen, Calendar1Icon, Settings2, Folder, LayoutGrid, Users, UserStar, CreditCard, Hammer, ChartLine } from "lucide-vue-next";
 import { dashboard } from "@/routes/tenant";
 import clients from "@/routes/tenant/coach/clients";
 import coachingSessions from "@/routes/tenant/coach/coaching-sessions";
 import { index as themeIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/ThemeController';
 import { manage } from '@/actions/App/Http/Controllers/Tenant/Admin/SubscriptionController';
 import { models as showModels } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingFrameworkController';
-import coachingFrameworks from "@/routes/tenant/coach/coaching-frameworks";
+import { index as coachingLogIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingLogController';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
@@ -28,6 +28,11 @@ const mainNavItems: NavItem[] = [
         href: showModels().url,
         icon: Hammer,
     },
+    {
+        title: 'Growth Tracker',
+        href: coachingLogIndex().url,
+        icon: ChartLine
+    }
 ];
 
 
