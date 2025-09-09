@@ -294,7 +294,7 @@ class CoachingSessionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         // Get clients for the dropdown (scoped by role)
         if (auth()->user()->hasRole('coach') && !auth()->user()->hasRole('admin')) {
@@ -312,8 +312,20 @@ class CoachingSessionController extends Controller
                 ->get(['id', 'name', 'email']);
         }
         
+        // Check for client_id in URL params and verify it exists in our list
+        $preSelectedClientId = null;
+        if ($request->has('client_id') && $request->client_id) {
+            $clientId = (int) $request->client_id;
+            // Verify the client exists in our filtered list
+            $client = $clients->firstWhere('id', $clientId);
+            if ($client) {
+                $preSelectedClientId = $clientId;
+            }
+        }
+        
         return Inertia::render('Tenant/coach/coaching-sessions/ScheduleSession', [
-            'clients' => $clients
+            'clients' => $clients,
+            'preSelectedClientId' => $preSelectedClientId
         ]);
     }
 

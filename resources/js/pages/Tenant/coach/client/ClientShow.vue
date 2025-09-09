@@ -22,6 +22,13 @@
                             Archive Client
                         </Button>
 
+                        <!-- Schedule Session Button -->
+                        <Link :href="createSession({ query: { client_id: client.id } }).url">
+                        <Button v-if="can.update" variant="outline">
+                            <Calendar class="mr-2 h-4 w-4" />
+                            Schedule Session
+                        </Button>
+                        </Link>
                         <!-- Delete Button (only for archived clients with delete permission) -->
                         <Button v-if="client.archived && can.delete" variant="destructive" @click="handleDeleteClick">
                             <Trash2 class="mr-2 h-4 w-4" />
@@ -147,11 +154,12 @@ import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type Client } from '@/types';
 import clients from '@/routes/tenant/coach/clients';
 import { destroy as destroyClientAction, archive as archiveClientAction, unarchive as unarchiveClientAction } from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
-import { Edit, Archive, ArchiveRestore, Trash2 } from 'lucide-vue-next';
+import { Edit, Archive, ArchiveRestore, Trash2, Calendar } from 'lucide-vue-next';
 import companies from '@/routes/tenant/coach/companies';
 import { Badge } from '@/components/ui/badge';
 import { alertConfirm } from '@/plugins/alert';
 import PageHeader from '@/components/PageHeader.vue';
+import { create as createSession } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 
 
 const props = defineProps<{

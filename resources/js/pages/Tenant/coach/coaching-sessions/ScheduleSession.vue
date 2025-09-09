@@ -15,7 +15,7 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedClient">{{ selectedClient.name }} ({{ selectedClient.email
-                                        }})</span>
+                                            }})</span>
                                         <span v-else class="text-muted-foreground">Select a client</span>
                                     </SelectValue>
                                 </SelectTrigger>
@@ -173,6 +173,7 @@ interface Client {
 
 interface Props {
     clients: Client[];
+    preSelectedClientId?: number | null;
 }
 
 const props = defineProps<Props>();
@@ -186,17 +187,14 @@ const formData = ref({
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // User's timezone
 });
 
-// Check for client_id in URL params and pre-fill if it exists
+// Set up form defaults and handle pre-selected client
 onMounted(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const clientIdParam = urlParams.get('client_id');
-
-    if (clientIdParam) {
-        const clientId = Number(clientIdParam);
-        // Verify the client exists in our list
-        const client = props.clients.find(c => c.id === clientId);
+    // Use pre-selected client ID from controller if provided
+    if (props.preSelectedClientId) {
+        // Verify the client exists in our list (already validated in controller, but double-check)
+        const client = props.clients.find(c => c.id === props.preSelectedClientId);
         if (client) {
-            formData.value.client_id = clientId;
+            formData.value.client_id = props.preSelectedClientId;
         }
     }
 
