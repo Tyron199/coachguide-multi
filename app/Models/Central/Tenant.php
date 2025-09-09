@@ -13,6 +13,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains, Billable;
 
+
+    public function getIncrementing()
+    {
+    return true;
+    }
+
     public function registration()
     {
         return $this->hasOne(Registration::class);

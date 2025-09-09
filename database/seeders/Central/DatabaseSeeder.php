@@ -13,11 +13,9 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-      $tenant =  Tenant::create([
-            'id'=> 'acme',
-        ]);
+      $tenant =  Tenant::create();
 
-         $tenant->domains()->create(['domain' => 'coachguide-acme.test']);
+    $tenant->domains()->create(['domain' => 'coachguide-acme.test']);
     }
 
 

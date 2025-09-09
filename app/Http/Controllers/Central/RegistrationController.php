@@ -183,12 +183,8 @@ class RegistrationController extends Controller
             // Create the tenant and domain atomically
             $appDomain = parse_url(config('app.url'), PHP_URL_HOST);
             $fullDomain = $validated['subdomain'] . '.' . $appDomain;
-
-            // Generate a unique tenant ID
-            $tenantId = \Illuminate\Support\Str::uuid();
-
             // Create tenant
-            $tenant = Tenant::create(['id' => $tenantId]);
+            $tenant = Tenant::create(['name' => $validated['name'],'email' => $registration->email, 'company_name' => $registration->company_name, 'subdomain' => $validated['subdomain']]);
             $tenant->domains()->create(['domain' => $fullDomain]);
 
             // Create the admin user in the tenant context
