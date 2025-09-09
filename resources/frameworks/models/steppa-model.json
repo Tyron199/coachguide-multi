@@ -1,0 +1,86 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "steppa-model",
+    "name": "STEPPA Model",
+    "description": "The STEPPA Model is an emotional and goal-oriented coaching framework. It integrates emotions and values into the goal-setting process, helping clients develop clarity and motivation for sustainable change.",
+    "category": "models",
+    "subcategory": "emotional-goal-oriented",
+    "bestFor": [
+        "life-coaching",
+        "emotional-intelligence-coaching"
+    ],
+    "type": "object",
+    "properties": {
+        "focus_area": {
+            "type": "string",
+            "title": "What issue or area would you like to focus on?",
+            "description": "Identify the subject or area of focus"
+        },
+        "work_objective": {
+            "type": "string",
+            "title": "What do you want to work on?",
+            "description": "Define what specifically needs to be worked on"
+        },
+        "goal_definition": {
+            "type": "string",
+            "title": "What is your goal?",
+            "description": "Set a clear target or goal"
+        },
+        "success_indicators": {
+            "type": "string",
+            "title": "How will you know when you've achieved it?",
+            "description": "Define success criteria and indicators"
+        },
+        "connected_emotions": {
+            "type": "string",
+            "title": "What emotions are connected to this goal?",
+            "description": "Explore emotions related to the goal"
+        },
+        "emotional_motivation": {
+            "type": "string",
+            "title": "How do these emotions influence your motivation?",
+            "description": "Understand how emotions impact motivation"
+        },
+        "current_beliefs": {
+            "type": "string",
+            "title": "What beliefs do you hold about this situation?",
+            "description": "Examine current perceptions and beliefs"
+        },
+        "perspective_shifts": {
+            "type": "string",
+            "title": "How might your perspective shift?",
+            "description": "Explore potential changes in perspective"
+        },
+        "action_steps": {
+            "type": "string",
+            "title": "What steps will you take to achieve this goal?",
+            "description": "Create a plan with specific steps"
+        },
+        "required_resources": {
+            "type": "string",
+            "title": "What resources do you need?",
+            "description": "Identify necessary resources and support"
+        },
+        "timeframe": {
+            "type": "string",
+            "title": "What is the timeframe for achieving this?",
+            "description": "Set pace and timeline for goal achievement"
+        },
+        "progress_measurement": {
+            "type": "string",
+            "title": "How will you measure progress?",
+            "description": "Define how progress will be tracked and measured"
+        },
+        "potential_adjustments": {
+            "type": "string",
+            "title": "What adjustments might be necessary?",
+            "description": "Consider what adaptations might be needed"
+        },
+        "action_commitments": {
+            "type": "string",
+            "title": "What actions will you commit to?",
+            "description": "Make specific action commitments"
+        }
+    },
+    "required": []
+}

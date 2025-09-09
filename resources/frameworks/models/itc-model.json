@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "itc-model",
+    "name": "Immunity to Change (ITC) Model",
+    "description": "The Immunity to Change (ITC) Model, developed by Robert Kegan and Lisa Lahey, helps clients uncover hidden assumptions that block change. It reveals competing commitments and limiting mindsets that create an 'immunity' to desired change.",
+    "category": "models",
+    "subcategory": "change-resistance",
+    "bestFor": [
+        "executive-coaching",
+        "leadership-development",
+        "behavioral-change"
+    ],
+    "type": "object",
+    "properties": {
+        "improvement_goal": {
+            "type": "string",
+            "title": "What is your improvement goal?",
+            "description": "Define the specific change or improvement goal"
+        },
+        "goal_importance": {
+            "type": "string",
+            "title": "Why does this matter to you?",
+            "description": "Explore the significance and motivation behind the goal"
+        },
+        "counterproductive_behaviors": {
+            "type": "string",
+            "title": "What behaviours work against this goal?",
+            "description": "Identify behaviors that prevent progress toward the goal"
+        },
+        "undermining_actions": {
+            "type": "string",
+            "title": "What actions undermine progress?",
+            "description": "Recognize specific actions that sabotage progress"
+        },
+        "competing_commitments": {
+            "type": "string",
+            "title": "What unspoken commitments stop you from changing?",
+            "description": "Uncover hidden commitments that compete with the stated goal"
+        },
+        "underlying_fears": {
+            "type": "string",
+            "title": "What fears drive these commitments?",
+            "description": "Explore the fears that fuel the competing commitments"
+        },
+        "big_assumptions": {
+            "type": "string",
+            "title": "What assumptions do you hold as true?",
+            "description": "Identify core assumptions that may be limiting change"
+        },
+        "assumption_impact": {
+            "type": "string",
+            "title": "How do these shape your behaviours?",
+            "description": "Understand how assumptions influence behavior patterns"
+        },
+        "assumption_testing": {
+            "type": "string",
+            "title": "How can you test these assumptions safely?",
+            "description": "Design safe experiments to test the validity of assumptions"
+        },
+        "supportive_reframes": {
+            "type": "string",
+            "title": "What reframes would support change?",
+            "description": "Develop new perspectives that support desired change"
+        },
+        "reinforcing_practices": {
+            "type": "string",
+            "title": "What practices can reinforce change?",
+            "description": "Establish practices that support and reinforce the change"
+        },
+        "support_systems": {
+            "type": "string",
+            "title": "What support systems will you use?",
+            "description": "Identify support systems and resources for sustaining change"
+        }
+    },
+    "required": []
+}

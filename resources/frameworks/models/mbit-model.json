@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "mbit-model",
+    "name": "mBIT (Multiple Brain Integration Techniques) Model",
+    "description": "The mBIT (Multiple Brain Integration Techniques) Coaching Model helps clients align their head, heart, and gut intelligences for coherent decision-making. It supports values-based leadership, resilience, and authentic action.",
+    "category": "models",
+    "subcategory": "neuroscience-integration",
+    "bestFor": [
+        "life-coaching",
+        "embodied-leadership-coaching",
+        "neuroscience-based-coaching"
+    ],
+    "type": "object",
+    "properties": {
+        "decision_issue": {
+            "type": "string",
+            "title": "What decision are you facing?",
+            "description": "Define the specific decision or issue to be addressed"
+        },
+        "misalignment_areas": {
+            "type": "string",
+            "title": "What feels misaligned right now?",
+            "description": "Identify areas where there is internal conflict or misalignment"
+        },
+        "logical_options": {
+            "type": "string",
+            "title": "What are the logical options?",
+            "description": "Explore rational, logical perspectives from head intelligence"
+        },
+        "information_needed": {
+            "type": "string",
+            "title": "What information do you need?",
+            "description": "Identify what additional information would help with decision-making"
+        },
+        "emotional_response": {
+            "type": "string",
+            "title": "What do you feel about these options?",
+            "description": "Tune into emotional and feeling responses from heart intelligence"
+        },
+        "values_alignment": {
+            "type": "string",
+            "title": "What aligns with your values?",
+            "description": "Explore how options align with core values and beliefs"
+        },
+        "instincts_intuitions": {
+            "type": "string",
+            "title": "What instincts or intuitions do you have?",
+            "description": "Access gut intelligence and instinctual responses"
+        },
+        "deeper_knowing": {
+            "type": "string",
+            "title": "What feels right at a deeper level?",
+            "description": "Connect with deeper intuitive knowing and wisdom"
+        },
+        "three_brain_agreement": {
+            "type": "string",
+            "title": "Where is there agreement across head, heart, and gut?",
+            "description": "Identify areas of alignment between all three intelligences"
+        },
+        "congruent_action": {
+            "type": "string",
+            "title": "How can you act congruently?",
+            "description": "Plan how to act in alignment with all three intelligences"
+        },
+        "aligned_steps": {
+            "type": "string",
+            "title": "What specific steps will you take from this alignment?",
+            "description": "Define concrete actions based on integrated intelligence"
+        },
+        "support_needed": {
+            "type": "string",
+            "title": "What support will you need?",
+            "description": "Identify what support or resources are needed for implementation"
+        }
+    },
+    "required": []
+}

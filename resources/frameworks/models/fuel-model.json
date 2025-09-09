@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "fuel-model",
+    "name": "FUEL Model",
+    "description": "The FUEL Model is a structured corporate coaching framework designed to improve performance, engagement, and leadership capability by following four key steps: Frame, Understand, Explore, and Lay out a plan.",
+    "category": "models",
+    "subcategory": "corporate-performance",
+    "bestFor": [
+        "leadership-coaching",
+        "performance-conversations",
+        "manager-as-coach"
+    ],
+    "type": "object",
+    "properties": {
+        "discussion_purpose": {
+            "type": "string",
+            "title": "What is the purpose of this discussion?",
+            "description": "Frame the conversation by defining its purpose"
+        },
+        "desired_outcome": {
+            "type": "string",
+            "title": "What outcome are we aiming for today?",
+            "description": "Set clear expectations for the session outcome"
+        },
+        "current_situation": {
+            "type": "string",
+            "title": "What is happening now?",
+            "description": "Understand the current state and situation"
+        },
+        "current_challenges": {
+            "type": "string",
+            "title": "What challenges are you experiencing?",
+            "description": "Identify specific challenges being faced"
+        },
+        "success_vision": {
+            "type": "string",
+            "title": "What does success look like for you?",
+            "description": "Explore and define what success would look like"
+        },
+        "path_options": {
+            "type": "string",
+            "title": "What options could lead you there?",
+            "description": "Explore different options and pathways to success"
+        },
+        "action_commitments": {
+            "type": "string",
+            "title": "What actions will you commit to?",
+            "description": "Define specific actions and commitments"
+        },
+        "support_needed": {
+            "type": "string",
+            "title": "What support do you need to succeed?",
+            "description": "Identify what support or resources are needed for success"
+        }
+    },
+    "required": []
+}

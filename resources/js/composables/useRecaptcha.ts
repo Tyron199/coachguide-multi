@@ -41,17 +41,23 @@ export function useRecaptcha(options: RecaptchaOptions) {
         });
     };
 
+    let tries = 0;
     const renderRecaptcha = () => {
+        tries++;
         if (!window.grecaptcha || !containerRef.value) return;
-
-        widgetId.value = window.grecaptcha.render(containerRef.value, {
-            sitekey: options.siteKey,
-            size: options.size || 'normal',
-            theme: options.theme || 'light',
-            callback: options.callback,
-            'expired-callback': options.expiredCallback,
-            'error-callback': options.errorCallback,
-        });
+        try {
+            widgetId.value = window.grecaptcha.render(containerRef.value, {
+                sitekey: options.siteKey,
+                size: options.size || 'normal',
+                theme: options.theme || 'light',
+                callback: options.callback,
+                'expired-callback': options.expiredCallback,
+                'error-callback': options.errorCallback,
+            });
+        } catch (ex) {
+            if (tries > 10) return;
+            setTimeout(renderRecaptcha, 250);
+        }
     };
 
     const getResponse = (): string | null => {

@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "habit-loop-mapping",
+    "name": "Habit Loop Mapping",
+    "description": "A systematic approach to understanding and changing habits by identifying the cue-routine-reward cycle and developing replacement strategies.",
+    "category": "tools",
+    "subcategory": "cognitive-behavioral",
+    "bestFor": [
+        "behavioral-change",
+        "performance-coaching",
+        "habit-formation"
+    ],
+    "type": "object",
+    "properties": {
+        "target_behavior": {
+            "type": "string",
+            "title": "What behavior is being addressed?",
+            "description": "Define the specific habit or behavior to be mapped"
+        },
+        "habit_triggers": {
+            "type": "string",
+            "title": "What triggers this habit? When/where does it occur?",
+            "description": "Identify the cues or triggers that initiate the habit"
+        },
+        "habit_routine": {
+            "type": "string",
+            "title": "What is the specific behavior or sequence followed?",
+            "description": "Map out the exact routine or behavior pattern"
+        },
+        "habit_reward": {
+            "type": "string",
+            "title": "What payoff is gained from this habit?",
+            "description": "Identify the reward or benefit obtained from the habit"
+        },
+        "replacement_strategy": {
+            "type": "string",
+            "title": "What new routine can replace the old one with similar reward?",
+            "description": "Develop a healthier routine that provides similar rewards"
+        },
+        "progress_tracking": {
+            "type": "string",
+            "title": "Track attempts and consistency of new routine",
+            "description": "Monitor progress in implementing the new habit routine"
+        },
+        "change_outcomes": {
+            "type": "string",
+            "title": "Results of habit change",
+            "description": "Record the outcomes and insights from the habit change process"
+        }
+    },
+    "required": []
+}

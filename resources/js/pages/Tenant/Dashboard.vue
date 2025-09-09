@@ -31,9 +31,10 @@ import {
     AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
 import { dashboard } from "@/routes/tenant"
-import CalendarIntegrationController from '@/actions/App/Http/Controllers/Tenant/Settings/CalendarIntegrationController';
-import CoachingSessionController from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
-
+import { show as showCalendarIntegration } from '@/actions/App/Http/Controllers/Tenant/Settings/CalendarIntegrationController';
+import { create as createSession } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
+import { create as createClient } from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
+import { show as showSession, index as indexSessions } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 
 interface Props {
     hasMicrosoftCalendar: boolean;
@@ -62,7 +63,7 @@ function handleCalendarModalNotNow() {
         action: {
             label: 'Go to Integrations',
             onClick: () => {
-                window.location.href = CalendarIntegrationController.show().url;
+                window.location.href = showCalendarIntegration().url;
             },
         },
     });
@@ -192,9 +193,14 @@ const getDateLabel = (date: Date) => {
                     <h1 class="text-3xl font-bold">Welcome back! 👋</h1>
                     <p class="text-muted-foreground">Here's what's happening with your coaching practice today.</p>
                 </div>
-                <div>
-
-                    <Link :href="CoachingSessionController.create().url">
+                <div class="flex items-center gap-2">
+                    <Link :href="createClient().url">
+                    <Button>
+                        <Plus class="mr-2 h-4 w-4" />
+                        Add Client
+                    </Button>
+                    </Link>
+                    <Link :href="createSession().url">
                     <Button>
                         <Plus class="mr-2 h-4 w-4" />
                         Schedule Session
@@ -270,7 +276,7 @@ const getDateLabel = (date: Date) => {
                                 <CardTitle>Upcoming Sessions</CardTitle>
                                 <CardDescription>Your next coaching appointments</CardDescription>
                             </div>
-                            <Link :href="CoachingSessionController.index().url">
+                            <Link :href="indexSessions().url">
                             <Button variant="outline" size="sm">
                                 <Eye class="mr-2 h-4 w-4" />
                                 View All
@@ -300,7 +306,7 @@ const getDateLabel = (date: Date) => {
                                     <span>{{ session.duration }}min</span>
                                 </div>
                             </div>
-                            <Link :href="CoachingSessionController.show(session.id).url">
+                            <Link :href="showSession(session.id).url">
                             <Button variant="ghost" size="sm">
                                 <ArrowRight class="h-4 w-4" />
                             </Button>

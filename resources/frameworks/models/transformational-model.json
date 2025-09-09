@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "transformational-model",
+    "name": "Transformational Coaching Model",
+    "description": "The Transformational Coaching Model focuses on deep personal change by addressing beliefs, identity, and purpose. It encourages clients to go beyond surface goals to shift perspectives and create lasting transformation.",
+    "category": "models",
+    "subcategory": "deep-change-identity",
+    "bestFor": [
+        "life-coaching",
+        "leadership-coaching",
+        "deep-inner-work"
+    ],
+    "type": "object",
+    "properties": {
+        "current_patterns": {
+            "type": "string",
+            "title": "What patterns or beliefs do you notice?",
+            "description": "Identify recurring patterns and underlying beliefs"
+        },
+        "reality_impact": {
+            "type": "string",
+            "title": "How do these impact your current reality?",
+            "description": "Explore how current patterns affect your life and outcomes"
+        },
+        "questionable_assumptions": {
+            "type": "string",
+            "title": "What assumptions could be questioned?",
+            "description": "Challenge underlying assumptions and taken-for-granted beliefs"
+        },
+        "limiting_beliefs": {
+            "type": "string",
+            "title": "What beliefs may no longer serve you?",
+            "description": "Identify beliefs that are holding you back or limiting growth"
+        },
+        "desired_identity": {
+            "type": "string",
+            "title": "Who do you want to become?",
+            "description": "Envision the transformed version of yourself"
+        },
+        "transformed_life": {
+            "type": "string",
+            "title": "What would a transformed life look like?",
+            "description": "Create a vision of life after transformation"
+        },
+        "values_alignment": {
+            "type": "string",
+            "title": "How do your goals align with your deeper values?",
+            "description": "Examine alignment between goals and core values"
+        },
+        "congruence_shifts": {
+            "type": "string",
+            "title": "What shifts are needed for congruence?",
+            "description": "Identify what needs to change to create alignment and congruence"
+        },
+        "transformation_steps": {
+            "type": "string",
+            "title": "What steps will you take toward transformation?",
+            "description": "Define specific actions to support transformation"
+        },
+        "pattern_reinforcement": {
+            "type": "string",
+            "title": "How will you reinforce new patterns?",
+            "description": "Plan how to strengthen and maintain new positive patterns"
+        }
+    },
+    "required": []
+}

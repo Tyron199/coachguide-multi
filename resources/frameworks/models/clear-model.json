@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "clear-model",
+    "name": "CLEAR Model",
+    "description": "The CLEAR Model, developed by Peter Hawkins, emphasizes building trust, exploring the client's world, identifying actions, and reviewing progress. It is widely used for performance and leadership coaching.",
+    "category": "models",
+    "subcategory": "performance-leadership",
+    "bestFor": [
+        "leadership-coaching",
+        "organisational-coaching",
+        "supervision"
+    ],
+    "type": "object",
+    "properties": {
+        "session_objectives": {
+            "type": "string",
+            "title": "What do we want to achieve from this session?",
+            "description": "Define clear objectives for the coaching session"
+        },
+        "session_value": {
+            "type": "string",
+            "title": "What would make this valuable?",
+            "description": "Identify what would make this session valuable for the client"
+        },
+        "current_situation": {
+            "type": "string",
+            "title": "What is happening for you right now?",
+            "description": "Listen to the client's current situation and context"
+        },
+        "feelings_about_situation": {
+            "type": "string",
+            "title": "How do you feel about this situation?",
+            "description": "Explore the client's emotional response to their situation"
+        },
+        "available_options": {
+            "type": "string",
+            "title": "What options do you see?",
+            "description": "Explore different options and possibilities"
+        },
+        "patterns_noticed": {
+            "type": "string",
+            "title": "What patterns do you notice?",
+            "description": "Identify recurring patterns or themes"
+        },
+        "action_steps": {
+            "type": "string",
+            "title": "What steps will you take?",
+            "description": "Define specific action steps to move forward"
+        },
+        "implementation_plan": {
+            "type": "string",
+            "title": "How will you implement them?",
+            "description": "Create a plan for implementing the chosen actions"
+        },
+        "key_learnings": {
+            "type": "string",
+            "title": "What have you learned?",
+            "description": "Reflect on key insights and learnings from the session"
+        },
+        "future_application": {
+            "type": "string",
+            "title": "What will you take forward into future sessions?",
+            "description": "Identify what to carry forward into future coaching sessions"
+        }
+    },
+    "required": []
+}

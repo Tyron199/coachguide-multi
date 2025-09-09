@@ -27,5 +27,10 @@ Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('adm
     Route::get('subscription/manage', [SubscriptionController::class, 'manage'])->name('subscription.manage');
     Route::get('subscription/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
     Route::get('subscription/receipt', [SubscriptionController::class, 'receipt'])->name('subscription.receipt');
+    Route::get('subscription/update-payment-method', [SubscriptionController::class, 'updatePaymentMethod'])->name('subscription.update-payment-method');
+    Route::get('subscription/billing-portal', [SubscriptionController::class, 'billingPortal'])->name('subscription.billing-portal');
+    Route::post('subscription/cancel', [SubscriptionController::class, 'cancel'])->name('subscription.cancel');
+    Route::post('subscription/resume', [SubscriptionController::class, 'resume'])->name('subscription.resume');
+    Route::get('subscription/invoice/{transaction}', [SubscriptionController::class, 'downloadInvoice'])->name('subscription.invoice');
 
 });

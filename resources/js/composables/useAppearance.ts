@@ -129,3 +129,16 @@ export function useAppearance() {
         toggleAppearance,
     };
 }
+
+export function isDarkMode() {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+    //First check local
+    const local = localStorage.getItem('appearance') as Appearance | null
+    if (local && local !== 'system') {
+        return local === 'dark';
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}

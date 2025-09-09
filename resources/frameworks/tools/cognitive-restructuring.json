@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "cognitive-restructuring",
+    "name": "Cognitive Restructuring",
+    "description": "A structured approach to help clients identify, challenge, and reframe limiting beliefs through evidence-based cognitive techniques.",
+    "category": "tools",
+    "subcategory": "cognitive-behavioral",
+    "bestFor": [
+        "executive-coaching",
+        "stress-management",
+        "performance-coaching"
+    ],
+    "type": "object",
+    "properties": {
+        "limiting_belief": {
+            "type": "string",
+            "title": "Identify Limiting Belief",
+            "description": "Record the client's current thought or belief causing difficulty"
+        },
+        "supporting_evidence": {
+            "type": "string",
+            "title": "Evidence Supporting the Belief",
+            "description": "List evidence that supports this belief"
+        },
+        "contradicting_evidence": {
+            "type": "string",
+            "title": "Evidence Contradicting the Belief",
+            "description": "List evidence that contradicts this belief"
+        },
+        "cognitive_distortions": {
+            "type": "string",
+            "title": "Challenge Belief - Identify Cognitive Distortions",
+            "description": "Identify cognitive distortions (e.g., all-or-nothing, catastrophizing)"
+        },
+        "new_belief": {
+            "type": "string",
+            "title": "Create New Belief",
+            "description": "Reframe into a balanced, empowering alternative belief"
+        },
+        "real_world_application": {
+            "type": "string",
+            "title": "Test & Apply",
+            "description": "Note how the new belief influences choices/behaviors in real contexts"
+        },
+        "progress_log": {
+            "type": "string",
+            "title": "Progress Log",
+            "description": "Track shifts in thinking and resilience over time"
+        },
+        "outcomes_insights": {
+            "type": "string",
+            "title": "Outcomes & Insights",
+            "description": "Record observed changes in behavior and mindset"
+        }
+    },
+    "required": []
+}

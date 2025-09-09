@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "mindfulness-grounding",
+    "name": "Mindfulness & Grounding Exercises",
+    "description": "Present moment awareness techniques and grounding exercises to help clients manage stress, anxiety, and overwhelming emotions through mindful attention.",
+    "category": "tools",
+    "subcategory": "cognitive-behavioral",
+    "bestFor": [
+        "stress-management",
+        "anxiety-coaching",
+        "emotional-regulation"
+    ],
+    "type": "object",
+    "properties": {
+        "present_moment_focus": {
+            "type": "string",
+            "title": "Present Moment Awareness",
+            "description": "Guide client to focus on breath, senses, or environment"
+        },
+        "grounding_technique": {
+            "type": "string",
+            "title": "Grounding Technique",
+            "description": "Apply 5-4-3-2-1 sensory method or similar grounding exercise"
+        },
+        "stress_level_before": {
+            "type": "string",
+            "title": "Stress Level Before (1-10)",
+            "description": "Rate stress or anxiety level before the exercise"
+        },
+        "stress_level_after": {
+            "type": "string",
+            "title": "Stress Level After (1-10)",
+            "description": "Rate stress or anxiety level after the exercise"
+        },
+        "insights_observations": {
+            "type": "string",
+            "title": "Insights and Observations",
+            "description": "Record insights, observations, and experiences from the mindfulness practice"
+        },
+        "daily_application": {
+            "type": "string",
+            "title": "Daily Application Plan",
+            "description": "Plan for incorporating mindfulness and grounding into daily routine"
+        },
+        "progress_tracking": {
+            "type": "string",
+            "title": "Progress Log",
+            "description": "Track consistency and effectiveness of mindfulness practice"
+        },
+        "outcomes_insights": {
+            "type": "string",
+            "title": "Outcomes & Insights",
+            "description": "Record overall outcomes and insights from regular mindfulness practice"
+        }
+    },
+    "required": []
+}

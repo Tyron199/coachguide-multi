@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "oskar-model",
+    "name": "OSKAR Model",
+    "description": "The OSKAR Model is a solution-focused coaching approach that emphasizes outcomes, scaling, knowledge, action, and review. It is especially useful in workplace and performance coaching.",
+    "category": "models",
+    "subcategory": "solution-focused",
+    "bestFor": [
+        "life-coaching",
+        "performance-coaching",
+        "short-term-interventions"
+    ],
+    "type": "object",
+    "properties": {
+        "desired_outcome": {
+            "type": "string",
+            "title": "What do you want to achieve?",
+            "description": "Define the desired outcome clearly"
+        },
+        "success_indicators": {
+            "type": "string",
+            "title": "What will be different when you succeed?",
+            "description": "Identify what will change when the outcome is achieved"
+        },
+        "current_scale_position": {
+            "type": "string",
+            "title": "On a scale of 1-10, where are you now?",
+            "description": "Rate current position on a scale towards the desired outcome"
+        },
+        "scale_reasoning": {
+            "type": "string",
+            "title": "What makes it that score and not lower?",
+            "description": "Explore what's already working that prevents a lower score"
+        },
+        "existing_strengths": {
+            "type": "string",
+            "title": "What strengths and resources do you already have?",
+            "description": "Identify current strengths and available resources"
+        },
+        "past_successes": {
+            "type": "string",
+            "title": "What has worked well before?",
+            "description": "Reflect on previous successful approaches and strategies"
+        },
+        "forward_steps": {
+            "type": "string",
+            "title": "What steps will you take to move forward?",
+            "description": "Define specific steps to progress towards the outcome"
+        },
+        "support_needed": {
+            "type": "string",
+            "title": "What support do you need?",
+            "description": "Identify what support or resources are needed"
+        },
+        "progress_made": {
+            "type": "string",
+            "title": "What progress have you made?",
+            "description": "Review and acknowledge progress made so far"
+        },
+        "next_actions": {
+            "type": "string",
+            "title": "What will you do next to continue momentum?",
+            "description": "Plan next actions to maintain and build momentum"
+        }
+    },
+    "required": []
+}

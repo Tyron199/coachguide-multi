@@ -6,9 +6,25 @@ use App\Http\Controllers\Central\HomeController;
 use App\Http\Controllers\Central\RegistrationController;
 use App\Http\Controllers\Central\LoginController;
 use App\Http\Controllers\Central\OathController;
+use Laravel\Paddle\Http\Controllers\WebhookController;
+use Illuminate\Support\Facades\Log;
 
 foreach (config('tenancy.central_domains') as $domain) {
-    Route::domain($domain)->name('central.')->group(function () {
+    Route::domain($domain)->name('central.')->group(function (  ) use ($domain) {
+
+         if (str_contains($domain, 'sharedwithexpose.com')) {
+            Route::post('paddle/webhook', WebhookController::class)
+                ->name('cashier.webhook');
+            Route::post('paddle/test', function () {
+                Log::debug('Paddle webhook received');
+                return 'test';
+            });
+            Route::get('paddle/test', function () {
+                Log::debug('Paddle webhook received');
+                return response()->json(['message' => 'Paddle webhook received']);
+            });
+            return;
+        }
     
 
         Route::get('/', [HomeController::class, 'index'])->name('home');

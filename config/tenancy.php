@@ -18,6 +18,7 @@ return [
      */
     'central_domains' => [
        parse_url(config('app.url'))['host'],
+       'https://nt5rebz8ph.sharedwithexpose.com'
     ],
 
     /**

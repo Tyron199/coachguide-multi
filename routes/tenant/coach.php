@@ -4,6 +4,8 @@ use App\Http\Controllers\Tenant\Coach\CompanyController;
 use App\Http\Controllers\Tenant\Coach\CoachingSessionController;
 use App\Http\Controllers\Tenant\Coach\CoachingNoteController;
 use App\Http\Controllers\Tenant\Coach\CoachingTaskController;
+use App\Http\Controllers\Tenant\Coach\CoachingFrameworkController;
+use App\Http\Controllers\Tenant\Coach\CoachingFrameworkInstanceController;
 use App\Http\Controllers\Tenant\AttachmentController;
 use App\Http\Controllers\Tenant\Coach\ContractController;
 
@@ -48,6 +50,22 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach'])->group(functi
         Route::resource('coaching-tasks', CoachingTaskController::class)->parameters(['coaching-tasks' => 'task']);
         Route::get('coaching-sessions/{session}/tasks', [CoachingTaskController::class, 'sessionTasks'])->name('coaching-sessions.tasks');
         Route::get('clients/{client}/tasks', [CoachingTaskController::class, 'clientTasks'])->name('clients.tasks');
+
+        // Coaching Framework routes
+        Route::get('coaching-frameworks/assign', [CoachingFrameworkController::class, 'showAssignment'])->name('coaching-frameworks.assign');
+        Route::get('coaching-frameworks/{framework}/assign', [CoachingFrameworkController::class, 'showAssignment'])->name('coaching-frameworks.assign-specific');
+        Route::post('coaching-frameworks/assign', [CoachingFrameworkController::class, 'storeAssignment'])->name('coaching-frameworks.store-assignment');
+
+        Route::get('coaching-frameworks', [CoachingFrameworkController::class, 'index'])->name('coaching-frameworks.index');
+        Route::get('coaching-frameworks/models', [CoachingFrameworkController::class, 'models'])->name('coaching-frameworks.models');
+        Route::get('coaching-frameworks/tools', [CoachingFrameworkController::class, 'tools'])->name('coaching-frameworks.tools');
+        Route::get('coaching-frameworks/{framework}', [CoachingFrameworkController::class, 'show'])->name('coaching-frameworks.show');
+
+        // Coaching Framework Instance routes
+        Route::get('coaching-sessions/{session}/frameworks', [CoachingFrameworkInstanceController::class, 'sessionInstances'])->name('coaching-sessions.frameworks');
+        Route::get('coaching-framework-instances/{instance}', [CoachingFrameworkInstanceController::class, 'show'])->name('coaching-framework-instances.show');
+        Route::patch('coaching-framework-instances/{instance}', [CoachingFrameworkInstanceController::class, 'update'])->name('coaching-framework-instances.update');
+        Route::delete('coaching-framework-instances/{instance}', [CoachingFrameworkInstanceController::class, 'destroy'])->name('coaching-framework-instances.destroy');
         
         // Attachment routes
         Route::delete('attachments/{attachment}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');

@@ -58,6 +58,14 @@ class CoachingSession extends Model
     }
 
     /**
+     * Get coaching framework instances used in this session
+     */
+    public function frameworkInstances()
+    {
+        return $this->hasMany(CoachingFrameworkInstance::class, 'session_id');
+    }
+
+    /**
      * Get the planned end time based on scheduled_at + duration
      */
     public function getPlannedEndTimeAttribute()

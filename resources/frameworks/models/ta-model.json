@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "ta-model",
+    "name": "Transactional Analysis Coaching Model",
+    "description": "Transactional Analysis (TA) Coaching uses the Parent-Adult-Child (PAC) model to explore communication patterns, relationships, and personal growth. It helps clients build awareness of their default modes and develop healthier interactions.",
+    "category": "models",
+    "subcategory": "behavioral-communication",
+    "bestFor": [
+        "leadership-coaching",
+        "conflict-resolution",
+        "behavioral-coaching"
+    ],
+    "type": "object",
+    "properties": {
+        "current_ego_state": {
+            "type": "string",
+            "title": "Which state are you in right now (Parent, Adult, Child)?",
+            "description": "Identify current ego state and its characteristics"
+        },
+        "communication_patterns": {
+            "type": "string",
+            "title": "How do these states show up in your communication?",
+            "description": "Explore how different ego states manifest in communication"
+        },
+        "relationship_dynamics": {
+            "type": "string",
+            "title": "What recurring dynamics occur in your relationships?",
+            "description": "Identify patterns in interpersonal relationships"
+        },
+        "response_triggers": {
+            "type": "string",
+            "title": "What triggers these responses?",
+            "description": "Understand what triggers specific ego state responses"
+        },
+        "adult_state_impact": {
+            "type": "string",
+            "title": "How does shifting into the Adult state change your interactions?",
+            "description": "Explore the impact of operating from Adult ego state"
+        },
+        "awareness_choices": {
+            "type": "string",
+            "title": "What choices open up with awareness?",
+            "description": "Identify new options that become available with increased awareness"
+        },
+        "alternative_responses": {
+            "type": "string",
+            "title": "How can you respond differently in challenging situations?",
+            "description": "Develop new ways of responding to difficult situations"
+        },
+        "adult_strategies": {
+            "type": "string",
+            "title": "What Adult-centered strategies can you use?",
+            "description": "Create specific strategies for maintaining Adult ego state"
+        },
+        "sustaining_awareness": {
+            "type": "string",
+            "title": "What will you do to sustain Adult state awareness?",
+            "description": "Plan for maintaining ongoing awareness of ego states"
+        },
+        "progress_monitoring": {
+            "type": "string",
+            "title": "How will you monitor progress?",
+            "description": "Establish methods for tracking progress and development"
+        }
+    },
+    "required": []
+}

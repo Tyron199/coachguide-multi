@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "cbc-model",
+    "name": "Cognitive Behavioural Coaching (CBC) Model",
+    "description": "Cognitive Behavioural Coaching (CBC) adapts CBT techniques into coaching practice. It helps clients identify and challenge unhelpful thoughts, reframe beliefs, and change behaviours to improve performance and wellbeing.",
+    "category": "models",
+    "subcategory": "cognitive-behavioral",
+    "bestFor": [
+        "executive-coaching",
+        "stress-management",
+        "performance-coaching"
+    ],
+    "type": "object",
+    "properties": {
+        "triggering_event": {
+            "type": "string",
+            "title": "What event triggered your response?",
+            "description": "Identify the specific situation or event that triggered the response"
+        },
+        "significant_event": {
+            "type": "string",
+            "title": "What happened recently that stands out?",
+            "description": "Describe recent events that are noteworthy or impactful"
+        },
+        "automatic_thoughts": {
+            "type": "string",
+            "title": "What automatic thoughts came up?",
+            "description": "Capture the immediate, automatic thoughts that arose"
+        },
+        "self_talk": {
+            "type": "string",
+            "title": "What did you say to yourself?",
+            "description": "Record internal dialogue and self-talk"
+        },
+        "emotions_felt": {
+            "type": "string",
+            "title": "What emotions did you feel?",
+            "description": "Identify and name the emotions experienced"
+        },
+        "emotion_intensity": {
+            "type": "string",
+            "title": "How strong were these emotions (0-10)?",
+            "description": "Rate the intensity of emotions on a scale from 0 to 10"
+        },
+        "evidence_analysis": {
+            "type": "string",
+            "title": "What evidence supports or contradicts these thoughts?",
+            "description": "Examine evidence for and against the automatic thoughts"
+        },
+        "alternative_perspective": {
+            "type": "string",
+            "title": "What alternative perspective is possible?",
+            "description": "Explore different ways of viewing the situation"
+        },
+        "new_thought_belief": {
+            "type": "string",
+            "title": "What new thought or belief could you practice?",
+            "description": "Develop more balanced and helpful thoughts or beliefs"
+        },
+        "supporting_action": {
+            "type": "string",
+            "title": "What action would support this?",
+            "description": "Identify actions that would reinforce the new thought pattern"
+        },
+        "application_approach": {
+            "type": "string",
+            "title": "How did you apply this new approach?",
+            "description": "Describe how the new approach was implemented"
+        },
+        "observed_outcomes": {
+            "type": "string",
+            "title": "What outcomes did you observe?",
+            "description": "Reflect on the results and outcomes of applying the new approach"
+        }
+    },
+    "required": []
+}

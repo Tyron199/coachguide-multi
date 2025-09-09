@@ -137,6 +137,11 @@ class User extends Authenticatable
         return $this->hasMany(CoachingSession::class, 'client_id');
     }
 
+    public function upcomingClientSessions()
+    {
+        return $this->clientSessions()->where('scheduled_at', '>', now());
+    }
+
     /**
      * Get coaching sessions where this user is the coach
      */

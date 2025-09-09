@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "grow-model",
+    "name": "GROW Model",
+    "description": "The GROW Model is a foundational coaching framework used to structure coaching conversations. It supports clients in setting clear goals, understanding reality, exploring options, and defining the way forward.",
+    "category": "models",
+    "subcategory": "goal-oriented",
+    "bestFor": [
+        "executive-coaching",
+        "life-coaching",
+        "goal-oriented-sessions"
+    ],
+    "type": "object",
+    "properties": {
+        "goal_achievement": {
+            "type": "string",
+            "title": "What do you want to achieve?",
+            "description": "Define your goal clearly"
+        },
+        "success_definition": {
+            "type": "string",
+            "title": "What will success look like?",
+            "description": "Describe how you'll know when you've achieved it"
+        },
+        "current_position": {
+            "type": "string",
+            "title": "Where are you now in relation to the goal?",
+            "description": "Assess your current reality"
+        },
+        "obstacles": {
+            "type": "string",
+            "title": "What obstacles are in your way?",
+            "description": "Identify challenges and barriers"
+        },
+        "possible_ways_forward": {
+            "type": "string",
+            "title": "What are the possible ways forward?",
+            "description": "Explore different options and approaches"
+        },
+        "resources_strategies": {
+            "type": "string",
+            "title": "What resources or strategies could you use?",
+            "description": "Identify available resources and potential strategies"
+        },
+        "actions_to_take": {
+            "type": "string",
+            "title": "What actions will you take?",
+            "description": "Define specific actions you will take"
+        },
+        "timeline": {
+            "type": "string",
+            "title": "When will you take them?",
+            "description": "Set timelines for your actions"
+        },
+        "accountability": {
+            "type": "string",
+            "title": "How will you stay accountable?",
+            "description": "Define how you will track progress and stay accountable"
+        }
+    },
+    "required": []
+}

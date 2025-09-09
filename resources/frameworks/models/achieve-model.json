@@ -1,0 +1,86 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "achieve-model",
+    "name": "ACHIEVE Model",
+    "description": "The ACHIEVE Model is a comprehensive coaching framework that emphasizes goal achievement through seven stages: Assess, Creative brainstorming, Hone goals, Initiate options, Evaluate options, Validate plan, and Execute.",
+    "category": "models",
+    "subcategory": "goal-oriented",
+    "bestFor": [
+        "executive-coaching",
+        "strategic-goal-coaching"
+    ],
+    "type": "object",
+    "properties": {
+        "assess_current_situation": {
+            "type": "string",
+            "title": "What is happening now?",
+            "description": "Assess the current situation"
+        },
+        "assess_challenges": {
+            "type": "string",
+            "title": "What challenges are you facing?",
+            "description": "Identify current challenges and obstacles"
+        },
+        "creative_options": {
+            "type": "string",
+            "title": "What options are possible?",
+            "description": "Brainstorm possible alternatives and options"
+        },
+        "innovative_ideas": {
+            "type": "string",
+            "title": "What innovative ideas come to mind?",
+            "description": "Generate creative and innovative solutions"
+        },
+        "specific_goals": {
+            "type": "string",
+            "title": "What exactly do you want to achieve?",
+            "description": "Define specific, clear goals"
+        },
+        "goal_importance": {
+            "type": "string",
+            "title": "Why is this goal important to you?",
+            "description": "Explore the significance and motivation behind the goal"
+        },
+        "initial_actions": {
+            "type": "string",
+            "title": "What actions can you start taking?",
+            "description": "Identify initial actionable steps"
+        },
+        "achievable_steps": {
+            "type": "string",
+            "title": "Which steps feel most achievable right now?",
+            "description": "Prioritize the most realistic and achievable actions"
+        },
+        "practical_options": {
+            "type": "string",
+            "title": "Which options are most practical?",
+            "description": "Evaluate the practicality of different options"
+        },
+        "pros_and_cons": {
+            "type": "string",
+            "title": "What are the pros and cons of each?",
+            "description": "Analyze the advantages and disadvantages of each option"
+        },
+        "plan_confidence": {
+            "type": "string",
+            "title": "How confident are you in this plan?",
+            "description": "Assess confidence level in the chosen plan"
+        },
+        "plan_adjustments": {
+            "type": "string",
+            "title": "What adjustments might be necessary?",
+            "description": "Identify potential modifications needed"
+        },
+        "first_steps": {
+            "type": "string",
+            "title": "What specific steps will you take first?",
+            "description": "Define the immediate next actions"
+        },
+        "progress_tracking": {
+            "type": "string",
+            "title": "How will you track progress and accountability?",
+            "description": "Establish methods for monitoring progress and maintaining accountability"
+        }
+    },
+    "required": []
+}

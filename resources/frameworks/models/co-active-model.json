@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "slug": "co-active-model",
+    "name": "Co-Active Coaching Model",
+    "description": "The Co-Active Coaching Model, developed by CTI, emphasizes the whole person and balances four key aspects: Fulfillment, Balance, Process, and the coach-client relationship. It is designed to empower clients through partnership.",
+    "category": "models",
+    "subcategory": "holistic-transformational",
+    "bestFor": [
+        "life-coaching",
+        "transformational-coaching"
+    ],
+    "type": "object",
+    "properties": {
+        "life_meaning": {
+            "type": "string",
+            "title": "What gives your life meaning?",
+            "description": "Explore what brings fulfillment and meaning to life"
+        },
+        "core_values": {
+            "type": "string",
+            "title": "What values are most important to you?",
+            "description": "Identify and clarify core personal values"
+        },
+        "current_perspectives": {
+            "type": "string",
+            "title": "What perspectives are you considering?",
+            "description": "Examine different viewpoints and perspectives"
+        },
+        "available_choices": {
+            "type": "string",
+            "title": "What choices do you have right now?",
+            "description": "Identify current options and choices available"
+        },
+        "present_moment": {
+            "type": "string",
+            "title": "What is happening in the moment?",
+            "description": "Focus on present moment awareness and experience"
+        },
+        "emotional_presence": {
+            "type": "string",
+            "title": "How can you stay present with your emotions?",
+            "description": "Develop capacity to stay present with emotions"
+        },
+        "partnership_approach": {
+            "type": "string",
+            "title": "How can we work together as equal partners?",
+            "description": "Establish a collaborative coaching partnership"
+        },
+        "coaching_needs": {
+            "type": "string",
+            "title": "What do you need from me as your coach?",
+            "description": "Define what support is needed from the coaching relationship"
+        }
+    },
+    "required": []
+}
