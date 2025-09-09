@@ -9,10 +9,8 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Stancl\Tenancy\Contracts\TenantWithDatabase;
-use Stancl\Tenancy\Jobs\TenantAwareJob;
 
-class SyncCoachingSessionJob extends TenantAwareJob implements ShouldQueue
+class SyncCoachingSessionJob implements ShouldQueue
 {
     use Queueable, InteractsWithQueue, SerializesModels;
 
@@ -24,10 +22,9 @@ class SyncCoachingSessionJob extends TenantAwareJob implements ShouldQueue
      */
     public function __construct(
         public CoachingSession $session,
-        public string $action,
-        TenantWithDatabase $tenant
+        public string $action
     ) {
-        $this->initializeTenancy($tenant);
+        // No need to manually handle tenancy - it's automatic with QueueTenancyBootstrapper
     }
 
     /**

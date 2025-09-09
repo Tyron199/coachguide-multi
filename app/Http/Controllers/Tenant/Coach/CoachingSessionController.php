@@ -323,10 +323,17 @@ class CoachingSessionController extends Controller
             }
         }
         
+        // Get user's calendar integrations
+        $calendarIntegrations = auth()->user()->calendarIntegrations()
+            ->select(['provider'])
+            ->get()
+            ->pluck('provider')
+            ->toArray();
+        
         return Inertia::render('Tenant/coach/coaching-sessions/ScheduleSession', [
             'clients' => $clients,
             'preSelectedClientId' => $preSelectedClientId,
-            'hasCalendarIntegration' => auth()->user()->calendarIntegrations()->exists()
+            'calendarIntegrations' => $calendarIntegrations
         ]);
     }
 

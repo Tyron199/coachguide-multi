@@ -23,8 +23,7 @@ class CoachingSessionObserver
             
             SyncCoachingSessionJob::dispatch(
                 $coachingSession,
-                'create',
-                tenant()
+                'create'
             )->delay(now()->addSeconds(10)); // Small delay to ensure transaction is committed
         }
     }
@@ -51,8 +50,7 @@ class CoachingSessionObserver
                 
                 SyncCoachingSessionJob::dispatch(
                     $coachingSession,
-                    'update',
-                    tenant()
+                    'update'
                 )->delay(now()->addSeconds(5));
             }
         }
@@ -71,8 +69,7 @@ class CoachingSessionObserver
             
             SyncCoachingSessionJob::dispatch(
                 $coachingSession,
-                'delete',
-                tenant()
+                'delete'
             )->delay(now()->addSeconds(5));
         }
     }
@@ -90,8 +87,7 @@ class CoachingSessionObserver
             
             SyncCoachingSessionJob::dispatch(
                 $coachingSession,
-                'create',
-                tenant()
+                'create'
             )->delay(now()->addSeconds(10));
         }
     }
@@ -109,8 +105,7 @@ class CoachingSessionObserver
             
             SyncCoachingSessionJob::dispatch(
                 $coachingSession,
-                'delete',
-                tenant()
+                'delete'
             );
         }
     }

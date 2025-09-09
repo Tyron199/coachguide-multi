@@ -116,12 +116,13 @@
                         </div>
 
                         <!-- Calendar Sync Option -->
-                        <div v-if="hasCalendarIntegration" class="flex items-center space-x-2">
+                        <div v-if="calendarIntegrations && calendarIntegrations.length > 0"
+                            class="flex items-center space-x-2">
                             <Checkbox id="sync_to_calendar" :model-value="formData.sync_to_calendar"
                                 @update:model-value="formData.sync_to_calendar = Boolean($event)" />
                             <Label for="sync_to_calendar"
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                Sync to calendar
+                                {{ calendarSyncText }}
                             </Label>
                             <input type="hidden" name="sync_to_calendar"
                                 :value="formData.sync_to_calendar ? '1' : '0'" />
@@ -187,7 +188,7 @@ interface Client {
 interface Props {
     clients: Client[];
     preSelectedClientId?: number | null;
-    hasCalendarIntegration?: boolean;
+    calendarIntegrations?: string[];
 }
 
 const props = defineProps<Props>();
@@ -256,6 +257,31 @@ const computedEndTime = computed(() => {
         });
     } catch {
         return null;
+    }
+});
+
+const calendarSyncText = computed(() => {
+    if (!props.calendarIntegrations || props.calendarIntegrations.length === 0) {
+        return 'Sync to calendar';
+    }
+
+    const providers = props.calendarIntegrations.map(provider => {
+        switch (provider.toLowerCase()) {
+            case 'microsoft':
+                return 'Microsoft';
+            case 'google':
+                return 'Google';
+            default:
+                return provider;
+        }
+    });
+
+    if (providers.length === 1) {
+        return `Sync to my ${providers[0]} calendar`;
+    } else {
+        // Multiple providers
+        const lastProvider = providers.pop();
+        return `Sync to my ${providers.join(', ')} and ${lastProvider} calendars`;
     }
 });
 
