@@ -151,7 +151,6 @@ class CoachingSessionObserver
             Log::debug("Skipping calendar sync - no calendar integrations found", [
                 'session_id' => $coachingSession->id
             ]);
-         
             return false;
         }
 

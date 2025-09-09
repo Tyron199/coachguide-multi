@@ -15,6 +15,11 @@
                             Edit Session
                         </Button>
                         </Link>
+
+                        <Button v-if="can.delete" variant="destructive" @click="handleDeleteSession">
+                            <Trash2 class="mr-2 h-4 w-4" />
+                            Delete Session
+                        </Button>
                     </template>
                 </PageHeader>
 
@@ -72,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import CoachingSessionLayout from '@/layouts/coaching-session/Layout.vue';
@@ -82,8 +87,9 @@ import { Badge } from '@/components/ui/badge';
 import { type BreadcrumbItem, type CoachingSession } from '@/types';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
 import clients from '@/routes/tenant/coach/clients';
-import { Edit } from 'lucide-vue-next';
+import { Edit, Trash2 } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
+import { alertConfirm } from '@/plugins/alert';
 
 const props = defineProps<{
     session: CoachingSession;
@@ -133,4 +139,26 @@ const isSessionInPast = computed(() => {
     if (!props.session.scheduled_at) return false;
     return new Date(props.session.scheduled_at) < new Date();
 });
+
+// Delete session function
+const handleDeleteSession = async () => {
+    const confirmed = await alertConfirm({
+        title: 'Delete Session',
+        description: `Are you sure you want to delete the session with ${props.session.client?.name}? This action cannot be undone.`,
+        confirmText: 'Delete Session',
+        variant: 'destructive'
+    });
+
+    if (confirmed) {
+        router.delete(sessions.destroy(props.session.id).url, {
+            onSuccess: () => {
+                // Redirect to sessions list after successful deletion
+                router.get(sessions.index().url);
+            },
+            onError: (errors) => {
+                console.error('Error deleting session:', errors);
+            }
+        });
+    }
+};
 </script>

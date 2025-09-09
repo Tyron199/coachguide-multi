@@ -176,17 +176,26 @@
                     </div>
 
                     <!-- Form Actions -->
-                    <div class="flex justify-end gap-3 pt-4">
-                        <Link :href="sessions.show(session.id).url">
-                        <Button type="button" variant="outline">
-                            Cancel
+                    <div class="flex justify-between pt-4">
+                        <!-- Delete Button (left side) -->
+                        <Button type="button" variant="destructive" @click="handleDeleteSession">
+                            <Trash2 class="mr-2 h-4 w-4" />
+                            Delete Session
                         </Button>
-                        </Link>
-                        <Button type="submit" :disabled="processing">
-                            <LoaderCircle v-if="processing" class="mr-2 h-4 w-4 animate-spin" />
-                            <SaveIcon class="mr-2 h-4 w-4" />
-                            Update Session
-                        </Button>
+
+                        <!-- Update/Cancel Buttons (right side) -->
+                        <div class="flex gap-3">
+                            <Link :href="sessions.show(session.id).url">
+                            <Button type="button" variant="outline">
+                                Cancel
+                            </Button>
+                            </Link>
+                            <Button type="submit" :disabled="processing">
+                                <LoaderCircle v-if="processing" class="mr-2 h-4 w-4 animate-spin" />
+                                <SaveIcon class="mr-2 h-4 w-4" />
+                                Update Session
+                            </Button>
+                        </div>
                     </div>
                 </Form>
             </div>
@@ -195,7 +204,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Form, Link } from '@inertiajs/vue3';
+import { Head, Form, Link, router } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import CoachingSessionLayout from '@/layouts/coaching-session/Layout.vue';
@@ -214,8 +223,9 @@ import { type BreadcrumbItem, type CoachingSession } from '@/types';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
 
 import CoachingSessionController from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
-import { LoaderCircle, SaveIcon, ChevronDown, Clock, Users, Video, MonitorSpeaker } from 'lucide-vue-next';
+import { LoaderCircle, SaveIcon, ChevronDown, Clock, Users, Video, MonitorSpeaker, Trash2 } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
+import { alertConfirm } from '@/plugins/alert';
 
 const props = defineProps<{
     session: CoachingSession;
@@ -326,4 +336,26 @@ const isSessionInPast = computed(() => {
     if (!props.session.scheduled_at) return false;
     return new Date(props.session.scheduled_at) < new Date();
 });
+
+// Delete session function
+const handleDeleteSession = async () => {
+    const confirmed = await alertConfirm({
+        title: 'Delete Session',
+        description: `Are you sure you want to delete the session with ${props.session.client?.name}? This action cannot be undone.`,
+        confirmText: 'Delete Session',
+        variant: 'destructive'
+    });
+
+    if (confirmed) {
+        router.delete(sessions.destroy(props.session.id).url, {
+            onSuccess: () => {
+                // Redirect to sessions list after successful deletion
+                router.get(sessions.index().url);
+            },
+            onError: (errors) => {
+                console.error('Error deleting session:', errors);
+            }
+        });
+    }
+};
 </script>

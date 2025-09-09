@@ -12,7 +12,7 @@
                     {{ alertState.options?.cancelText }}
                 </AlertDialogCancel>
                 <AlertDialogAction
-                    :class="alertState.options?.variant === 'destructive' ? 'bg-destructive hover:bg-destructive/90' : ''"
+                    :class="alertState.options?.variant === 'destructive' ? 'bg-destructive hover:bg-destructive/90 text-destructive-foreground' : ''"
                     @click="handleConfirm">
                     {{ alertState.options?.confirmText }}
                 </AlertDialogAction>

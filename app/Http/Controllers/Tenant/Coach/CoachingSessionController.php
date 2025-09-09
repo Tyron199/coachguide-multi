@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Coach;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant\CoachingSession;
 use App\Models\Tenant\User;
+use App\Rules\NoSessionOverlap;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -342,10 +343,23 @@ class CoachingSessionController extends Controller
      */
     public function store(Request $request)
     {
+        // Determine coach - if admin, they can schedule for any coach, otherwise it's themselves
+        $coachId = auth()->id();
+
         $request->validate([
             'client_id' => 'required|exists:users,id',
             'scheduled_date' => 'required|date',
-            'scheduled_time' => 'required|date_format:H:i',
+            'scheduled_time' => [
+                'required',
+                'date_format:H:i',
+                new NoSessionOverlap(
+                    $coachId,
+                    $request->scheduled_date,
+                    $request->scheduled_time,
+                    $request->duration ?? 60,
+                    $request->timezone ?? 'UTC'
+                )
+            ],
             'duration' => 'required|integer|min:15|max:480', // 15 minutes to 8 hours
             'session_type' => 'required|in:in_person,online,hybrid',
             'timezone' => 'required|string|timezone',
@@ -363,9 +377,6 @@ class CoachingSessionController extends Controller
         // Calculate the planned end time based on duration
         $endAt = $scheduledAt->copy()->addMinutes((int) $request->duration);
 
-        // Determine coach - if admin, they can schedule for any coach, otherwise it's themselves
-        $coachId = auth()->id();
-        
         // Verify the client is assigned to this coach (unless admin)
         if (auth()->user()->hasRole('coach') && !auth()->user()->hasRole('admin')) {
             $client = User::findOrFail($request->client_id);
@@ -376,7 +387,7 @@ class CoachingSessionController extends Controller
 
         $session = CoachingSession::create([
             'client_id' => $request->client_id,
-            'coach_id' => $coachId,
+            'coach_id' => auth()->id(),
             'scheduled_at' => $scheduledAt,
             'start_at' => $startAt,
             'end_at' => $endAt,
@@ -450,7 +461,18 @@ class CoachingSessionController extends Controller
         
         $request->validate([
             'scheduled_date' => 'required|date',
-            'scheduled_time' => 'required|date_format:H:i',
+            'scheduled_time' => [
+                'required',
+                'date_format:H:i',
+                new NoSessionOverlap(
+                    $coachingSession->coach_id,
+                    $request->scheduled_date,
+                    $request->scheduled_time,
+                    $request->duration ?? $coachingSession->duration,
+                    $request->timezone ?? 'UTC',
+                    $coachingSession->id // Exclude current session from overlap check
+                )
+            ],
             'duration' => 'required|integer|min:15|max:480', // 15 minutes to 8 hours
             'session_type' => 'required|in:in_person,online,hybrid',
             'client_attended' => 'sometimes|boolean',
