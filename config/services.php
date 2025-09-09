@@ -43,7 +43,7 @@ return [
         'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
         'redirect' => env('MICROSOFT_REDIRECT_URI', env('APP_URL') . '/oauth/microsoft/callback'),
         'scopes' => [
-            'calendar' => ['offline_access', 'Calendars.ReadWrite', 'User.Read'],
+            'calendar' => ['offline_access', 'Calendars.ReadWrite', 'OnlineMeetings.ReadWrite', 'User.Read'],
             'auth' => ['User.Read', 'offline_access']
         ]
     ],
@@ -52,7 +52,7 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI', env('APP_URL') . '/oauth/google/callback'),
         'scopes' => [
-            'calendar' => ['openid', 'email', 'profile', 'https://www.googleapis.com/auth/calendar'],
+            'calendar' => ['openid', 'email', 'profile', 'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'],
             'auth' => ['openid', 'email', 'profile']
         ]
     ]

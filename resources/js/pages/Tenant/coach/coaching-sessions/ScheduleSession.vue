@@ -15,7 +15,7 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedClient">{{ selectedClient.name }} ({{ selectedClient.email
-                                            }})</span>
+                                        }})</span>
                                         <span v-else class="text-muted-foreground">Select a client</span>
                                     </SelectValue>
                                 </SelectTrigger>
@@ -30,6 +30,7 @@
                                 </SelectContent>
                             </Select>
                             <input type="hidden" name="client_id" :value="formData.client_id" />
+                            <input type="hidden" name="timezone" :value="formData.timezone" />
                             <InputError :message="errors.client_id" />
                         </div>
 
@@ -182,6 +183,7 @@ const formData = ref({
     scheduled_time: '',
     duration: 60 as number, // Default to 1 hour
     session_type: 'online' as 'in_person' | 'online' | 'hybrid', // Default to online
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // User's timezone
 });
 
 // Check for client_id in URL params and pre-fill if it exists

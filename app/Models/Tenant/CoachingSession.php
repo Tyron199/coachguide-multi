@@ -16,6 +16,7 @@ class CoachingSession extends Model
         'session_type',
         'duration',
         'client_attended',
+        'sync_to_calendar',
     ];
 
     protected $appends = [
@@ -30,6 +31,7 @@ class CoachingSession extends Model
         'end_at' => 'datetime',
         'duration' => 'integer',
         'client_attended' => 'boolean',
+        'sync_to_calendar' => 'boolean',
         'session_type' => CoachingSessionType::class,
     ];
 
@@ -63,6 +65,14 @@ class CoachingSession extends Model
     public function frameworkInstances()
     {
         return $this->hasMany(CoachingFrameworkInstance::class, 'session_id');
+    }
+
+    /**
+     * Get calendar events for this session
+     */
+    public function calendarEvents()
+    {
+        return $this->hasMany(CalendarEvent::class);
     }
 
     /**
@@ -129,5 +139,15 @@ class CoachingSession extends Model
         // Session is active if current time is between start_at and end_at
         return $this->start_at && $this->end_at && 
                $now->between($this->start_at, $this->end_at);
+    }
+
+    /**
+     * Check if this session should be synced to calendars
+     */
+    public function shouldSyncToCalendar(): bool
+    {
+        return $this->sync_to_calendar && 
+               ($this->client->calendarIntegrations()->exists() || 
+                $this->coach->calendarIntegrations()->exists());
     }
 }

@@ -328,13 +328,15 @@ class CoachingSessionController extends Controller
             'scheduled_time' => 'required|date_format:H:i',
             'duration' => 'required|integer|min:15|max:480', // 15 minutes to 8 hours
             'session_type' => 'required|in:in_person,online,hybrid',
+            'timezone' => 'required|string|timezone',
         ]);
 
-        // Combine date and time - Laravel will handle timezone conversion based on app config
+        // Combine date and time in user's timezone, then convert to UTC for storage
         $scheduledAt = \Carbon\Carbon::createFromFormat(
             'Y-m-d H:i', 
-            $request->scheduled_date . ' ' . $request->scheduled_time
-        );
+            $request->scheduled_date . ' ' . $request->scheduled_time,
+            $request->timezone  // Parse in user's timezone
+        )->utc();  // Convert to UTC for storage
         $startAt = $scheduledAt; // The planned start time (same as scheduled)
         
         // Calculate the planned end time based on duration
@@ -430,13 +432,15 @@ class CoachingSessionController extends Controller
             'duration' => 'required|integer|min:15|max:480', // 15 minutes to 8 hours
             'session_type' => 'required|in:in_person,online,hybrid',
             'client_attended' => 'sometimes|boolean',
+            'timezone' => 'required|string|timezone',
         ]);
 
-        // Combine date and time
+        // Combine date and time in user's timezone, then convert to UTC for storage
         $scheduledAt = \Carbon\Carbon::createFromFormat(
             'Y-m-d H:i', 
-            $request->scheduled_date . ' ' . $request->scheduled_time
-        );
+            $request->scheduled_date . ' ' . $request->scheduled_time,
+            $request->timezone  // Parse in user's timezone
+        )->utc();  // Convert to UTC for storage
         $startAt = $scheduledAt; // The planned start time (same as scheduled)
         
         // Calculate the planned end time based on duration

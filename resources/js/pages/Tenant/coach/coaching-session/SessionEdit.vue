@@ -68,6 +68,7 @@
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                                 <input type="hidden" name="duration" :value="formData.duration" />
+                                <input type="hidden" name="timezone" :value="formData.timezone" />
                                 <InputError :message="errors.duration" />
                             </div>
 
@@ -224,6 +225,7 @@ const formData = ref({
     session_type: props.session.session_type,
     duration: props.session.duration || 60,
     client_attended: props.session.client_attended,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // User's timezone
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -243,13 +245,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const formatDateForInput = (dateString: string | undefined) => {
     if (!dateString) return '';
-    return new Date(dateString).toISOString().split('T')[0];
+    const date = new Date(dateString);
+    // Convert to local date for display in the form
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
 };
 
 const formatTimeForInput = (dateString: string | undefined) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toTimeString().slice(0, 5); // Format as HH:MM
+    // Convert to local time for display in the form
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
 };
 
 const selectedDurationName = computed(() => {
