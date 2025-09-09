@@ -29,7 +29,7 @@ Route::middleware([
   
 
 Route::get('/', function () {
-    return Inertia::location(route('tenant.login'));
+    return Inertia::render('Tenant/Welcome')
 })->name('home');
 
 Route::get('dashboard', function () {
