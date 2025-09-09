@@ -13,6 +13,9 @@ class CoachingSessionObserver
      */
     public function created(CoachingSession $coachingSession): void
     {
+        Log::info("CoachingSessionObserver created event", [
+            'session_id' => $coachingSession->id
+        ]);
         if ($this->shouldSync($coachingSession)) {
             Log::info("Dispatching calendar sync job for created session", [
                 'session_id' => $coachingSession->id

@@ -325,7 +325,8 @@ class CoachingSessionController extends Controller
         
         return Inertia::render('Tenant/coach/coaching-sessions/ScheduleSession', [
             'clients' => $clients,
-            'preSelectedClientId' => $preSelectedClientId
+            'preSelectedClientId' => $preSelectedClientId,
+            'hasCalendarIntegration' => auth()->user()->calendarIntegrations()->exists()
         ]);
     }
 
@@ -341,6 +342,7 @@ class CoachingSessionController extends Controller
             'duration' => 'required|integer|min:15|max:480', // 15 minutes to 8 hours
             'session_type' => 'required|in:in_person,online,hybrid',
             'timezone' => 'required|string|timezone',
+            'sync_to_calendar' => 'nullable|boolean',
         ]);
 
         // Combine date and time in user's timezone, then convert to UTC for storage
@@ -374,6 +376,7 @@ class CoachingSessionController extends Controller
             'duration' => $request->duration,
             'session_type' => $request->session_type,
             'client_attended' => true, // Default to true, assuming attendance
+            'sync_to_calendar' => $request->boolean('sync_to_calendar', false),
         ]);
 
         return to_route('tenant.coach.coaching-sessions.show', $session)

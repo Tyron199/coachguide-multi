@@ -15,7 +15,7 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedClient">{{ selectedClient.name }} ({{ selectedClient.email
-                                            }})</span>
+                                        }})</span>
                                         <span v-else class="text-muted-foreground">Select a client</span>
                                     </SelectValue>
                                 </SelectTrigger>
@@ -115,6 +115,18 @@
                             <InputError :message="errors.session_type" />
                         </div>
 
+                        <!-- Calendar Sync Option -->
+                        <div v-if="hasCalendarIntegration" class="flex items-center space-x-2">
+                            <Checkbox id="sync_to_calendar" :model-value="formData.sync_to_calendar"
+                                @update:model-value="formData.sync_to_calendar = Boolean($event)" />
+                            <Label for="sync_to_calendar"
+                                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                Sync to calendar
+                            </Label>
+                            <input type="hidden" name="sync_to_calendar"
+                                :value="formData.sync_to_calendar ? '1' : '0'" />
+                        </div>
+
                         <!-- Computed End Time Display -->
                         <div v-if="computedEndTime" class="p-4 bg-muted rounded-lg">
                             <div class="flex items-center gap-2">
@@ -152,6 +164,7 @@ import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Select,
     SelectContent,
@@ -174,6 +187,7 @@ interface Client {
 interface Props {
     clients: Client[];
     preSelectedClientId?: number | null;
+    hasCalendarIntegration?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -185,6 +199,7 @@ const formData = ref({
     duration: 60 as number, // Default to 1 hour
     session_type: 'online' as 'in_person' | 'online' | 'hybrid', // Default to online
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // User's timezone
+    sync_to_calendar: true, // Default to true if user has calendar integration
 });
 
 // Set up form defaults and handle pre-selected client
