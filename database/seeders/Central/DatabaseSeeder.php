@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
       $tenant =  Tenant::create();
 
-    $tenant->domains()->create(['domain' => 'coachguide-acme.test']);
+        $tenant->domains()->create(['domain' => 'coachguide-acme.test']);
     }
 
 

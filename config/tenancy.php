@@ -51,7 +51,7 @@ return [
          * prefix + tenant_id + suffix.
          */
         'prefix' => 'tenant_',
-        'suffix' => '_' . now()->format('YmdHis'),
+        'suffix' => '_' . now()->timestamp,
 
         /**
          * TenantDatabaseManagers are classes that handle the creation & deletion of tenant databases.
