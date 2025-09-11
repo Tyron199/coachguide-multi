@@ -23,6 +23,12 @@ class CoachingFrameworkInstance extends Model
         'completed_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'progress_percentage',
+        'total_fields',
+        'completed_fields',
+    ];
+
     /**
      * Get the framework this instance is based on
      */

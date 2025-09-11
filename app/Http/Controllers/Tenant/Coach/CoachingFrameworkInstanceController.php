@@ -49,7 +49,7 @@ class CoachingFrameworkInstanceController extends Controller
         // Load relationships
         $instance->load(['framework', 'session.client', 'coach', 'client']);
 
-        return Inertia::render('Tenant/coach/coaching-framework-instances/EditInstance', [
+        return Inertia::render('Tenant/coach/coaching-session/SessionFrameworkInstance', [
             'instance' => $instance,
             'framework' => $instance->framework,
             'session' => $instance->session,
@@ -90,15 +90,20 @@ class CoachingFrameworkInstanceController extends Controller
 
         $instance->update($updateData);
 
-        // Determine redirect based on context
-        if ($instance->session_id) {
-            return to_route('tenant.coach.coaching-sessions.frameworks', $instance->session_id)
-                ->with('success', 'Framework progress saved successfully.');
-        } else {
-            // Fallback - shouldn't happen in normal flow
-            return to_route('tenant.coach.coaching-frameworks.index')
-                ->with('success', 'Framework progress saved successfully.');
+        // Check if this is a form submission (has redirect intent)
+        // If the request came from the form submit button, redirect to frameworks list
+        if ($request->has('redirect_to_list') || (!$request->ajax() && $request->boolean('completed'))) {
+            if ($instance->session_id) {
+                return to_route('tenant.coach.coaching-sessions.frameworks', $instance->session_id)
+                    ->with('success', 'Framework progress saved successfully.');
+            } else {
+                return to_route('tenant.coach.coaching-frameworks.index')
+                    ->with('success', 'Framework progress saved successfully.');
+            }
         }
+
+        // For auto-save and regular updates, stay on the same page
+        return back()->with('success', 'Framework progress saved successfully.');
     }
 
     /**

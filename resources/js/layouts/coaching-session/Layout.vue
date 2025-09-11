@@ -10,7 +10,7 @@
 
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem } from '@/types';
-import { Clock, FileText, CheckSquare } from 'lucide-vue-next';
+import { Clock, FileText, CheckSquare, Layers } from 'lucide-vue-next';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
 import { type CoachingSession } from '@/types';
 
@@ -33,6 +33,11 @@ const sidebarNavItems: NavItem[] = [
         title: 'Tasks',
         href: sessions.tasks(props.session.id),
         icon: CheckSquare,
+    },
+    {
+        title: 'Frameworks',
+        href: sessions.frameworks(props.session.id),
+        icon: Layers,
     }
 ];
 
