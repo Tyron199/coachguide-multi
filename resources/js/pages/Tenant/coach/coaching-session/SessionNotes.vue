@@ -53,7 +53,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     {
         title: `Session #${props.session.session_number} with ${props.session.client?.name}`,
         href: sessions.show(props.session.id).url,
-    }
+    },
     {
         title: 'Notes',
         href: sessions.notes(props.session.id).url,
