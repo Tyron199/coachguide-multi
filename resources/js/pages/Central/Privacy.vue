@@ -179,10 +179,10 @@
     </GuestLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import GuestLayout from '@/layouts/GuestLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { terms, privacy } from '@/routes/central';
+// import { terms, privacy } from '@/routes/central';
 
 
 </script>

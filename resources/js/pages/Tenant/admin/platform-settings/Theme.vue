@@ -190,8 +190,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted } from 'vue'
-import { useForm, Head, router } from '@inertiajs/vue3'
+import { ref, watch } from 'vue'
+import { useForm, Head } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/AppLayout.vue'
 import SettingsLayout from '@/layouts/platform-settings/Layout.vue'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -201,7 +201,7 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Switch } from '@/components/ui/switch'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import ThemeController from '@/actions/App/Http/Controllers/Tenant/Admin/ThemeController'
 import { type BreadcrumbItem } from '@/types'

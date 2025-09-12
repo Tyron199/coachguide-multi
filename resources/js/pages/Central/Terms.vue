@@ -329,7 +329,7 @@
     </GuestLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import GuestLayout from '@/layouts/GuestLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { home } from '@/routes/central';

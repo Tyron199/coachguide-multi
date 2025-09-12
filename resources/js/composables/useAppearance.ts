@@ -44,13 +44,12 @@ const getStoredAppearance = () => {
     return localStorage.getItem('appearance') as Appearance | null;
 };
 
-const getStoredLayout = () => {
-    if (typeof window === 'undefined') {
-        return null;
-    }
-
-    return localStorage.getItem('layout') as Layout | null;
-};
+// const getStoredLayout = () => {
+//     if (typeof window === 'undefined') {
+//         return null;
+//     }
+//     return localStorage.getItem('layout') as Layout | null;
+// };
 
 const handleSystemThemeChange = () => {
     const currentAppearance = getStoredAppearance();

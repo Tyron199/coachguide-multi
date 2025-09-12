@@ -54,7 +54,7 @@ export function useRecaptcha(options: RecaptchaOptions) {
                 'expired-callback': options.expiredCallback,
                 'error-callback': options.errorCallback,
             });
-        } catch (ex) {
+        } catch {
             if (tries > 10) return;
             setTimeout(renderRecaptcha, 250);
         }

@@ -316,7 +316,7 @@
     </GuestLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import Icon from '@/components/Icon.vue';
@@ -329,7 +329,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { register } from '@/routes/central';
 
 
-const props = defineProps({
+defineProps({
     plans: {
         type: Object,
         required: true

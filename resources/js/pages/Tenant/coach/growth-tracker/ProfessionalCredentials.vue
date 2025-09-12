@@ -5,7 +5,8 @@
     <AppLayout :breadcrumbs="breadcrumbs">
         <GrowthTrackerLayout>
             <div class="space-y-6">
-                <PageHeader title="Professional Credentials" description="Manage your professional credentials" :badge="`0 entries`">
+                <PageHeader title="Professional Credentials" description="Manage your professional credentials"
+                    :badge="`0 entries`">
                     <template #actions>
 
                     </template>
@@ -27,8 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
+// import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import GrowthTrackerLayout from '@/layouts/growth-tracker/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';
@@ -42,10 +43,10 @@ interface Props {
     filters: CompanyFilters;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 // Selection state
-const selectedCompanies = ref<number[]>([]);
+// const selectedCompanies = ref<number[]>([]);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

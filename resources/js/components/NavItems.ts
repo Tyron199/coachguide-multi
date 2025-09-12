@@ -1,5 +1,5 @@
 import { type NavItem } from "@/types";
-import { BookOpen, Calendar1Icon, Settings2, Folder, LayoutGrid, Users, UserStar, CreditCard, Hammer, ChartLine } from "lucide-vue-next";
+import { Calendar1Icon, Settings2, LayoutGrid, Users, CreditCard, Hammer, ChartLine } from "lucide-vue-next";
 import { dashboard } from "@/routes/tenant";
 import clients from "@/routes/tenant/coach/clients";
 import coachingSessions from "@/routes/tenant/coach/coaching-sessions";

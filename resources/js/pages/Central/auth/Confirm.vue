@@ -10,7 +10,7 @@ import { Form, Head, usePage } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 import { useSubdomain } from '@/composables/useSubdomain';
 import { submitConfirm } from '@/actions/App/Http/Controllers/Central/RegistrationController';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 
 const page = usePage();
 const registration = page.props.registration as any;

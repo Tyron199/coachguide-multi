@@ -23,16 +23,13 @@
             @update:open="isPreviewOpen = $event" @assign="handleAssignFramework" />
 
         <!-- Assignment Modal -->
-        <AssignFrameworkModal 
-            :is-open="isAssignModalOpen" 
-            :pre-selected-framework="assignmentFramework"
-            @update:is-open="isAssignModalOpen = $event"
-            @success="handleAssignmentSuccess" />
+        <AssignFrameworkModal :is-open="isAssignModalOpen" :pre-selected-framework="assignmentFramework"
+            @update:is-open="isAssignModalOpen = $event" @success="handleAssignmentSuccess" />
     </AppLayout>
 </template>
 
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import CoachingFrameworksLayout from '@/layouts/coaching-frameworks/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';

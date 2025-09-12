@@ -1,13 +1,13 @@
 <script setup lang="ts">
 interface Props {
-    class?: string;
+    className?: string;
 }
 
 defineProps<Props>();
 </script>
 
 <template>
-    <div class="flex min-h-screen w-full flex-col bg-background" :class="class">
+    <div class="flex min-h-screen w-full flex-col bg-background" :class="className">
         <slot />
     </div>
 </template>

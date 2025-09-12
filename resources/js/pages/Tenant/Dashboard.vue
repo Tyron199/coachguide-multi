@@ -19,17 +19,17 @@ import {
     ArrowRight
 } from 'lucide-vue-next';
 
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger
-} from '@/components/ui/alert-dialog';
+// import {
+//     AlertDialog,
+//     AlertDialogAction,
+//     AlertDialogCancel,
+//     AlertDialogContent,
+//     AlertDialogDescription,
+//     AlertDialogFooter,
+//     AlertDialogHeader,
+//     AlertDialogTitle,
+//     AlertDialogTrigger
+// } from '@/components/ui/alert-dialog';
 import { dashboard } from "@/routes/tenant"
 import { show as showCalendarIntegration } from '@/actions/App/Http/Controllers/Tenant/Settings/CalendarIntegrationController';
 import { create as createSession } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
@@ -367,17 +367,17 @@ const getDateLabel = (date: Date) => {
                     <div class="grid gap-4 md:grid-cols-3">
                         <div class="text-center">
                             <div class="text-3xl font-bold text-blue-600">{{ dashboardStats.quickStats.sessionsCompleted
-                            }}</div>
+                                }}</div>
                             <div class="text-sm text-muted-foreground">Sessions Completed</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-green-600">{{ dashboardStats.quickStats.contractsSigned
-                            }}</div>
+                                }}</div>
                             <div class="text-sm text-muted-foreground">New Contracts Signed</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-purple-600">{{ dashboardStats.quickStats.completionRate
-                            }}%</div>
+                                }}%</div>
                             <div class="text-sm text-muted-foreground">Action Completion Rate</div>
                         </div>
                     </div>

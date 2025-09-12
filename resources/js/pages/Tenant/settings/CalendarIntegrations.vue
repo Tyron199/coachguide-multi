@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { Calendar, CheckCircle, ExternalLink } from 'lucide-vue-next';
 import { calendarIntegrations } from '@/routes/tenant';
 import calendarOauth from '@/routes/tenant/calendar/oauth';

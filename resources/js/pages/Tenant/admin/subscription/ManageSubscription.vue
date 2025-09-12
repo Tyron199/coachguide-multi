@@ -57,7 +57,7 @@
                                     <div v-if="lastPayment">
                                         <p class="text-sm font-medium text-muted-foreground">Last payment</p>
                                         <p class="text-sm">{{ formatCurrency(lastPayment.amount, lastPayment.currency)
-                                        }} on
+                                            }} on
                                             {{
                                                 formatDate(lastPayment.date) }}</p>
                                     </div>
@@ -200,9 +200,8 @@
 
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+// import { computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import BillingLayout from '@/layouts/billing/Layout.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -219,12 +218,11 @@ import {
 } from '@/components/ui/table';
 import { BreadcrumbItem } from '@/types';
 import { manage } from '@/actions/App/Http/Controllers/Tenant/Admin/SubscriptionController';
-import { alertConfirm, alertInfo } from '@/plugins/alert';
+import { alertConfirm } from '@/plugins/alert';
 import SubscriptionController from '@/actions/App/Http/Controllers/Tenant/Admin/SubscriptionController';
 import {
     CreditCard,
     Download,
-    ExternalLink,
     XCircle,
     Play,
     AlertCircle,

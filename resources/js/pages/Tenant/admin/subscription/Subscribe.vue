@@ -21,7 +21,7 @@ import SubscriptionPlans from '@/components/SubscriptionPlans.vue';
 import { initializePaddle, Paddle } from '@paddle/paddle-js';
 import { ref, onMounted } from 'vue';
 import { isDarkMode } from '@/composables/useAppearance';
-import { alertError, alertInfo } from '@/plugins/alert';
+import { alertError } from '@/plugins/alert';
 const props = defineProps({
     token: {
         type: String,

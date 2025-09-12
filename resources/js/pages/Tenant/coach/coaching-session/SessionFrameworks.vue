@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import CoachingSessionLayout from '@/layouts/coaching-session/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';
@@ -64,7 +64,7 @@ import AssignFrameworkModal from '@/components/AssignFrameworkModal.vue';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type CoachingSession } from '@/types';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
-import frameworkRoutes from '@/routes/tenant/coach/coaching-frameworks';
+// import frameworkRoutes from '@/routes/tenant/coach/coaching-frameworks';
 import frameworkInstanceRoutes from '@/routes/tenant/coach/coaching-framework-instances';
 import { Plus, Layers } from 'lucide-vue-next';
 import { alertConfirm } from '@/plugins/alert';

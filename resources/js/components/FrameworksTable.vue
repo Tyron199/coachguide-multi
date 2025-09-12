@@ -116,7 +116,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits<{
+defineEmits<{
     assign: [framework: Framework];
     preview: [framework: Framework];
 }>();

@@ -28,7 +28,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
     },
 ];
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const logoForm = useForm({
     logo: null as File | null,

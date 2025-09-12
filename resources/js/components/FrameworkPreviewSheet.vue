@@ -22,7 +22,7 @@
                     <div v-if="framework.subcategory" class="flex items-center gap-2">
                         <Tag class="h-4 w-4 text-muted-foreground" />
                         <span class="text-sm text-foreground font-medium">{{ formatSubcategory(framework.subcategory)
-                            }}</span>
+                        }}</span>
                     </div>
 
                     <!-- Best For -->
@@ -102,7 +102,6 @@
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
     SheetTitle,
 } from '@/components/ui/sheet';
@@ -140,7 +139,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits<{
+defineEmits<{
     'update:open': [value: boolean];
     assign: [framework: Framework];
 }>();

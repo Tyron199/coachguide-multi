@@ -49,7 +49,7 @@ const activeItemStyles = computed(
                                 <Menu class="h-5 w-5" />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" class="w-[300px] p-6">
+                        <SheetContent side="left" class="w-[300px] p-6 bg-sidebar">
                             <SheetTitle class="sr-only">Navigation Menu</SheetTitle>
                             <SheetHeader class="flex justify-start text-left">
                                 <AppLogo w="10" h="auto" class="size-5 fill-current text-black dark:text-white" />

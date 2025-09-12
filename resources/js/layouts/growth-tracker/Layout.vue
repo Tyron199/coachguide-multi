@@ -10,7 +10,7 @@
 
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem } from '@/types';
-import { models as showModels, tools as showTools } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingFrameworkController';
+// import { models as showModels, tools as showTools } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingFrameworkController';
 import {
     NotebookPen,
     GraduationCap,

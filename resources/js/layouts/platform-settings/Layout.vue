@@ -2,8 +2,8 @@
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { appearance, calendarIntegrations } from '@/routes/tenant';
-import avatar from '@/routes/tenant/avatar';
+// import { appearance, calendarIntegrations } from '@/routes/tenant';
+// import avatar from '@/routes/tenant/avatar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { Palette, Image } from 'lucide-vue-next';

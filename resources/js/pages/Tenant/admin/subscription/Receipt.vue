@@ -7,7 +7,7 @@
             <div class="container mx-auto max-w-4xl px-4 md:px-6">
                 <div class="text-center space-y-8">
                     <!-- Success checkmark animation when subscribed -->
-                    <div v-if="subscribed" class="space-y-6">
+                    <div v-if="isSubscribed" class="space-y-6">
                         <div
                             class="mx-auto w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
                             <CheckCircle class="w-12 h-12 text-green-600 dark:text-green-400" />
@@ -74,11 +74,11 @@ interface Props {
     subscribed: boolean;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 const page = usePage();
 
 // Get the current subscription status from the page props (this will be updated by polling)
-const subscribed = computed(() => page.props.subscribed as boolean);
+const isSubscribed = computed(() => page.props.subscribed as boolean);
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -92,10 +92,10 @@ const showFallbackMessage = ref(false);
 let fallbackTimer: ReturnType<typeof setTimeout>;
 
 // Set up polling to check subscription status every second
-const { start, stop } = usePoll(3000, {
+const { stop } = usePoll(3000, {
     only: ['subscribed'], // Only reload the subscribed prop
 }, {
-    autoStart: !subscribed.value // Only start polling if not already subscribed
+    autoStart: !isSubscribed.value // Only start polling if not already subscribed
 });
 
 // Redirect to manage subscription when subscribed
@@ -104,7 +104,7 @@ const redirectToManage = () => {
 };
 
 // Watch for subscription status changes and redirect when subscribed
-watch(subscribed, (newValue) => {
+watch(isSubscribed, (newValue) => {
     if (newValue) {
         // Stop polling once subscribed
         stop();
@@ -116,7 +116,7 @@ watch(subscribed, (newValue) => {
 });
 
 // If already subscribed on initial load, redirect immediately
-if (subscribed.value) {
+if (isSubscribed.value) {
     setTimeout(() => {
         redirectToManage();
     }, 2000);

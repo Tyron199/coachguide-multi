@@ -10,7 +10,7 @@
     <FlashToaster />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import GuestShell from '@/components/GuestShell.vue';
 import GuestHeader from '@/components/GuestHeader.vue';
 import GuestContent from '@/components/GuestContent.vue';
