@@ -52,10 +52,6 @@ const props = defineProps<Props>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Clients',
-        href: clientsRoutes.index().url,
-    },
-    {
         title: 'Companies',
         href: companiesRoutes.index().url,
     },

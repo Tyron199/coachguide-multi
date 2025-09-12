@@ -74,7 +74,7 @@
                                         <textarea :id="fieldKey" :name="`form_data.${fieldKey}`"
                                             :placeholder="fieldSchema.description" :value="formData[fieldKey] || ''"
                                             @input="updateFieldValue(fieldKey, ($event.target as HTMLTextAreaElement).value)"
-                                            @blur="handleFieldBlur(fieldKey)"
+                                            @blur="handleFieldBlur"
                                             class="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y"
                                             :class="{ 'border-destructive': errors[`form_data.${fieldKey}`] }" />
 
@@ -229,8 +229,8 @@ const isFullyCompleted = computed(() => {
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Sessions',
-        href: sessions.index().url,
+        title: props.session.is_past ? 'Past Sessions' : 'Sessions',
+        href: props.session.is_past ? sessions.past().url : sessions.index().url,
     },
     {
         title: `Session #${props.session.session_number} with ${props.session.client?.name}`,
@@ -266,7 +266,7 @@ function updateFieldValue(fieldKey: string, value: string): void {
     formData.value[fieldKey] = value;
 }
 
-async function handleFieldBlur(): Promise<void> {
+async function handleFieldBlur(_e?: FocusEvent): Promise<void> {
     // Auto-save on field blur
     await autoSave();
 }

@@ -23,6 +23,7 @@ class CoachingSession extends Model
         'session_number',
         'formatted_duration',
         'is_active',
+        'is_past',
     ];
 
     protected $casts = [
@@ -139,6 +140,14 @@ class CoachingSession extends Model
         // Session is active if current time is between start_at and end_at
         return $this->start_at && $this->end_at && 
                $now->between($this->start_at, $this->end_at);
+    }
+    
+    /**
+     * Check if its a "past" session
+     */
+    public function getIsPastAttribute()
+    {
+        return $this->end_at && $this->end_at < now();
     }
 
     /**

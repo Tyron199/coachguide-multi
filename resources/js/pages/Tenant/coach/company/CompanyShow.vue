@@ -123,10 +123,6 @@ const props = defineProps<{
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Clients',
-        href: clients.index().url,
-    },
-    {
         title: 'Companies',
         href: companies.index().url,
     },

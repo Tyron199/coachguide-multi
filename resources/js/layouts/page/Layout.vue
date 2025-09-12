@@ -25,8 +25,8 @@ const currentPath = typeof window !== undefined ? window.location.pathname + win
         </div>
         <div class="flex flex-col lg:flex-row lg:space-x-12">
             <aside class="w-full max-w-xl lg:w-64">
-                <div class="flex flex-col mb-4">
-                    <div id="avatar-img" v-if="avatar" class="flex  mb-4">
+                <div class="flex flex-col mb-4 items-center lg:items-start text-center lg:text-left">
+                    <div id="avatar-img" v-if="avatar" class="flex mb-4">
                         <img :src="avatar" :alt="title" class="w-32 h-auto overflow-hidden rounded-lg">
                     </div>
                     <div v-if="title || description">
@@ -40,6 +40,7 @@ const currentPath = typeof window !== undefined ? window.location.pathname + win
                         :key="typeof item.href === 'string' ? item.href : item.href?.url" variant="ghost" :class="[
                             'w-full justify-start',
                             { 'bg-muted': currentPath === (typeof item.href === 'string' ? item.href : item.href?.url) },
+                            item.class,
                         ]" as-child>
                         <Link :href="item.href">
                         <component :is="item.icon" class="mr-2 h-4 w-4" />

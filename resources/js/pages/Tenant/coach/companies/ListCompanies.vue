@@ -51,12 +51,8 @@ const selectedCompanies = ref<number[]>([]);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Clients',
-        href: clients.index().url
-    },
-    {
         title: 'Companies',
         href: companiesRoutes.index().url
-    },
+    }
 ];
 </script>

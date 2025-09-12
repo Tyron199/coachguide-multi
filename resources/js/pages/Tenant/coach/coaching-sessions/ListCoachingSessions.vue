@@ -211,13 +211,23 @@ const handleWeekChanged = (weekStart: Date) => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Sessions',
-        href: coachingSessions.index().url
-    },
-    {
-        title: title.value,
-        href: coachingSessions.index().url
-    },
+
 ];
+
+if (props.filters.view === 'calendar') {
+    breadcrumbs.splice(1, 0, {
+        title: 'Sessions Calendar',
+        href: coachingSessions.calendar().url
+    });
+} else if (props.filters.upcoming) {
+    breadcrumbs.splice(1, 0, {
+        title: 'Upcoming Sessions',
+        href: coachingSessions.index().url
+    });
+} else if (props.filters.upcoming === false) {
+    breadcrumbs.splice(1, 0, {
+        title: 'Past Sessions',
+        href: coachingSessions.past().url
+    });
+}
 </script>

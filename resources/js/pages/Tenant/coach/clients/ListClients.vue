@@ -168,13 +168,18 @@ const handleDeleteSelected = async () => {
 
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Clients',
-        href: clientRoutes.index().url
-    },
-    {
-        title: title.value,
-        href: clientRoutes.index().url
-    },
+
 ];
+
+if (props.filters.archived) {
+    breadcrumbs.splice(1, 0, {
+        title: 'Archived Clients',
+        href: clientRoutes.archived().url
+    });
+} else {
+    breadcrumbs.splice(1, 0, {
+        title: 'Active Clients',
+        href: clientRoutes.index().url
+    });
+}
 </script>

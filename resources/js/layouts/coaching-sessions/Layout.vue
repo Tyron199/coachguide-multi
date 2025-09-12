@@ -26,6 +26,7 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Calendar',
         href: sessions.calendar(),
+        class: 'hidden md:inline-flex',
         icon: Calendar,
     }
 ];

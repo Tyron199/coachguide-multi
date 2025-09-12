@@ -102,10 +102,7 @@ const description = computed(() => {
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Tools & Models',
-        href: frameworkRoutes.index().url
-    },
+
     {
         title: title.value,
         href: getCurrentUrl()

@@ -23,7 +23,7 @@
                         </Button>
 
                         <!-- Schedule Session Button -->
-                        <Link :href="createSession({ query: { client_id: client.id } }).url">
+                        <Link :href="createSession({ query: { client_id: client.id } }).url" v-if="!client.archived">
                         <Button v-if="can.update" variant="outline">
                             <Calendar class="mr-2 h-4 w-4" />
                             Schedule Session
@@ -172,8 +172,8 @@ const props = defineProps<{
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Clients',
-        href: clients.index().url,
+        title: props.client.archived ? 'Archived Clients' : 'Clients',
+        href: props.client.archived ? clients.archived().url : clients.index().url,
     },
     {
         title: props.client.name,
@@ -181,13 +181,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     }
 ];
 
-//If user archived, insert archived clients breadcrumb in index 1
-if (props.client.archived) {
-    breadcrumbs.splice(1, 0, {
-        title: 'Archived Clients',
-        href: clients.archived().url,
-    });
-}
 
 const formatDate = (dateString: string | undefined) => {
     if (!dateString) return null;

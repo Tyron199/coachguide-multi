@@ -140,8 +140,8 @@ const toggleFocusArea = (area: string, checked: boolean) => {
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Clients',
-        href: clients.index().url
+        title: props.client.archived ? 'Archived Clients' : 'Clients',
+        href: props.client.archived ? clients.archived().url : clients.index().url,
     },
     {
         title: props.client.name,

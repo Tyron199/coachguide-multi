@@ -240,8 +240,8 @@ const formData = ref({
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Sessions',
-        href: sessions.index().url
+        title: props.session.is_past ? 'Past Sessions' : 'Sessions',
+        href: props.session.is_past ? sessions.past().url : sessions.index().url
     },
     {
         title: `Session #${props.session.session_number} with ${props.session.client?.name}`,

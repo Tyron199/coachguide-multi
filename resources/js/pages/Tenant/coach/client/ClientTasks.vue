@@ -58,8 +58,8 @@ const props = defineProps<{
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Clients',
-        href: clients.index().url,
+        title: props.client.archived ? 'Archived Clients' : 'Clients',
+        href: props.client.archived ? clients.archived().url : clients.index().url,
     },
     {
         title: props.client.name,
@@ -71,13 +71,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     }
 ];
 
-// If client is archived, insert archived clients breadcrumb
-if (props.client.archived) {
-    breadcrumbs.splice(1, 0, {
-        title: 'Archived Clients',
-        href: clients.archived().url,
-    });
-}
 
 
 </script>

@@ -180,8 +180,8 @@ const breadcrumbs = computed((): BreadcrumbItem[] => {
         // Client context breadcrumbs
         const clientBreadcrumbs: BreadcrumbItem[] = [
             {
-                title: 'Clients',
-                href: clients.index().url,
+                title: props.client.archived ? 'Archived Clients' : 'Clients',
+                href: props.client.archived ? clients.archived().url : clients.index().url,
             },
             {
                 title: props.client.name,
@@ -197,13 +197,7 @@ const breadcrumbs = computed((): BreadcrumbItem[] => {
             }
         ];
 
-        // If client is archived, insert archived clients breadcrumb
-        if (props.client.archived) {
-            clientBreadcrumbs.splice(1, 0, {
-                title: 'Archived Clients',
-                href: clients.archived().url,
-            });
-        }
+
 
         return clientBreadcrumbs;
     }

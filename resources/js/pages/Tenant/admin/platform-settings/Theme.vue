@@ -61,7 +61,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex space-x-4">
+                            <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                                 <Button type="submit" :disabled="selectedTheme === currentTheme || form.processing">
                                     <span v-if="form.processing">Updating...</span>
                                     <span v-else>Apply Theme</span>
@@ -190,7 +190,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import { useForm, Head } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/AppLayout.vue'
 import SettingsLayout from '@/layouts/platform-settings/Layout.vue'

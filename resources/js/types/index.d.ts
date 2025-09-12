@@ -15,6 +15,7 @@ export interface NavItem {
     href: NonNullable<InertiaLinkProps['href']>;
     icon?: LucideIcon;
     isActive?: boolean;
+    class?: string;
     items?: {
         title: string;
         href: NonNullable<InertiaLinkProps['href']>;
@@ -157,6 +158,7 @@ export interface CoachingSession {
     updated_at: string;
     client?: Client;
     coach?: User;
+    is_past: boolean;
 }
 
 export interface CoachingNote {

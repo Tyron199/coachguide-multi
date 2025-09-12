@@ -131,12 +131,12 @@ const breadcrumbs = computed((): BreadcrumbItem[] => {
         // Session context breadcrumbs
         return [
             {
-                title: 'Sessions',
-                href: sessions.index().url,
+                title: props.session.is_past ? 'Past Sessions' : 'Sessions',
+                href: props.session.is_past ? sessions.past().url : sessions.index().url
             },
             {
-                title: `Session ${props.session.session_number}`,
-                href: sessions.show(props.session.id).url,
+                title: `Session #${props.session.session_number} with ${props.session.client?.name}`,
+                href: sessions.show(props.session.id).url
             },
             {
                 title: 'Notes',
@@ -151,8 +151,8 @@ const breadcrumbs = computed((): BreadcrumbItem[] => {
         // Client context breadcrumbs
         const clientBreadcrumbs: BreadcrumbItem[] = [
             {
-                title: 'Clients',
-                href: clients.index().url,
+                title: props.client.archived ? 'Archived Clients' : 'Clients',
+                href: props.client.archived ? clients.archived().url : clients.index().url,
             },
             {
                 title: props.client.name,
@@ -168,13 +168,7 @@ const breadcrumbs = computed((): BreadcrumbItem[] => {
             }
         ];
 
-        // If client is archived, insert archived clients breadcrumb
-        if (props.client.archived) {
-            clientBreadcrumbs.splice(1, 0, {
-                title: 'Archived Clients',
-                href: clients.archived().url,
-            });
-        }
+
 
         return clientBreadcrumbs;
     }
