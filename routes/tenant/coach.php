@@ -6,6 +6,7 @@ use App\Http\Controllers\Tenant\Coach\CoachingNoteController;
 use App\Http\Controllers\Tenant\Coach\CoachingTaskController;
 use App\Http\Controllers\Tenant\Coach\CoachingFrameworkController;
 use App\Http\Controllers\Tenant\Coach\CoachingFrameworkInstanceController;
+use App\Http\Controllers\Tenant\Coach\CustomFrameworkController;
 use App\Http\Controllers\Tenant\AttachmentController;
 use App\Http\Controllers\Tenant\Coach\ContractController;
 use App\Http\Controllers\Tenant\Coach\CoachingLogController;
@@ -71,6 +72,19 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach'])->group(functi
         Route::get('coaching-framework-instances/{instance}', [CoachingFrameworkInstanceController::class, 'show'])->name('coaching-framework-instances.show');
         Route::patch('coaching-framework-instances/{instance}', [CoachingFrameworkInstanceController::class, 'update'])->name('coaching-framework-instances.update');
         Route::delete('coaching-framework-instances/{instance}', [CoachingFrameworkInstanceController::class, 'destroy'])->name('coaching-framework-instances.destroy');
+
+        // Custom Framework routes
+        Route::prefix('custom-frameworks')->name('custom-frameworks.')->group(function () {
+            Route::get('/', [CustomFrameworkController::class, 'index'])->name('index');
+            Route::get('/create', [CustomFrameworkController::class, 'create'])->name('create');
+            Route::post('/', [CustomFrameworkController::class, 'store'])->name('store');
+            Route::get('/{framework}', [CustomFrameworkController::class, 'show'])->name('show');
+            Route::get('/{framework}/edit', [CustomFrameworkController::class, 'edit'])->name('edit');
+            Route::patch('/{framework}', [CustomFrameworkController::class, 'update'])->name('update');
+            Route::patch('/{framework}/publish', [CustomFrameworkController::class, 'publish'])->name('publish');
+            Route::delete('/{framework}', [CustomFrameworkController::class, 'destroy'])->name('destroy');
+            Route::patch('/{framework}/toggle-active', [CustomFrameworkController::class, 'toggleActive'])->name('toggle-active');
+        })->where('framework', '[0-9]+');
         
         // Attachment routes
         Route::delete('attachments/{attachment}', [AttachmentController::class, 'destroy'])->name('attachments.destroy');

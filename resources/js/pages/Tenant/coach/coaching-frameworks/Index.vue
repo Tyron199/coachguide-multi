@@ -8,7 +8,10 @@
                 <PageHeader :title="title" :description="description"
                     :badge="`${formatNumber(props.frameworks.total)} ${props.frameworks.total === 1 ? 'framework' : 'frameworks'}`">
                     <template #actions>
-                        <!-- Future: Add Framework button for custom frameworks -->
+                        <Button variant="outline" @click="goToCustomFrameworks">
+                            <Settings class="mr-2 h-4 w-4" />
+                            My Custom Frameworks
+                        </Button>
                     </template>
                 </PageHeader>
 
@@ -29,17 +32,20 @@
 </template>
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import CoachingFrameworksLayout from '@/layouts/coaching-frameworks/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import FrameworksTable from '@/components/FrameworksTable.vue';
 import FrameworkPreviewSheet from '@/components/FrameworkPreviewSheet.vue';
 import AssignFrameworkModal from '@/components/AssignFrameworkModal.vue';
+import { Button } from '@/components/ui/button';
+import { Settings } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 import { formatNumber } from '@/lib/utils';
 import { type BreadcrumbItem } from '@/types';
 import frameworkRoutes from '@/routes/tenant/coach/coaching-frameworks';
+import * as customFrameworkRoutes from '@/routes/tenant/coach/custom-frameworks';
 
 interface Framework {
     id: number;
@@ -131,5 +137,9 @@ function handleAssignmentSuccess(instance: any): void {
     // The modal component already handles page refresh
     // We could show a success toast here if desired
     console.log('Framework assigned successfully:', instance);
+}
+
+function goToCustomFrameworks(): void {
+    router.visit(customFrameworkRoutes.index().url);
 }
 </script>

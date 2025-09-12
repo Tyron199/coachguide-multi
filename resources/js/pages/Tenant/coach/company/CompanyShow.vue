@@ -106,7 +106,6 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type Company } from '@/types';
 import companies from '@/routes/tenant/coach/companies';
-import clients from '@/routes/tenant/coach/clients';
 import { Edit } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
 

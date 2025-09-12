@@ -37,7 +37,6 @@ import { Button } from '@/components/ui/button';
 import { formatNumber } from '@/lib/utils';
 import { Plus } from 'lucide-vue-next';
 import companiesRoutes from '@/routes/tenant/coach/companies';
-import clients from '@/routes/tenant/coach/clients';
 
 interface Props {
     companies: PaginatedCompanies;

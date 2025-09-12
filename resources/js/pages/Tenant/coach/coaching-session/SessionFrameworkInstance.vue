@@ -266,7 +266,7 @@ function updateFieldValue(fieldKey: string, value: string): void {
     formData.value[fieldKey] = value;
 }
 
-async function handleFieldBlur(_e?: FocusEvent): Promise<void> {
+async function handleFieldBlur(): Promise<void> {
     // Auto-save on field blur
     await autoSave();
 }
