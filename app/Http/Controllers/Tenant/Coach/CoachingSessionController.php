@@ -551,5 +551,41 @@ class CoachingSessionController extends Controller
         }
         
         return back()->with('success', 'Sessions deleted successfully.');
-    }  
+    }
+
+    /**
+     * API: Get upcoming sessions for a specific client
+     */
+    public function getSessionsForClient(Request $request, $clientId)
+    {
+        // Verify the client exists and user has access
+        $client = User::findOrFail($clientId);
+        
+        // Authorization check - coaches can only see their assigned clients' sessions (unless admin)
+        if (auth()->user()->hasRole('coach') && !auth()->user()->hasRole('admin')) {
+            if ($client->assigned_coach_id !== auth()->id()) {
+                abort(403, 'Unauthorized to view this client\'s sessions');
+            }
+        }
+
+        // Get upcoming sessions for this client
+        $sessions = CoachingSession::where('client_id', $clientId)
+            ->where('end_at', '>', now()) // Only upcoming sessions
+            ->orderBy('scheduled_at')
+            ->get()
+            ->map(function($session) {
+                return [
+                    'id' => $session->id,
+                    'scheduled_at' => $session->scheduled_at,
+                    'duration' => $session->duration,
+                    'session_type' => $session->session_type,
+                    'session_number' => $session->session_number,
+                    'formatted_duration' => $session->formatted_duration,
+                ];
+            });
+
+        return response()->json([
+            'sessions' => $sessions,
+        ]);
+    }
 }

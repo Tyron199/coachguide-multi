@@ -21,6 +21,13 @@
         <!-- Framework Preview Sheet -->
         <FrameworkPreviewSheet :framework="selectedFramework" :is-open="isPreviewOpen"
             @update:open="isPreviewOpen = $event" @assign="handleAssignFramework" />
+
+        <!-- Assignment Modal -->
+        <AssignFrameworkModal 
+            :is-open="isAssignModalOpen" 
+            :pre-selected-framework="assignmentFramework"
+            @update:is-open="isAssignModalOpen = $event"
+            @success="handleAssignmentSuccess" />
     </AppLayout>
 </template>
 
@@ -31,6 +38,7 @@ import CoachingFrameworksLayout from '@/layouts/coaching-frameworks/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import FrameworksTable from '@/components/FrameworksTable.vue';
 import FrameworkPreviewSheet from '@/components/FrameworkPreviewSheet.vue';
+import AssignFrameworkModal from '@/components/AssignFrameworkModal.vue';
 import { computed, ref } from 'vue';
 import { formatNumber } from '@/lib/utils';
 import { type BreadcrumbItem } from '@/types';
@@ -79,6 +87,10 @@ const props = defineProps<Props>();
 const selectedFramework = ref<Framework | null>(null);
 const isPreviewOpen = ref(false);
 
+// Assignment modal state
+const isAssignModalOpen = ref(false);
+const assignmentFramework = ref<Framework | null>(null);
+
 // Computed properties
 const title = computed(() => {
     if (props.currentCategory === 'models') return 'Coaching Models';
@@ -111,12 +123,19 @@ function getCurrentUrl(): string {
 }
 
 function handleAssignFramework(framework: Framework): void {
-    // Navigate to assignment page with framework pre-selected
-    router.visit(frameworkRoutes.assignSpecific(framework.id).url);
+    // Open assignment modal with framework pre-selected
+    assignmentFramework.value = framework;
+    isAssignModalOpen.value = true;
 }
 
 function handlePreviewFramework(framework: Framework): void {
     selectedFramework.value = framework;
     isPreviewOpen.value = true;
+}
+
+function handleAssignmentSuccess(instance: any): void {
+    // The modal component already handles page refresh
+    // We could show a success toast here if desired
+    console.log('Framework assigned successfully:', instance);
 }
 </script>

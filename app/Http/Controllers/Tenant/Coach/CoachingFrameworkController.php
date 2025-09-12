@@ -248,4 +248,109 @@ class CoachingFrameworkController extends Controller
         return to_route('tenant.coach.coaching-framework-instances.show', $instance)
             ->with('success', "{$framework->name} assigned to session successfully.");
     }
+
+    /**
+     * API: Get modal data for framework assignment
+     */
+    public function getModalData(Request $request)
+    {
+        // Get frameworks
+        $frameworks = CoachingFramework::select(['id', 'name', 'description', 'category', 'subcategory'])
+            ->orderBy('name')
+            ->get();
+
+        // Get clients based on role
+        if (auth()->user()->hasRole('coach') && !auth()->user()->hasRole('admin')) {
+            // Regular coaches only see their assigned clients
+            $clients = User::role('client')
+                ->where('assigned_coach_id', auth()->id())
+                ->where('archived', false)
+                ->select(['id', 'name', 'email'])
+                ->orderBy('name')
+                ->get();
+        } else {
+            // Admins see all active clients
+            $clients = User::role('client')
+                ->where('archived', false)
+                ->select(['id', 'name', 'email'])
+                ->orderBy('name')
+                ->get();
+        }
+
+        return response()->json([
+            'frameworks' => $frameworks,
+            'clients' => $clients,
+        ]);
+    }
+
+    /**
+     * API: Store framework assignment
+     */
+    public function apiAssign(Request $request)
+    {
+        $request->validate([
+            'framework_id' => 'required|exists:coaching_frameworks,id',
+            'client_id' => 'required|exists:users,id',
+            'session_id' => 'required|exists:coaching_sessions,id',
+        ]);
+
+        $framework = CoachingFramework::findOrFail($request->framework_id);
+        $session = CoachingSession::findOrFail($request->session_id);
+
+        // Authorize access to this session
+        $this->authorize('view', $session->client);
+
+        // Verify the client matches the session
+        if ($session->client_id !== (int)$request->client_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Session does not belong to the selected client.',
+            ], 422);
+        }
+
+        // Check if framework is already assigned to this session
+        $existingInstance = CoachingFrameworkInstance::where([
+            'framework_id' => $framework->id,
+            'session_id' => $session->id,
+        ])->first();
+
+        if ($existingInstance) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This framework is already assigned to this session.',
+            ], 422);
+        }
+
+        // Create framework instance
+        $instance = CoachingFrameworkInstance::create([
+            'framework_id' => $framework->id,
+            'session_id' => $session->id,
+            'coach_id' => auth()->id(),
+            'client_id' => $session->client_id,
+            'schema_snapshot' => $framework->schema,
+            'form_data' => [], // Empty initially
+        ]);
+
+        // Load relationships for response
+        $instance->load(['framework', 'session.client']);
+
+        return response()->json([
+            'success' => true,
+            'message' => "{$framework->name} assigned to session successfully.",
+            'instance' => [
+                'id' => $instance->id,
+                'framework' => [
+                    'id' => $instance->framework->id,
+                    'name' => $instance->framework->name,
+                    'category' => $instance->framework->category,
+                ],
+                'session' => [
+                    'id' => $instance->session->id,
+                    'session_number' => $instance->session->session_number,
+                ],
+                'progress_percentage' => 0,
+                'completed_at' => null,
+            ]
+        ]);
+    }
 }

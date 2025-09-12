@@ -8,12 +8,10 @@
                 <PageHeader title="Session Frameworks" description="Tools and models assigned to this coaching session"
                     :badge="`${instances.length} ${instances.length === 1 ? 'framework' : 'frameworks'}`">
                     <template #actions>
-                        <Link :href="frameworkRoutes.assign({ query: { session_id: session.id } }).url">
-                        <Button>
+                        <Button @click="handleOpenAssignModal">
                             <Plus class="mr-2 h-4 w-4" />
                             Assign Framework
                         </Button>
-                        </Link>
                     </template>
                 </PageHeader>
 
@@ -33,16 +31,29 @@
                         Get started by assigning a coaching tool or model to this session.
                     </p>
                     <div class="mt-6">
-                        <Link :href="frameworkRoutes.assign({ query: { session_id: session.id } }).url">
-                        <Button>
+                        <Button @click="handleOpenAssignModal">
                             <Plus class="mr-2 h-4 w-4" />
                             Assign Framework
                         </Button>
-                        </Link>
                     </div>
                 </div>
             </div>
         </CoachingSessionLayout>
+
+        <!-- Assignment Modal -->
+        <AssignFrameworkModal 
+            :is-open="isAssignModalOpen" 
+            :pre-selected-client="{ id: session.client_id, name: session.client?.name || '', email: session.client?.email || '' }"
+            :pre-selected-session="{ 
+                id: session.id, 
+                session_number: session.session_number, 
+                scheduled_at: session.scheduled_at || '', 
+                duration: session.duration || 60,
+                session_type: session.session_type || 'online',
+                formatted_duration: session.formatted_duration || '' 
+            }"
+            @update:is-open="isAssignModalOpen = $event"
+            @success="handleAssignmentSuccess" />
     </AppLayout>
 </template>
 
@@ -52,6 +63,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import CoachingSessionLayout from '@/layouts/coaching-session/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import FrameworkInstanceCard from '@/components/FrameworkInstanceCard.vue';
+import AssignFrameworkModal from '@/components/AssignFrameworkModal.vue';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem, type CoachingSession } from '@/types';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
@@ -59,6 +71,7 @@ import frameworkRoutes from '@/routes/tenant/coach/coaching-frameworks';
 import frameworkInstanceRoutes from '@/routes/tenant/coach/coaching-framework-instances';
 import { Plus, Layers } from 'lucide-vue-next';
 import { alertConfirm } from '@/plugins/alert';
+import { ref } from 'vue';
 
 interface Framework {
     id: number;
@@ -99,6 +112,9 @@ const props = defineProps<{
     };
 }>();
 
+// Assignment modal state
+const isAssignModalOpen = ref(false);
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Sessions',
@@ -133,5 +149,15 @@ async function handleRemoveInstance(instance: FrameworkInstance): Promise<void> 
             }
         });
     }
+}
+
+// Handle opening assignment modal
+function handleOpenAssignModal(): void {
+    isAssignModalOpen.value = true;
+}
+
+function handleAssignmentSuccess(instance: any): void {
+    // The modal component already handles page refresh
+    console.log('Framework assigned successfully:', instance);
 }
 </script>
