@@ -38,12 +38,13 @@
                             </SelectContent>
                         </Select>
                         <div v-if="errors.framework_id" class="text-sm text-destructive">{{ errors.framework_id }}</div>
-                        
+
                         <!-- Explore Frameworks Link -->
                         <div class="mt-2">
-                            <Link :href="frameworkRoutes.index().url" class="inline-flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors">
-                                <ExternalLink class="mr-1 h-3 w-3" />
-                                Explore all frameworks
+                            <Link :href="frameworkRoutes.index().url"
+                                class="inline-flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors">
+                            <ExternalLink class="mr-1 h-3 w-3" />
+                            Explore all frameworks
                             </Link>
                         </div>
                     </div>

@@ -105,7 +105,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: sessions.index().url,
     },
     {
-        title: `Session with ${props.session.client?.name}`,
+        title: `Session #${props.session.session_number} with ${props.session.client?.name}`,
         href: sessions.show(props.session.id).url,
     }
 ];

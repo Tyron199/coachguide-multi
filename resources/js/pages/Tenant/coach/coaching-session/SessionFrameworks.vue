@@ -41,19 +41,16 @@
         </CoachingSessionLayout>
 
         <!-- Assignment Modal -->
-        <AssignFrameworkModal 
-            :is-open="isAssignModalOpen" 
+        <AssignFrameworkModal :is-open="isAssignModalOpen"
             :pre-selected-client="{ id: session.client_id, name: session.client?.name || '', email: session.client?.email || '' }"
-            :pre-selected-session="{ 
-                id: session.id, 
-                session_number: session.session_number, 
-                scheduled_at: session.scheduled_at || '', 
+            :pre-selected-session="{
+                id: session.id,
+                session_number: session.session_number,
+                scheduled_at: session.scheduled_at || '',
                 duration: session.duration || 60,
                 session_type: session.session_type || 'online',
-                formatted_duration: session.formatted_duration || '' 
-            }"
-            @update:is-open="isAssignModalOpen = $event"
-            @success="handleAssignmentSuccess" />
+                formatted_duration: session.formatted_duration || ''
+            }" @update:is-open="isAssignModalOpen = $event" @success="handleAssignmentSuccess" />
     </AppLayout>
 </template>
 
@@ -121,7 +118,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: sessions.index().url,
     },
     {
-        title: `Session ${props.session.session_number}`,
+        title: `Session #${props.session.session_number} with ${props.session.client?.name}`,
         href: sessions.show(props.session.id).url,
     },
     {
