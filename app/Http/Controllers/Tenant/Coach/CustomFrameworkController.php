@@ -131,6 +131,7 @@ class CustomFrameworkController extends Controller
                 'subcategory' => $framework->subcategory,
                 'best_for' => $framework->best_for,
                 'schema' => $framework->schema,
+                'is_active' => $framework->is_active, // Added missing is_active field
                 'fields' => $this->extractFieldsFromSchema($framework->schema),
             ],
             'existingSubcategories' => $this->getExistingSubcategories(),

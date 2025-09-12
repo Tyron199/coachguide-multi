@@ -7,12 +7,7 @@
             <div class="space-y-6">
                 <PageHeader :title="title" :description="description"
                     :badge="`${formatNumber(props.frameworks.total)} ${props.frameworks.total === 1 ? 'framework' : 'frameworks'}`">
-                    <template #actions>
-                        <Button variant="outline" @click="goToCustomFrameworks">
-                            <Settings class="mr-2 h-4 w-4" />
-                            My Custom Frameworks
-                        </Button>
-                    </template>
+
                 </PageHeader>
 
                 <FrameworksTable :frameworks="props.frameworks" :subcategories="props.subcategories"
