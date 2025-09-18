@@ -12,7 +12,7 @@
 
         <!-- Time badge (primary highlight) -->
         <div class="flex items-center justify-between gap-1 mb-1">
-            <Badge :variant="isSessionWithinHour(session.scheduled_at) ? 'destructive' : 'default'" :class="[
+            <Badge :variant="getTimeBadgeVariant(session.scheduled_at)" :class="[
                 'text-[11px] px-2 py-1 font-semibold',
                 isSessionWithinHour(session.scheduled_at) ? 'animate-pulse' : ''
             ]">
@@ -116,6 +116,17 @@ const formatTime = (dateString: string) => {
         hour: '2-digit',
         minute: '2-digit',
     });
+};
+
+const getTimeBadgeVariant = (scheduledAt: string) => {
+    // Priority order: within hour (warning) > past (outline) > future (default)
+    if (isSessionWithinHour(scheduledAt)) {
+        return 'warning';
+    } else if (isSessionInPast(scheduledAt)) {
+        return 'outline';
+    } else {
+        return 'default';
+    }
 };
 
 const getSessionTypeVariant = (type: string) => {
