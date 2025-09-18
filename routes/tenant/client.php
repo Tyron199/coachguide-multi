@@ -28,6 +28,6 @@ Route::prefix('client')->name('client.')->group(function () {
 });
 
 
-Route::middleware('auth','verified','role:client')->prefix('client')->name('client.')->group(function () {
+Route::middleware(['auth', 'verified', 'two-factor', 'role:client'])->prefix('client')->name('client.')->group(function () {
   
 });

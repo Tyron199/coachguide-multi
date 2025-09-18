@@ -37,6 +37,9 @@ class User extends Authenticatable
         'assigned_coach_id',
         'archived',
         'email_verified_at',
+        'google2fa_secret',
+        'google2fa_enabled',
+        'google2fa_enabled_at',
     ];
 
     /**
@@ -47,6 +50,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'google2fa_secret',
     ];
 
     /**
@@ -62,6 +66,8 @@ class User extends Authenticatable
             'status' => UserRegistrationStatus::class,
             'provider' => OauthProviderType::class,
             'archived' => 'boolean',
+            'google2fa_enabled' => 'boolean',
+            'google2fa_enabled_at' => 'datetime',
         ];
     }
 
@@ -233,6 +239,38 @@ class User extends Authenticatable
         return $value ? tenant_asset($value) : null;
     }
 
+    /**
+     * Check if the user has enabled two-factor authentication
+     */
+    public function hasEnabledTwoFactor(): bool
+    {
+        return $this->google2fa_enabled && !empty($this->google2fa_secret);
+    }
+
+
+    /**
+     * Enable two-factor authentication for the user
+     */
+    public function enableTwoFactor(string $secret): void
+    {
+        $this->update([
+            'google2fa_secret' => $secret,
+            'google2fa_enabled' => true,
+            'google2fa_enabled_at' => now(),
+        ]);
+    }
+
+    /**
+     * Disable two-factor authentication for the user
+     */
+    public function disableTwoFactor(): void
+    {
+        $this->update([
+            'google2fa_secret' => null,
+            'google2fa_enabled' => false,
+            'google2fa_enabled_at' => null,
+        ]);
+    }
 
     //Return model of self formatted for inertia middleware
     public function toInertia()

@@ -9,7 +9,7 @@ use App\Http\Controllers\Tenant\Admin\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth', 'verified','role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'two-factor', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
 
     Route::get('platform-settings/theme', [ThemeController::class, 'index'])->name('platform-settings.theme');

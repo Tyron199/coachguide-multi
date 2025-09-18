@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('coach')->name('coach.')->middleware(['role:coach'])->group(function () {
 
     //Auth grouped
-    Route::middleware(['auth', 'verified'])->group(function () {
+    Route::middleware(['auth', 'verified', 'two-factor'])->group(function () {
 
         Route::get('clients/archived', [ClientController::class, 'archived'])->name('clients.archived');
         Route::get('clients/{client}/objectives', [ClientController::class, 'objectives'])->name('clients.objectives');
@@ -84,6 +84,7 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach'])->group(functi
             Route::patch('/{framework}/publish', [CustomFrameworkController::class, 'publish'])->name('publish');
             Route::delete('/{framework}', [CustomFrameworkController::class, 'destroy'])->name('destroy');
             Route::patch('/{framework}/toggle-active', [CustomFrameworkController::class, 'toggleActive'])->name('toggle-active');
+            Route::patch('/{framework}/duplicate', [CustomFrameworkController::class, 'duplicate'])->name('duplicate');
         })->where('framework', '[0-9]+');
         
         // Attachment routes

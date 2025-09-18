@@ -34,7 +34,7 @@ Route::get('/', function () {
 
 Route::get('dashboard', function () {
     return Inertia::render('Tenant/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'two-factor'])->name('dashboard');
 
 require __DIR__.'/tenant/settings.php';
 require __DIR__.'/tenant/auth.php';

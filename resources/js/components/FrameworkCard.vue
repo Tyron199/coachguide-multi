@@ -61,7 +61,8 @@
             </div>
         </CardContent>
 
-        <CardFooter class="flex gap-3">
+        <!-- System Framework Actions -->
+        <CardFooter v-if="!isCustom" class="flex gap-3">
             <Button variant="outline" class="flex-1" @click="$emit('preview', framework)">
                 <Eye class="mr-2 h-4 w-4" />
                 Preview
@@ -71,6 +72,45 @@
                 Use
             </Button>
         </CardFooter>
+
+        <!-- Custom Framework Actions -->
+        <CardFooter v-else class="flex gap-3">
+            <Button variant="outline" class="flex-1" @click="$emit('preview', framework)">
+                <Eye class="mr-2 h-4 w-4" />
+                Preview
+            </Button>
+            <Button class="flex-1" @click="$emit('assign', framework)" :disabled="!framework.is_active">
+                <Plus class="mr-2 h-4 w-4" />
+                Use
+            </Button>
+            <DropdownMenu>
+                <DropdownMenuTrigger as-child>
+                    <Button variant="ghost" size="icon">
+                        <MoreVertical class="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuItem @click="$emit('edit', framework)">
+                        <Edit class="mr-2 h-4 w-4" />
+                        Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem @click="$emit('duplicate', framework)">
+                        <Copy class="mr-2 h-4 w-4" />
+                        Duplicate
+                    </DropdownMenuItem>
+                    <DropdownMenuItem @click="$emit('toggle-active', framework)">
+                        <Power class="mr-2 h-4 w-4" />
+                        {{ framework.is_active ? 'Deactivate' : 'Activate' }}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem @click="$emit('delete', framework)"
+                        class="text-destructive focus:text-destructive">
+                        <Trash2 class="mr-2 h-4 w-4" />
+                        Delete
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </CardFooter>
     </Card>
 </template>
 
@@ -79,13 +119,25 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
     Tag,
     Target,
     BarChart3,
     CheckCircle,
     FileText,
     Eye,
-    Plus
+    Plus,
+    MoreVertical,
+    Edit,
+    Copy,
+    Power,
+    Trash2
 } from 'lucide-vue-next';
 import { computed } from 'vue';
 
@@ -102,10 +154,12 @@ interface Framework {
     };
     instances_count?: number;
     completed_instances_count?: number;
+    is_active?: boolean; // For custom frameworks
 }
 
 interface Props {
     framework: Framework;
+    isCustom?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -114,6 +168,10 @@ const props = defineProps<Props>();
 defineEmits<{
     preview: [framework: Framework];
     assign: [framework: Framework];
+    edit?: [framework: Framework];
+    duplicate?: [framework: Framework];
+    'toggle-active'?: [framework: Framework];
+    delete?: [framework: Framework];
 }>();
 
 // Computed properties

@@ -5,7 +5,7 @@ use App\Http\Controllers\Tenant\Auth\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
 // Calendar Integration Routes (requires authentication)
-Route::middleware('auth')->prefix('calendar/oauth')->name('calendar.oauth.')->group(function () {
+Route::middleware(['auth', 'two-factor'])->prefix('calendar/oauth')->name('calendar.oauth.')->group(function () {
     Route::get('{provider}/initiate', [CalendarIntegrationController::class, 'initiate'])
         ->where('provider', 'microsoft|google')
         ->name('initiate');
@@ -26,7 +26,7 @@ Route::prefix('social/oauth')->name('social.oauth.')->group(function () {
         ->name('callback');
     
     // Social account linking routes (requires authentication)
-    Route::middleware('auth')->group(function () {
+    Route::middleware(['auth', 'two-factor'])->group(function () {
         Route::get('{provider}/link', [SocialAuthController::class, 'link'])
             ->where('provider', 'microsoft|google')
             ->name('link');

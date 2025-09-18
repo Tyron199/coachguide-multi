@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bacon/bacon-qr-code": "^3.0",
         "barryvdh/laravel-dompdf": "^3.1",
         "fakerphp/faker": "^1.24",
         "inertiajs/inertia-laravel": "^2.0",
@@ -18,7 +19,7 @@
         "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.9",
-        "microsoft/microsoft-graph": "*",
+        "pragmarx/google2fa-laravel": "^2.3",
         "predis/predis": "^3.2",
         "resend/resend-php": "^0.19.1",
         "socialiteproviders/google": "^4.1",
@@ -88,7 +89,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "tbachert/spi": false
         }
     },
     "minimum-stability": "stable",

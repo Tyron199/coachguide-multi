@@ -5,10 +5,11 @@ use App\Http\Controllers\Tenant\Settings\PasswordController;
 use App\Http\Controllers\Tenant\Settings\ProfileController;
 use App\Http\Controllers\Tenant\Settings\CalendarIntegrationController;
 use App\Http\Controllers\Tenant\Settings\ThemeController;
+use App\Http\Controllers\Tenant\Settings\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'two-factor'])->group(function () {
     Route::redirect('settings', '/settings/profile');
 
     Route::get('settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,5 +32,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('settings/calendar-integrations', [CalendarIntegrationController::class, 'show'])->name('calendar-integrations');
     
+    // Two-Factor Authentication settings
+    Route::get('settings/two-factor', [TwoFactorController::class, 'show'])->name('two-factor.show');
+    Route::post('settings/two-factor/enable', [TwoFactorController::class, 'enable'])->name('two-factor.enable');
+    Route::post('settings/two-factor/confirm', [TwoFactorController::class, 'confirm'])->name('two-factor.confirm');
+    Route::delete('settings/two-factor', [TwoFactorController::class, 'disable'])->name('two-factor.disable');
  
 });

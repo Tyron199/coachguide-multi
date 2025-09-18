@@ -54,16 +54,27 @@
         </div>
 
         <!-- Actions -->
-        <div class="flex items-center justify-end gap-4 mt-8 pt-6 border-t">
-            <Button variant="outline" @click="$emit('cancel')">
-                Cancel
-            </Button>
+        <div class="flex items-center justify-between mt-8 pt-6 border-t">
+            <!-- Auto-save status -->
+            <div class="flex items-center text-sm text-muted-foreground">
+                <LoaderCircle v-if="savingDraft" class="mr-2 h-3 w-3 animate-spin" />
+                <CheckCircle v-else-if="justSaved" class="mr-2 h-3 w-3 text-green-600" />
+                <span v-if="savingDraft">Saving...</span>
+                <span v-else-if="justSaved" class="text-green-600">Saved</span>
+            </div>
 
-            <Button @click="publishFramework" :disabled="!canPublish || publishing">
-                <LoaderCircle v-if="publishing" class="mr-2 h-4 w-4 animate-spin" />
-                <CheckCircle v-else class="mr-2 h-4 w-4" />
-                {{ publishing ? 'Publishing...' : 'Publish Framework' }}
-            </Button>
+            <!-- Action buttons -->
+            <div class="flex items-center gap-4">
+                <Button variant="outline" @click="$emit('cancel')" :disabled="savingDraft">
+                    Close
+                </Button>
+
+                <Button @click="publishFramework" :disabled="!canPublish || publishing || savingDraft">
+                    <LoaderCircle v-if="publishing" class="mr-2 h-4 w-4 animate-spin" />
+                    <CheckCircle v-else class="mr-2 h-4 w-4" />
+                    {{ publishing ? 'Publishing...' : 'Publish Framework' }}
+                </Button>
+            </div>
         </div>
     </div>
 </template>
@@ -101,6 +112,7 @@ const emit = defineEmits<{
 const errors = ref<Record<string, string>>({});
 const savingDraft = ref(false);
 const publishing = ref(false);
+const justSaved = ref(false);
 
 const formData = ref({
     name: '',
@@ -147,6 +159,7 @@ async function autoSave(): Promise<void> {
     if (savingDraft.value) return;
 
     savingDraft.value = true;
+    justSaved.value = false;
 
     try {
         if (props.isEditing && props.initialData?.id) {
@@ -157,6 +170,13 @@ async function autoSave(): Promise<void> {
                 {
                     preserveState: true,
                     preserveScroll: true,
+                    onSuccess: () => {
+                        // Show "Saved" state briefly
+                        justSaved.value = true;
+                        setTimeout(() => {
+                            justSaved.value = false;
+                        }, 2000); // Show "Saved" for 2 seconds
+                    },
                     onError: (errors) => {
                         console.error('Auto-save failed:', errors);
                     }

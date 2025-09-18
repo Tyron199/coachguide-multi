@@ -28,7 +28,7 @@
                             :current-direction="props.filters.sort_direction" @sort="handleSort" />
                         <SortableTableHead label="Type" sort-key="session_type" :current-sort="props.filters.sort_by"
                             :current-direction="props.filters.sort_direction" @sort="handleSort" />
-                        <SortableTableHead label="Attended" sort-key="client_attended"
+                        <SortableTableHead v-if="showAttendanceColumn" label="Attended" sort-key="client_attended"
                             :current-sort="props.filters.sort_by" :current-direction="props.filters.sort_direction"
                             @sort="handleSort" />
                     </TableRow>
@@ -69,8 +69,8 @@
                                 {{ formatSessionType(session.session_type) }}
                             </Badge>
                         </TableCell>
-                        <TableCell>
-                            <Badge
+                        <TableCell v-if="showAttendanceColumn">
+                            <Badge v-if="isSessionInPast(session.scheduled_at)"
                                 :variant="session.client_attended === null ? 'secondary' : session.client_attended ? 'default' : 'destructive'">
                                 {{ session.client_attended === null ? 'Pending' : session.client_attended ? 'Attended' :
                                     'No Show' }}
@@ -148,7 +148,8 @@
                             </Badge>
                         </div>
 
-                        <div class="flex items-center justify-between gap-4">
+                        <div v-if="showAttendanceColumn && isSessionInPast(session.scheduled_at)"
+                            class="flex items-center justify-between gap-4">
                             <span class="text-muted-foreground">Attended</span>
                             <Badge
                                 :variant="session.client_attended === null ? 'secondary' : session.client_attended ? 'default' : 'destructive'">
@@ -285,9 +286,10 @@ const isIndeterminate = computed(() => {
 
 // Helper function to get correct colspan
 const getColspan = () => {
-    let colspan = 6;
+    let colspan = 6; // Base columns: Session #, Client, Scheduled, Duration, Type
     if (props.canSeeCoachColumn) colspan += 1;
     if (props.selectable) colspan += 1;
+    if (showAttendanceColumn.value) colspan += 1; // Add attendance column if not viewing upcoming sessions
     return colspan;
 };
 
@@ -331,6 +333,17 @@ const getSessionTypeVariant = (type: string) => {
             return 'secondary';
     }
 };
+
+const isSessionInPast = (scheduledAt: string) => {
+    const sessionDate = new Date(scheduledAt);
+    const now = new Date();
+    return sessionDate < now;
+};
+
+const showAttendanceColumn = computed(() => {
+    // Don't show attendance column if we're specifically viewing upcoming sessions
+    return !props.filters.upcoming;
+});
 
 
 

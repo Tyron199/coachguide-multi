@@ -27,6 +27,10 @@
                                         <Edit class="mr-2 h-4 w-4" />
                                         Edit Framework
                                     </DropdownMenuItem>
+                                    <DropdownMenuItem @click="duplicateFramework">
+                                        <Copy class="mr-2 h-4 w-4" />
+                                        Duplicate
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem @click="assignFramework">
                                         <Plus class="mr-2 h-4 w-4" />
                                         Assign to Session
@@ -225,6 +229,7 @@ import {
     Settings,
     ChevronDown,
     Edit,
+    Copy,
     Plus,
     Power,
     Trash2
@@ -276,6 +281,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 // Methods
 function editFramework(): void {
     router.visit(customFrameworkRoutes.edit(props.framework.id).url);
+}
+
+function duplicateFramework(): void {
+    router.patch(customFrameworkRoutes.duplicate(props.framework.id).url, {}, {
+        preserveScroll: true,
+    });
 }
 
 function assignFramework(): void {

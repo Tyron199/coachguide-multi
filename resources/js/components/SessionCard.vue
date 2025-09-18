@@ -10,11 +10,14 @@
             class="block p-2 rounded border hover:bg-accent/50 transition-colors group bg-background text-xs"
             :class="{ 'border-primary bg-primary/10': session.is_active }">
 
-        <!-- Time and type -->
+        <!-- Time badge (primary highlight) -->
         <div class="flex items-center justify-between gap-1 mb-1">
-            <div class="font-semibold text-foreground">
+            <Badge :variant="isSessionWithinHour(session.scheduled_at) ? 'destructive' : 'default'" :class="[
+                'text-[11px] px-2 py-1 font-semibold',
+                isSessionWithinHour(session.scheduled_at) ? 'animate-pulse' : ''
+            ]">
                 {{ formatTime(session.scheduled_at) }}
-            </div>
+            </Badge>
             <div class="flex items-center gap-1">
                 <Badge v-if="session.is_active" variant="default" class="text-[10px] px-1 py-0 animate-pulse">
                     LIVE
@@ -40,11 +43,14 @@
             {{ session.coach.name }}
         </div>
 
-        <!-- Bottom row: Attendance and meeting link -->
+        <!-- Bottom row: Attendance (only for past sessions) and meeting link -->
         <div class="flex items-center justify-between gap-1">
-            <Badge :variant="getAttendanceVariant(session.client_attended)" class="text-[10px] px-1 py-0">
-                {{ getAttendanceShort(session.client_attended) }}
-            </Badge>
+            <div>
+                <Badge v-if="isSessionInPast(session.scheduled_at)"
+                    :variant="getAttendanceVariant(session.client_attended)" class="text-[10px] px-1 py-0">
+                    {{ getAttendanceShort(session.client_attended) }}
+                </Badge>
+            </div>
 
             <Button variant="ghost" size="sm" class="h-4 px-1 text-[10px] text-muted-foreground hover:text-foreground"
                 disabled>
@@ -150,5 +156,20 @@ const getSessionTypeShort = (type: string) => {
 const getAttendanceShort = (attended: boolean | null) => {
     if (attended === null) return 'No Show';
     return attended ? 'Attended' : 'No Show';
+};
+
+const isSessionInPast = (scheduledAt: string) => {
+    const sessionDate = new Date(scheduledAt);
+    const now = new Date();
+    return sessionDate < now;
+};
+
+const isSessionWithinHour = (scheduledAt: string) => {
+    const sessionDate = new Date(scheduledAt);
+    const now = new Date();
+    const oneHourFromNow = new Date(now.getTime() + (60 * 60 * 1000)); // Add 1 hour in milliseconds
+
+    // Session is within the next hour if it's after now and before one hour from now
+    return sessionDate >= now && sessionDate <= oneHourFromNow;
 };
 </script>

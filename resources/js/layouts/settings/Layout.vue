@@ -6,9 +6,10 @@ import { appearance, calendarIntegrations } from '@/routes/tenant';
 import avatar from '@/routes/tenant/avatar';
 import { edit as editPassword } from '@/routes/tenant/password';
 import { edit } from '@/routes/tenant/profile';
+import { show as twoFactor } from '@/actions/App/Http/Controllers/Tenant/Settings/TwoFactorController';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { User, Lock, Sun, Calendar } from 'lucide-vue-next';
+import { User, Lock, Sun, Calendar, Shield } from 'lucide-vue-next';
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -25,6 +26,11 @@ const sidebarNavItems: NavItem[] = [
         title: 'Password',
         href: editPassword(),
         icon: Lock,
+    },
+    {
+        title: '2FA',
+        href: twoFactor(),
+        icon: Shield,
     },
     {
         title: 'Calendar',

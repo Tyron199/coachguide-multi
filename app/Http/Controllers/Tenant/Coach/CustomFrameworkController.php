@@ -19,6 +19,12 @@ class CustomFrameworkController extends Controller
     {
         $frameworks = CoachingFramework::userCreated()
             ->where('created_by_coach_id', auth()->id())
+            ->withCount([
+                'instances',
+                'instances as completed_instances_count' => function($query) {
+                    $query->whereNotNull('completed_at');
+                }
+            ])
             ->with('instances')
             ->orderBy('created_at', 'desc')
             ->get()
@@ -31,9 +37,12 @@ class CustomFrameworkController extends Controller
                     'category' => $framework->category,
                     'subcategory' => $framework->subcategory,
                     'best_for' => $framework->best_for,
+                    'schema' => $framework->schema,
                     'is_active' => $framework->is_active,
                     'usage_count' => $framework->usage_count,
                     'completed_count' => $framework->completed_count,
+                    'instances_count' => $framework->instances_count,
+                    'completed_instances_count' => $framework->completed_instances_count,
                     'created_at' => $framework->created_at,
                     'updated_at' => $framework->updated_at,
                 ];
@@ -233,11 +242,38 @@ class CustomFrameworkController extends Controller
 
         $status = $framework->is_active ? 'activated' : 'deactivated';
         
-        return response()->json([
-            'success' => true,
-            'message' => "Framework {$status} successfully.",
-            'is_active' => $framework->is_active
+        return back()->with('success', "Framework {$status} successfully.");
+    }
+
+    /**
+     * Duplicate a custom framework
+     */
+    public function duplicate(CoachingFramework $framework)
+    {
+        // Ensure user can only duplicate their own custom frameworks
+        if ($framework->created_by_coach_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Extract fields from the original framework's schema
+        $originalFields = $this->extractFieldsFromSchema($framework->schema);
+
+        // Create the duplicated framework
+        $duplicatedFramework = CoachingFramework::create([
+            'slug' => $this->generateUniqueSlug($framework->name . ' (Copy)'),
+            'name' => $framework->name . ' (Copy)',
+            'description' => $framework->description,
+            'category' => $framework->category,
+            'subcategory' => $framework->subcategory,
+            'best_for' => $framework->best_for,
+            'schema' => $this->buildSchema($originalFields),
+            'is_system' => false,
+            'created_by_coach_id' => auth()->id(),
+            'is_active' => false, // Start as inactive like new frameworks
         ]);
+
+        return redirect()->route('tenant.coach.custom-frameworks.edit', $duplicatedFramework->id)
+            ->with('success', 'Framework duplicated successfully! You can now customize your copy.');
     }
 
     /**

@@ -149,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -231,4 +231,20 @@ function removeTag(tag: string): void {
         props.modelValue.best_for.splice(index, 1);
     }
 }
+
+// Initialize subcategory selection on mount
+onMounted(() => {
+    // If there's an existing subcategory, set the dropdown to that value
+    if (props.modelValue.subcategory) {
+        // Check if the subcategory exists in the existing options
+        if (props.existingSubcategories.includes(props.modelValue.subcategory)) {
+            selectedSubcategory.value = props.modelValue.subcategory;
+            showCustomSubcategory.value = false;
+        } else {
+            // It's a custom subcategory
+            selectedSubcategory.value = 'custom';
+            showCustomSubcategory.value = true;
+        }
+    }
+});
 </script>

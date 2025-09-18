@@ -34,6 +34,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = $request->user();
+
+        // Check if user has 2FA enabled
+        if ($user && $user->hasEnabledTwoFactor()) {
+            // Clear any existing 2FA verification from previous sessions
+            $request->session()->forget('2fa_verified');
+            
+            // Redirect to 2FA challenge
+            return redirect()->route('tenant.two-factor.challenge');
+        }
+
         return redirect()->intended(route('tenant.dashboard', absolute: false));
     }
 
