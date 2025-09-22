@@ -106,11 +106,41 @@ class AdminController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'phone' => 'nullable|string|max:255',
             'send_invitation' => 'nullable|boolean',
         ]);
 
+        // Check if user with this email already exists
+        $existingUser = User::where('email', $request->email)->first();
+        
+        if ($existingUser) {
+            // If user already has admin role, return error
+            if ($existingUser->hasRole(UserRole::ADMIN)) {
+                return back()->withErrors([
+                    'email' => 'An administrator with this email address already exists.'
+                ])->withInput();
+            }
+            
+            // If user exists but doesn't have admin role, add the admin role
+            $existingUser->assignRole(UserRole::ADMIN);
+            
+            // Update other fields if provided
+            $existingUser->update([
+                'name' => $request->name,
+                'phone' => $request->phone ?: $existingUser->phone,
+            ]);
+            
+            // Send invitation email if requested
+            if ($request->boolean('send_invitation')) {
+                $existingUser->notify(new SendAdminInvitation($existingUser));
+            }
+            
+            return to_route('tenant.admin.administrators.show', $existingUser)
+                ->with('success', 'Administrator role added to existing user successfully.');
+        }
+        
+        // If user doesn't exist, create new user
         $admin = User::create([
             'name' => $request->name,
             'email' => $request->email,

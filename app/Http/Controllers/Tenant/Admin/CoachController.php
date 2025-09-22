@@ -109,11 +109,41 @@ class CoachController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'phone' => 'nullable|string|max:255',
             'send_invitation' => 'nullable|boolean',
         ]);
 
+        // Check if user with this email already exists
+        $existingUser = User::where('email', $request->email)->first();
+        
+        if ($existingUser) {
+            // If user already has coach role, return error
+            if ($existingUser->hasRole(UserRole::COACH)) {
+                return back()->withErrors([
+                    'email' => 'A coach with this email address already exists.'
+                ])->withInput();
+            }
+            
+            // If user exists but doesn't have coach role, add the coach role
+            $existingUser->assignRole(UserRole::COACH);
+            
+            // Update other fields if provided
+            $existingUser->update([
+                'name' => $request->name,
+                'phone' => $request->phone ?: $existingUser->phone,
+            ]);
+            
+            // Send invitation email if requested
+            if ($request->boolean('send_invitation')) {
+                $existingUser->notify(new SendCoachInvitation($existingUser));
+            }
+            
+            return to_route('tenant.admin.coaches.show', $existingUser)
+                ->with('success', 'Coach role added to existing user successfully.');
+        }
+        
+        // If user doesn't exist, create new user
         $coach = User::create([
             'name' => $request->name,
             'email' => $request->email,
