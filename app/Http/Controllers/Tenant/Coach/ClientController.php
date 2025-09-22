@@ -190,13 +190,24 @@ class ClientController extends Controller
         // Authorize client creation
         $this->authorize('create', User::class);
 
-        $request->validate([
+        // Dynamic validation rules based on user role
+        $validationRules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'new_company_name' => 'required_if:company_id,new|nullable|string|max:255|unique:companies,name',
             'company_id' => 'nullable|exists:companies,id',
-            'assigned_coach_id' => 'nullable|exists:users,id',
             'send_invitation' => 'nullable|boolean',
+        ];
+        
+        // If user is admin-only (not a coach), they must select a coach
+        if (auth()->user()->hasRole('admin') && !auth()->user()->hasRole('coach')) {
+            $validationRules['assigned_coach_id'] = 'required|exists:users,id';
+        } else {
+            $validationRules['assigned_coach_id'] = 'nullable|exists:users,id';
+        }
+        
+        $request->validate($validationRules, [
+            'assigned_coach_id.required' => 'As an administrator, you must select a coach to assign this client to.',
         ]);
 
         //So if new company name then we need to create a new company.
@@ -209,7 +220,20 @@ class ClientController extends Controller
         }
 
         // Determine coach assignment
-        $assignedCoachId = $request->assigned_coach_id ?? auth()->id();
+        $assignedCoachId = $request->assigned_coach_id;
+        
+        // If no coach is assigned, handle auto-assignment logic
+        if (!$assignedCoachId) {
+            // If the current user is a coach, auto-assign to themselves
+            if (auth()->user()->hasRole('coach')) {
+                $assignedCoachId = auth()->id();
+            } else {
+                // If the current user is admin-only (not a coach), they must select a coach
+                return back()->withErrors([
+                    'assigned_coach_id' => 'As an administrator, you must select a coach to assign this client to.'
+                ])->withInput();
+            }
+        }
         
         $client = User::create([
             'name' => $request->name,

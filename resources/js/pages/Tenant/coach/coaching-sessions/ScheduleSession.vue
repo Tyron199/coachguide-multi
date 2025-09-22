@@ -15,7 +15,7 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedClient">{{ selectedClient.name }} ({{ selectedClient.email
-                                            }})</span>
+                                        }})</span>
                                         <span v-else class="text-muted-foreground">Select a client</span>
                                     </SelectValue>
                                 </SelectTrigger>
@@ -32,6 +32,15 @@
                             <input type="hidden" name="client_id" :value="formData.client_id" />
                             <input type="hidden" name="timezone" :value="formData.timezone" />
                             <InputError :message="errors.client_id" />
+                        </div>
+
+                        <!-- Coach Assignment Info -->
+                        <div v-if="assignedCoach" class="p-4 bg-muted rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <Users class="h-4 w-4 text-muted-foreground" />
+                                <span class="text-sm font-medium">Session will be assigned to:</span>
+                                <span class="text-sm text-muted-foreground">{{ assignedCoach.name }}</span>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -183,10 +192,18 @@ interface Client {
     id: number;
     name: string;
     email: string;
+    assigned_coach_id?: number;
+}
+
+interface Coach {
+    id: number;
+    name: string;
+    email: string;
 }
 
 interface Props {
     clients: Client[];
+    coaches: Coach[];
     preSelectedClientId?: number | null;
     calendarIntegrations?: string[];
 }
@@ -227,6 +244,11 @@ onMounted(() => {
 const selectedClient = computed(() => {
     if (formData.value.client_id === null) return null;
     return props.clients.find(c => c.id === Number(formData.value.client_id)) || null;
+});
+
+const assignedCoach = computed(() => {
+    if (!selectedClient.value?.assigned_coach_id) return null;
+    return props.coaches.find(c => c.id === selectedClient.value.assigned_coach_id) || null;
 });
 
 const selectedSessionType = computed(() => {

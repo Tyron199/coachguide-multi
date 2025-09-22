@@ -26,7 +26,8 @@ const isCoach = user.roles.includes('coach');
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain title="Coach" :items="mainNavItems" v-if="isCoach" />
+            <NavMain title="Coach" :items="mainNavItems" v-if="isCoach || isAdmin
+            " />
             <NavMain title="Admin" :items="adminNavItems" v-if="isAdmin" />
         </SidebarContent>
 

@@ -19,6 +19,16 @@ export interface FileIconInfo {
     color: string;
 }
 
+// Format date utility function
+export function formatDate(dateString: string | Date): string {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+    });
+
+}
+
 // Get appropriate icon and color for a file based on extension and MIME type
 export function getFileIcon(fileName: string, mimeType?: string): FileIconInfo {
     const extension = fileName.toLowerCase().split('.').pop() || '';

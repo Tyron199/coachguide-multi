@@ -222,3 +222,60 @@ export interface Attachment {
     created_at: string;
     updated_at: string;
 }
+
+export interface Coach {
+    id: number;
+    name: string;
+    email: string;
+    phone?: string;
+    assigned_clients_count: number;
+    archived: boolean;
+    status: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface PaginatedCoaches {
+    data: Coach[];
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number;
+    to: number;
+}
+
+export interface CoachFilters {
+    search?: string;
+    archived: boolean;
+    sort_by?: string;
+    sort_direction?: string;
+}
+
+export interface Administrator {
+    id: number;
+    name: string;
+    email: string;
+    phone?: string;
+    archived: boolean;
+    status: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface PaginatedAdministrators {
+    data: Administrator[];
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number;
+    to: number;
+}
+
+export interface AdministratorFilters {
+    search?: string;
+    archived: boolean;
+    sort_by?: string;
+    sort_direction?: string;
+}

@@ -71,12 +71,14 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedCoach">{{ selectedCoach.name }}</span>
-                                        <span v-else class="text-muted-foreground">Auto-assign to me</span>
+                                        <span v-else-if="userIsCoach" class="text-muted-foreground">Auto-assign to
+                                            me</span>
+                                        <span v-else class="text-muted-foreground">Select a coach</span>
                                     </SelectValue>
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="null">Auto-assign to me</SelectItem>
-                                    <SelectSeparator />
+                                    <SelectItem value="null" v-if="userIsCoach">Auto-assign to me</SelectItem>
+                                    <SelectSeparator v-if="userIsCoach" />
                                     <SelectItem v-for="coach in props.coaches" :key="coach.id"
                                         :value="coach.id.toString()">
                                         {{ coach.name }}
@@ -118,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Form, Link } from '@inertiajs/vue3';
+import { Head, Form, Link, usePage } from '@inertiajs/vue3';
 import { ref, computed, onMounted } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ClientsLayout from '@/layouts/clients/Layout.vue';
@@ -148,6 +150,13 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const page = usePage();
+
+// Check if current user is a coach (not just admin)
+const userIsCoach = computed(() => {
+    const userRoles = (page.props.auth?.user as any)?.roles || [];
+    return userRoles.includes('coach');
+});
 
 const formData = ref({
     company_id: null as number | null,

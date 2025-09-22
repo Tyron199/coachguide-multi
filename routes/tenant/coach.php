@@ -19,7 +19,7 @@ use App\Http\Controllers\Tenant\Coach\ProfessionalCredentialController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('coach')->name('coach.')->middleware(['role:coach'])->group(function () {
+Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(function () {
 
     //Auth grouped
     Route::middleware(['auth', 'verified', 'two-factor'])->group(function () {

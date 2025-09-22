@@ -13,8 +13,8 @@ class CompanyPolicy
      */
     public function viewAny(User $user): bool
     {
-        // Only coaches can view companies (admins who coach will also have coach role)
-        return $user->hasRole('coach');
+        // Coaches and admins can view companies
+        return $user->hasRole(['coach', 'admin']);
     }
 
     /**

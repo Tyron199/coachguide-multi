@@ -10,7 +10,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use App\Models\Tenant\User;
 use App\Models\Tenant\Company;
 use App\Models\Tenant\CoachingTask;
-use App\Policies\Tenant\ClientPolicy;
+use App\Policies\Tenant\UserPolicy;
 use App\Policies\Tenant\CompanyPolicy;
 use App\Policies\Tenant\CoachingTaskPolicy;
 use App\Services\Calendar\CalendarServiceManager;
@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
 
 
         // Register policies
-        Gate::policy(User::class, ClientPolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Company::class, CompanyPolicy::class);
         Gate::policy(CoachingTask::class, CoachingTaskPolicy::class);
 

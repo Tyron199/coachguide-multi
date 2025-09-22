@@ -304,13 +304,13 @@ class CoachingSessionController extends Controller
                 ->where('assigned_coach_id', auth()->id())
                 ->where('archived', false)
                 ->orderBy('name')
-                ->get(['id', 'name', 'email']);
+                ->get(['id', 'name', 'email', 'assigned_coach_id']);
         } else {
             // Admins see all active clients
             $clients = User::role('client')
                 ->where('archived', false)
                 ->orderBy('name')
-                ->get(['id', 'name', 'email']);
+                ->get(['id', 'name', 'email', 'assigned_coach_id']);
         }
         
         // Check for client_id in URL params and verify it exists in our list
@@ -331,8 +331,14 @@ class CoachingSessionController extends Controller
             ->pluck('provider')
             ->toArray();
         
+        // Get coaches for displaying which coach will handle the session
+        $coaches = User::role('coach')
+            ->orderBy('name')
+            ->get(['id', 'name', 'email']);
+        
         return Inertia::render('Tenant/coach/coaching-sessions/ScheduleSession', [
             'clients' => $clients,
+            'coaches' => $coaches,
             'preSelectedClientId' => $preSelectedClientId,
             'calendarIntegrations' => $calendarIntegrations
         ]);
@@ -343,12 +349,29 @@ class CoachingSessionController extends Controller
      */
     public function store(Request $request)
     {
-        // Determine coach - if admin, they can schedule for any coach, otherwise it's themselves
-        $coachId = auth()->id();
-
         $request->validate([
             'client_id' => 'required|exists:users,id',
             'scheduled_date' => 'required|date',
+            'scheduled_time' => 'required|date_format:H:i',
+            'duration' => 'required|integer|min:15|max:480', // 15 minutes to 8 hours
+            'session_type' => 'required|in:in_person,online,hybrid',
+            'timezone' => 'required|string|timezone',
+            'sync_to_calendar' => 'nullable|boolean',
+        ]);
+
+        // Get the client and their assigned coach
+        $client = User::findOrFail($request->client_id);
+        
+        if (!$client->assigned_coach_id) {
+            return back()->withErrors([
+                'client_id' => 'This client does not have an assigned coach. Please assign a coach to this client first.'
+            ])->withInput();
+        }
+        
+        $coachId = $client->assigned_coach_id;
+        
+        // Add session overlap validation now that we have the correct coach ID
+        $request->validate([
             'scheduled_time' => [
                 'required',
                 'date_format:H:i',
@@ -360,10 +383,6 @@ class CoachingSessionController extends Controller
                     $request->timezone ?? 'UTC'
                 )
             ],
-            'duration' => 'required|integer|min:15|max:480', // 15 minutes to 8 hours
-            'session_type' => 'required|in:in_person,online,hybrid',
-            'timezone' => 'required|string|timezone',
-            'sync_to_calendar' => 'nullable|boolean',
         ]);
 
         // Combine date and time in user's timezone, then convert to UTC for storage
@@ -377,9 +396,8 @@ class CoachingSessionController extends Controller
         // Calculate the planned end time based on duration
         $endAt = $scheduledAt->copy()->addMinutes((int) $request->duration);
 
-        // Verify the client is assigned to this coach (unless admin)
+        // Verify authorization - coaches can only schedule for their assigned clients (unless admin)
         if (auth()->user()->hasRole('coach') && !auth()->user()->hasRole('admin')) {
-            $client = User::findOrFail($request->client_id);
             if ($client->assigned_coach_id !== auth()->id()) {
                 abort(403, 'You can only schedule sessions for your assigned clients.');
             }
@@ -387,7 +405,7 @@ class CoachingSessionController extends Controller
 
         $session = CoachingSession::create([
             'client_id' => $request->client_id,
-            'coach_id' => auth()->id(),
+            'coach_id' => $coachId, // Use the client's assigned coach, not the current user
             'scheduled_at' => $scheduledAt,
             'start_at' => $startAt,
             'end_at' => $endAt,
