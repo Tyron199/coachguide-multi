@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant\User;
 use App\Notifications\Tenant\SendCoachInvitation;
+use App\Notifications\Tenant\CoachRoleAdded;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -134,9 +135,15 @@ class CoachController extends Controller
                 'phone' => $request->phone ?: $existingUser->phone,
             ]);
             
-            // Send invitation email if requested
+            // Send appropriate notification if requested
             if ($request->boolean('send_invitation')) {
-                $existingUser->notify(new SendCoachInvitation($existingUser));
+                // If user is already active (not pending), send role addition notification
+                if ($existingUser->status !== UserRegistrationStatus::PENDING) {
+                    $existingUser->notify(new CoachRoleAdded($existingUser));
+                } else {
+                    // If user is still pending, send regular invitation
+                    $existingUser->notify(new SendCoachInvitation($existingUser));
+                }
             }
             
             return to_route('tenant.admin.coaches.show', $existingUser)

@@ -35,7 +35,7 @@
                                 @update:model-value="formData.send_invitation = Boolean($event)" />
                             <Label for="send_invitation"
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                Send invitation email to administrator
+                                Send notification email (invitation for new users, role update for existing users)
                             </Label>
                             <input type="hidden" name="send_invitation" :value="formData.send_invitation ? '1' : '0'" />
                             <InputError :message="errors.send_invitation" />
