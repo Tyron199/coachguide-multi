@@ -27,7 +27,7 @@
         <!-- Calendar Grid -->
         <div class="border border-border rounded-lg overflow-hidden bg-background">
             <!-- Day Headers with Dates -->
-            <div class="grid grid-cols-7 border-b border-border">
+            <div class="grid grid-cols-5 border-b border-border">
                 <div v-for="(date, index) in weekDates" :key="date.toISOString()"
                     class="p-4 text-center border-r border-border last:border-r-0"
                     :class="{ 'bg-primary/5': isToday(date) }">
@@ -41,7 +41,7 @@
             </div>
 
             <!-- Session Cells -->
-            <div class="grid grid-cols-7 min-h-[200px]">
+            <div class="grid grid-cols-5 min-h-[200px]">
                 <div v-for="date in weekDates" :key="`sessions-${date.toISOString()}`"
                     class="border-r border-border last:border-r-0 p-2 space-y-1 relative"
                     :class="{ 'bg-primary/5': isToday(date) }">
@@ -157,12 +157,12 @@ const selectedRows = computed({
     }
 });
 
-// Get all dates for the current 7-day period starting from currentWeekStart
+// Get all dates for the current 5-day period starting from currentWeekStart
 const weekDates = computed(() => {
     const dates = [];
     const start = new Date(currentWeekStart.value);
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 5; i++) {
         const date = new Date(start);
         date.setDate(start.getDate() + i);
         dates.push(date);
@@ -191,7 +191,7 @@ const getSessionsForDate = (date: Date) => {
 const formatWeekRange = (weekStart: Date) => {
     const start = new Date(weekStart);
     const end = new Date(weekStart);
-    end.setDate(start.getDate() + 6);
+    end.setDate(start.getDate() + 4);
 
     const startStr = start.toLocaleDateString('en-US', {
         month: 'short',
@@ -223,7 +223,11 @@ const isToday = (date: Date) => {
 const isShowingToday = computed(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return currentWeekStart.value.toDateString() === today.toDateString();
+    // Check if today falls within the current 5-day period
+    const start = new Date(currentWeekStart.value);
+    const end = new Date(currentWeekStart.value);
+    end.setDate(start.getDate() + 4);
+    return today >= start && today <= end;
 });
 
 // Calendar can navigate freely in both directions
@@ -238,14 +242,14 @@ const canGoForward = computed(() => {
 // Navigation functions
 const goToPreviousWeek = () => {
     const newDate = new Date(currentWeekStart.value);
-    newDate.setDate(newDate.getDate() - 7);
+    newDate.setDate(newDate.getDate() - 5);
     currentWeekStart.value = newDate;
     emit('week-changed', newDate);
 };
 
 const goToNextWeek = () => {
     const newDate = new Date(currentWeekStart.value);
-    newDate.setDate(newDate.getDate() + 7);
+    newDate.setDate(newDate.getDate() + 5);
     currentWeekStart.value = newDate;
     emit('week-changed', newDate);
 };
@@ -253,7 +257,10 @@ const goToNextWeek = () => {
 const goToCurrentWeek = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset to start of day
-    currentWeekStart.value = today;
+    // Center today in the 5-day period (today will be in position 2, index 2)
+    const centerDate = new Date(today);
+    centerDate.setDate(today.getDate() - 2);
+    currentWeekStart.value = centerDate;
     emit('week-changed', currentWeekStart.value);
 };
 
@@ -276,10 +283,13 @@ const toggleRowSelection = (sessionId: number, checked: boolean | 'indeterminate
     selectedRows.value = currentSelection;
 };
 
-// Initialize to today
+// Initialize to center today in the 5-day period
 onMounted(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset to start of day
-    currentWeekStart.value = today;
+    // Center today in the 5-day period (today will be in position 2, index 2)
+    const centerDate = new Date(today);
+    centerDate.setDate(today.getDate() - 2);
+    currentWeekStart.value = centerDate;
 });
 </script>
