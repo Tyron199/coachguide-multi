@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('coaching_contracts', function (Blueprint $table) {
-            $table->date('start_date')->after('client_id');
-            $table->date('end_date')->after('start_date');
+            $table->date('start_date')->nullable()->after('client_id');
+            $table->date('end_date')->nullable()->after('start_date');
         });
     }
 
