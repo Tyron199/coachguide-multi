@@ -3,14 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
+import { withDefaults } from 'vue';
 
 
-defineProps<{
+interface Props {
     sidebarNavItems: NavItem[];
+    sidebarWidth?: number;
     title: string;
     description: string;
     avatar?: string;
-}>();
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    sidebarWidth: 12,
+});
 
 
 
@@ -24,7 +30,8 @@ const currentPath = typeof window !== undefined ? window.location.pathname + win
 
         </div>
         <div class="flex flex-col lg:flex-row lg:space-x-12">
-            <aside class="w-full max-w-xl lg:w-64">
+            <aside class="w-full max-w-xl lg:max-w-none" :style="{ '--sidebar-width': `${props.sidebarWidth}rem` }"
+                :class="'lg:w-[var(--sidebar-width)]'">
                 <div class="flex flex-col mb-4 items-center lg:items-start text-center lg:text-left">
                     <div id="avatar-img" v-if="avatar" class="flex mb-4">
                         <img :src="avatar" :alt="title" class="w-32 h-auto overflow-hidden rounded-lg">

@@ -1,5 +1,6 @@
 <template>
-    <PageLayout :sidebar-nav-items="sidebarNavItems" title="Clients" description="Manage your clients">
+    <PageLayout :sidebar-width="12" :sidebar-nav-items="sidebarNavItems" title="Clients"
+        description="Manage your clients">
         <slot />
     </PageLayout>
 

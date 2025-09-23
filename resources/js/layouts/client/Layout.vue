@@ -1,6 +1,6 @@
 <template>
-    <PageLayout :sidebar-nav-items="sidebarNavItems" :title="client.name" description="Manage client"
-        :avatar="userAvatar">
+    <PageLayout :sidebar-width="12" :sidebar-nav-items="sidebarNavItems" :title="client.name"
+        description="Manage client" :avatar="userAvatar">
         <slot />
     </PageLayout>
 
