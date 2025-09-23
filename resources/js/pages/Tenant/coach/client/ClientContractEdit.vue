@@ -37,6 +37,40 @@
                         <Form :action="contracts.update([client.id, contract.id])" class="space-y-6"
                             v-slot="{ errors, processing }">
 
+                            <!-- Contract Dates Section (Always Required) -->
+                            <div class="space-y-4">
+                                <div class="border-b pb-2">
+                                    <h3 class="text-base font-medium">Contract Period</h3>
+                                    <p class="text-sm text-muted-foreground mt-1">
+                                        Define the coaching engagement period
+                                    </p>
+                                </div>
+
+                                <div class="grid gap-4 sm:grid-cols-2">
+                                    <!-- Start Date -->
+                                    <div class="grid gap-2">
+                                        <Label for="start_date">
+                                            Contract Start Date
+                                            <span class="text-destructive">*</span>
+                                        </Label>
+                                        <Input id="start_date" name="start_date" type="date" required
+                                            :model-value="contract.start_date" />
+                                        <InputError :message="errors.start_date" />
+                                    </div>
+
+                                    <!-- End Date -->
+                                    <div class="grid gap-2">
+                                        <Label for="end_date">
+                                            Contract End Date
+                                            <span class="text-destructive">*</span>
+                                        </Label>
+                                        <Input id="end_date" name="end_date" type="date" required
+                                            :model-value="contract.end_date" />
+                                        <InputError :message="errors.end_date" />
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Dynamic form fields -->
                             <div v-if="templateVariables" class="space-y-8">
                                 <div v-for="(category, categoryKey) in templateVariables" :key="categoryKey"
@@ -209,6 +243,8 @@ interface Contract {
     id: number;
     template_path: string;
     variables: Record<string, any> | null;
+    start_date?: string;
+    end_date?: string;
     status: number;
     created_at: string;
     updated_at: string;

@@ -107,8 +107,8 @@
                             <div>
                                 <Label class="text-sm font-medium text-muted-foreground">Contract Period</Label>
                                 <p class="mt-1 text-sm">
-                                    {{ formatDate(contract.variables?.start_date) || 'Not set' }} -
-                                    {{ formatDate(contract.variables?.end_date) || 'Not set' }}
+                                    {{ formatDate(contract.start_date) || 'Not set' }} -
+                                    {{ formatDate(contract.end_date) || 'Not set' }}
                                 </p>
                             </div>
                             <div>
@@ -205,6 +205,8 @@ interface Contract {
     id: number;
     template_path: string;
     variables: Record<string, any> | null;
+    start_date?: string;
+    end_date?: string;
     status: number;
     created_at: string;
     updated_at: string;

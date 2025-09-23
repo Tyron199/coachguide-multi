@@ -78,6 +78,14 @@
                                     <Label class="text-xs font-medium text-muted-foreground">Template</Label>
                                     <p class="mt-1">{{ templateInfo?.title || 'Unknown Template' }}</p>
                                 </div>
+                                <div v-if="contract.start_date">
+                                    <Label class="text-xs font-medium text-muted-foreground">Start Date</Label>
+                                    <p class="mt-1">{{ (contract.start_date) }}</p>
+                                </div>
+                                <div v-if="contract.end_date">
+                                    <Label class="text-xs font-medium text-muted-foreground">End Date</Label>
+                                    <p class="mt-1">{{ (contract.end_date) }}</p>
+                                </div>
                                 <div>
                                     <Label class="text-xs font-medium text-muted-foreground">Created</Label>
                                     <p class="mt-1">{{ formatDate(contract.created_at) }}</p>
@@ -213,6 +221,8 @@ interface Contract {
     id: number;
     template_path: string;
     variables: Record<string, any> | null;
+    start_date?: string;
+    end_date?: string;
     status: number;
     created_at: string;
     updated_at: string;

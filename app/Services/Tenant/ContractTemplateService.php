@@ -27,13 +27,21 @@ class ContractTemplateService
     /**
      * Render contract with coach and client models
      */
-    public function renderContractWithModels(string $templatePath, User $coach, User $client, array $variables = []): string
+    public function renderContractWithModels(string $templatePath, User $coach, User $client, array $variables = [], ?CoachingContract $contract = null): string
     {
         $data = array_merge($variables, [
             'coach' => $coach,
             'client' => $client,
             'logo' => $this->logoService->getContractLogoData(),
         ]);
+
+        // If we have a contract model, include the dates from it
+        // Convert UTC dates back to a reasonable display format
+        // Since contracts are date-based (not time-based), we'll show the date portion
+        if ($contract) {
+            $data['start_date'] = $contract->start_date ? $contract->start_date->format('F j, Y') : null;
+            $data['end_date'] = $contract->end_date ? $contract->end_date->format('F j, Y') : null;
+        }
 
         return view($templatePath, $data)->render();
     }
@@ -87,9 +95,9 @@ class ContractTemplateService
     /**
      * Create and save a coaching contract with template snapshot
      */
-    public function createContract(User $coach, User $client, string $templatePath, array $contractDetails = []): CoachingContract
+    public function createContract(User $coach, User $client, string $templatePath, string $startDate, string $endDate, array $contractDetails = []): CoachingContract
     {
-        // Only store user-input variables, not auto-populated data
+        // Only store user-input variables, not auto-populated data (excluding dates)
         $variables = $this->filterUserInputVariables($templatePath, $contractDetails);
         
         // Create template snapshot for legal compliance
@@ -99,6 +107,8 @@ class ContractTemplateService
         return CoachingContract::create([
             'coach_id' => $coach->id,
             'client_id' => $client->id,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
             'template_path' => $templatePath,
             'template_snapshot' => $templateSnapshot,
             'template_version' => $templateVersion,
@@ -109,7 +119,7 @@ class ContractTemplateService
     }
 
     /**
-     * Filter out auto-populated variables, keep only user input
+     * Filter out auto-populated variables, keep only user input (excluding dates which are now model fields)
      */
     private function filterUserInputVariables(string $templatePath, array $contractDetails): array
     {
@@ -124,6 +134,11 @@ class ContractTemplateService
                 }
                 
                 foreach ($category['fields'] ?? [] as $fieldKey => $field) {
+                    // Skip date fields as they're now model fields, not variables
+                    if (in_array($fieldKey, ['start_date', 'end_date'])) {
+                        continue;
+                    }
+                    
                     if (isset($contractDetails[$fieldKey])) {
                         $userInputVariables[$fieldKey] = $contractDetails[$fieldKey];
                     } elseif (isset($field['default'])) {
@@ -134,8 +149,10 @@ class ContractTemplateService
             
             return $userInputVariables;
         } catch (\Exception $e) {
-            // Fallback: return all provided details
-            return $contractDetails;
+            // Fallback: return all provided details, excluding dates
+            $filtered = $contractDetails;
+            unset($filtered['start_date'], $filtered['end_date']);
+            return $filtered;
         }
     }
 
@@ -144,15 +161,15 @@ class ContractTemplateService
      */
     public function renderContractFromModel(CoachingContract $contract): string
     {
-        if (!$contract->variables) {
-            throw new \Exception('Contract has no variables to render');
-        }
-
-        // Include signature models if they exist, plus contract creation date
+        // Include signature models if they exist, plus contract creation date and dates from model
+        // Note: For contract display, we show dates as they would appear to the user
+        // Since we stored start/end of day in user's timezone as UTC, we need to format them appropriately
         $additionalData = [
             'coachSignature' => $contract->coachSignature(),
             'clientSignature' => $contract->clientSignature(),
             'contract_date' => $contract->created_at->format('F j, Y'),
+            'start_date' => $contract->start_date ? $contract->start_date->format('F j, Y') : null,
+            'end_date' => $contract->end_date ? $contract->end_date->format('F j, Y') : null,
         ];
 
         // Use template snapshot for legal compliance if contract is signed
@@ -161,7 +178,7 @@ class ContractTemplateService
                 $contract->template_snapshot,
                 $contract->coach,
                 $contract->client,
-                array_merge($contract->variables, $additionalData)
+                array_merge($contract->variables ?? [], $additionalData)
             );
         }
 
@@ -170,26 +187,41 @@ class ContractTemplateService
             $contract->template_path,
             $contract->coach,
             $contract->client,
-            array_merge($contract->variables, $additionalData)
+            array_merge($contract->variables ?? [], $additionalData),
+            $contract
         );
     }
 
     /**
      * Update contract variables and clear rendered content
      */
-    public function updateContractVariables(CoachingContract $contract, array $newVariables): void
+    public function updateContractVariables(CoachingContract $contract, array $newVariables, ?string $startDate = null, ?string $endDate = null): void
     {
         if (!$contract->canBeEdited()) {
             throw new \Exception('Contract cannot be edited in current status: ' . $contract->status->label());
         }
 
+        // Filter out date fields from variables as they're now model fields
+        $filteredVariables = $newVariables;
+        unset($filteredVariables['start_date'], $filteredVariables['end_date']);
+
         // Merge with existing variables
-        $variables = array_merge($contract->variables ?? [], $newVariables);
+        $variables = array_merge($contract->variables ?? [], $filteredVariables);
         
-        $contract->update([
+        $updateData = [
             'variables' => $variables,
             'content' => null, // Clear rendered content to force re-render
-        ]);
+        ];
+
+        // Update dates if provided
+        if ($startDate) {
+            $updateData['start_date'] = $startDate;
+        }
+        if ($endDate) {
+            $updateData['end_date'] = $endDate;
+        }
+        
+        $contract->update($updateData);
     }
 
     /**
@@ -273,7 +305,7 @@ class ContractTemplateService
     }
 
     /**
-     * Generate form validation rules from template schema
+     * Generate form validation rules from template schema (excluding date fields which are now model fields)
      */
     public function getValidationRules(string $templatePath): array
     {
@@ -288,6 +320,11 @@ class ContractTemplateService
                 }
                 
                 foreach ($category['fields'] ?? [] as $fieldKey => $field) {
+                    // Skip date fields as they're now model fields, not form variables
+                    if (in_array($fieldKey, ['start_date', 'end_date'])) {
+                        continue;
+                    }
+                    
                     $fieldRules = [];
                     
                     // Required validation
@@ -546,7 +583,7 @@ class ContractTemplateService
         file_put_contents($tempFile, $templateSnapshot);
         
         try {
-            // Prepare data for rendering
+            // Prepare data for rendering (dates should already be in variables array)
             $data = array_merge($variables, [
                 'coach' => $coach,
                 'client' => $client,

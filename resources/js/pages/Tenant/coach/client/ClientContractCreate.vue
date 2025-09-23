@@ -101,6 +101,42 @@
                                 v-slot="{ errors, processing }">
                                 <input type="hidden" name="template_path" :value="selectedTemplate?.path" />
 
+                                <!-- Contract Dates Section (Always Required) -->
+                                <div class="space-y-4">
+                                    <div class="border-b pb-2">
+                                        <h3 class="text-base font-medium">Contract Period</h3>
+                                        <p class="text-sm text-muted-foreground mt-1">
+                                            Define the coaching engagement period
+                                        </p>
+                                    </div>
+
+                                    <div class="grid gap-4 sm:grid-cols-2">
+                                        <!-- Start Date -->
+                                        <div class="grid gap-2">
+                                            <Label for="start_date">
+                                                Contract Start Date
+                                                <span class="text-destructive">*</span>
+                                            </Label>
+                                            <Input id="start_date" name="start_date" type="date" required
+                                                :model-value="formData.start_date || getDefaultStartDate()"
+                                                @input="updateFormData('start_date', $event.target.value)" />
+                                            <InputError :message="errors.start_date" />
+                                        </div>
+
+                                        <!-- End Date -->
+                                        <div class="grid gap-2">
+                                            <Label for="end_date">
+                                                Contract End Date
+                                                <span class="text-destructive">*</span>
+                                            </Label>
+                                            <Input id="end_date" name="end_date" type="date" required
+                                                :model-value="formData.end_date || getDefaultEndDate()"
+                                                @input="updateFormData('end_date', $event.target.value)" />
+                                            <InputError :message="errors.end_date" />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- Dynamic form fields will be loaded here -->
                                 <div v-if="templateVariables" class="space-y-8">
                                     <div v-for="(category, categoryKey) in templateVariables" :key="categoryKey"
@@ -314,11 +350,22 @@ const updateFormData = (key: string, value: any) => {
     formData.value[key] = value;
 };
 
+
 const getDefaultDate = (defaultValue?: string) => {
     if (defaultValue === 'current_date') {
         return new Date().toISOString().split('T')[0];
     }
     return defaultValue || '';
+};
+
+const getDefaultStartDate = () => {
+    return new Date().toISOString().split('T')[0];
+};
+
+const getDefaultEndDate = () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() + 3); // Default to 3 months from now
+    return date.toISOString().split('T')[0];
 };
 
 

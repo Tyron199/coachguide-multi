@@ -12,6 +12,8 @@ class CoachingContract extends Model
     protected $fillable = [
         'coach_id',
         'client_id',
+        'start_date',
+        'end_date',
         'template_path',
         'template_snapshot',
         'template_version',
@@ -25,6 +27,8 @@ class CoachingContract extends Model
         'status' => ContractStatus::class,
         'variables' => 'array',
         'template_snapshot_at' => 'datetime',
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     /**

@@ -13,22 +13,6 @@
         "template_version": "1.0",
         "template_description": "Coaching agreement with pay-per-session pricing structure",
         "categories": {
-            "contract_dates": {
-                "label": "Contract Period",
-                "description": "Define the coaching engagement period",
-                "fields": {
-                    "start_date": {
-                        "label": "Contract Start Date", 
-                        "type": "date",
-                        "required": true
-                    },
-                    "end_date": {
-                        "label": "Contract End Date",
-                        "type": "date", 
-                        "required": true
-                    }
-                }
-            },
             "session_details": {
                 "label": "Session Configuration",
                 "description": "Define your coaching session structure",

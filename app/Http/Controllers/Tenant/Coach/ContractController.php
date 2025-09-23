@@ -43,31 +43,31 @@ class ContractController extends Controller
         
         $template = $request->input('template_path', 'contracts.standard_coaching_agreement_1');
         
-        // Get dynamic validation rules from template schema
+        // Get dynamic validation rules from template schema (excludes dates)
         $validationRules = $this->contractService->getValidationRules($template);
         
-        // Add custom business rules
-        if (isset($validationRules['end_date'])) {
-            $validationRules['end_date'] .= '|after:start_date';
-        }
+        // Add date validation rules (these are now model fields, not template variables)
+        $validationRules['start_date'] = 'required|date';
+        $validationRules['end_date'] = 'required|date|after:start_date';
         
         $validated = $request->validate($validationRules);
 
-        // Render and create contract using the new method
-        $renderedContent = $this->contractService->renderContractWithModels(
-            $template,
+        // Just use the dates as-is
+        $startDate = $validated['start_date'];
+        $endDate = $validated['end_date'];
+        
+        // Remove dates from validated data as they're handled separately
+        unset($validated['start_date'], $validated['end_date']);
+
+        // Create contract using the updated service method
+        $contract = $this->contractService->createContract(
             Auth::user(),
             $client,
+            $template,
+            $startDate,
+            $endDate,
             $validated
         );
-        
-        $contract = CoachingContract::create([
-            'coach_id' => Auth::id(),
-            'client_id' => $client->id,
-            'template_path' => $template,
-            'variables' => $validated,
-            'content' => $renderedContent,
-        ]);
 
         return redirect()->route('tenant.coach.clients.contracts.show', [$client, $contract])
             ->with('success', 'Contract created successfully!');
@@ -101,6 +101,8 @@ class ContractController extends Controller
                 'id' => $contract->id,
                 'template_path' => $contract->template_path,
                 'variables' => $contract->variables,
+                'start_date' => $contract->start_date?->format('Y-m-d'),
+                'end_date' => $contract->end_date?->format('Y-m-d'),
                 'status' => $contract->status->value,
                 'created_at' => $contract->created_at->toISOString(),
                 'updated_at' => $contract->updated_at->toISOString(),
@@ -142,6 +144,8 @@ class ContractController extends Controller
                 'id' => $contract->id,
                 'template_path' => $contract->template_path,
                 'variables' => $contract->variables,
+                'start_date' => $contract->start_date?->format('Y-m-d'),
+                'end_date' => $contract->end_date?->format('Y-m-d'),
                 'status' => $contract->status->value,
                 'created_at' => $contract->created_at->toISOString(),
                 'updated_at' => $contract->updated_at->toISOString(),
@@ -165,18 +169,24 @@ class ContractController extends Controller
             return back()->with('error', 'This contract cannot be edited in its current status.');
         }
         
-        // Get validation rules for this contract's template
+        // Get validation rules for this contract's template (excludes dates)
         $validationRules = $this->contractService->getValidationRules($contract->template_path);
         
-        // Add custom business rules
-        if (isset($validationRules['end_date'])) {
-            $validationRules['end_date'] .= '|after:start_date';
-        }
+        // Add date validation rules (these are now model fields, not template variables)
+        $validationRules['start_date'] = 'required|date';
+        $validationRules['end_date'] = 'required|date|after:start_date';
         
         $validated = $request->validate($validationRules);
         
-        // Update contract variables and clear rendered content
-        $this->contractService->updateContractVariables($contract, $validated);
+        // Just use the dates as-is
+        $startDate = $validated['start_date'];
+        $endDate = $validated['end_date'];
+        
+        // Remove dates from validated data as they're handled separately
+        unset($validated['start_date'], $validated['end_date']);
+        
+        // Update contract variables and dates
+        $this->contractService->updateContractVariables($contract, $validated, $startDate, $endDate);
         
         return redirect()->route('tenant.coach.clients.contracts.show', [$client, $contract])
             ->with('success', 'Contract updated successfully!');
@@ -342,6 +352,8 @@ class ContractController extends Controller
                     'id' => $contract->id,
                     'template_path' => $contract->template_path,
                     'variables' => $contract->variables,
+                    'start_date' => $contract->start_date?->format('Y-m-d'),
+                    'end_date' => $contract->end_date?->format('Y-m-d'),
                     'status' => $contract->status->value,
                     'created_at' => $contract->created_at->toISOString(),
                     'updated_at' => $contract->updated_at->toISOString(),
