@@ -180,10 +180,12 @@ const weekDays = computed(() => {
 
 // Get sessions for a specific date
 const getSessionsForDate = (date: Date) => {
-    const dateStr = date.toISOString().split('T')[0];
+    // Use local date comparison to avoid timezone conversion issues
+    const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     return props.sessions.filter(session => {
-        const sessionDate = new Date(session.scheduled_at).toISOString().split('T')[0];
-        return sessionDate === dateStr;
+        const sessionDate = new Date(session.scheduled_at);
+        const sessionLocalDate = new Date(sessionDate.getFullYear(), sessionDate.getMonth(), sessionDate.getDate());
+        return sessionLocalDate.getTime() === targetDate.getTime();
     });
 };
 
