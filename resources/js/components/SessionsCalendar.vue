@@ -257,10 +257,8 @@ const goToNextWeek = () => {
 const goToCurrentWeek = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset to start of day
-    // Center today in the 5-day period (today will be in position 2, index 2)
-    const centerDate = new Date(today);
-    centerDate.setDate(today.getDate() - 2);
-    currentWeekStart.value = centerDate;
+    // Start the 5-day period with today as the first day
+    currentWeekStart.value = today;
     emit('week-changed', currentWeekStart.value);
 };
 
@@ -283,13 +281,11 @@ const toggleRowSelection = (sessionId: number, checked: boolean | 'indeterminate
     selectedRows.value = currentSelection;
 };
 
-// Initialize to center today in the 5-day period
+// Initialize to start the 5-day period with today
 onMounted(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset to start of day
-    // Center today in the 5-day period (today will be in position 2, index 2)
-    const centerDate = new Date(today);
-    centerDate.setDate(today.getDate() - 2);
-    currentWeekStart.value = centerDate;
+    // Start the 5-day period with today as the first day
+    currentWeekStart.value = today;
 });
 </script>
