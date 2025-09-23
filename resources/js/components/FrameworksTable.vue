@@ -49,7 +49,7 @@
         </div>
 
         <!-- Frameworks Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
             <FrameworkCard v-for="framework in props.frameworks.data" :key="framework.id" :framework="framework"
                 @assign="$emit('assign', framework)" @preview="$emit('preview', framework)" />
         </div>

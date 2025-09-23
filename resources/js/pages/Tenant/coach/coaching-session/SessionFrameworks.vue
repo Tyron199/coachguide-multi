@@ -17,7 +17,7 @@
 
                 <!-- Frameworks Grid -->
                 <div v-if="instances.length > 0"
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
                     <FrameworkInstanceCard v-for="instance in instances" :key="instance.id" :instance="instance"
                         @remove="handleRemoveInstance" />
                 </div>
