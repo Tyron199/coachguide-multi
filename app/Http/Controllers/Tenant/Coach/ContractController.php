@@ -28,6 +28,9 @@ class ContractController extends Controller
     {
         $this->authorize('create', CoachingContract::class);
         
+        // Load the assigned coach relationship
+        $client->load('assignedCoach');
+        
         return Inertia::render('Tenant/coach/client/ClientContractCreate', [
             'client' => $client,
             'availableTemplates' => $this->contractService->getAvailableTemplates(),
@@ -40,6 +43,21 @@ class ContractController extends Controller
     public function store(Request $request, User $client)
     {
         $this->authorize('create', CoachingContract::class);
+        
+        // Ensure the client has an assigned coach
+        if (!$client->assigned_coach_id) {
+            return back()->withErrors([
+                'client' => 'This client must have an assigned coach before creating a contract.'
+            ])->withInput();
+        }
+        
+        // Get the assigned coach
+        $assignedCoach = $client->assignedCoach;
+        if (!$assignedCoach) {
+            return back()->withErrors([
+                'client' => 'The assigned coach for this client could not be found.'
+            ])->withInput();
+        }
         
         $template = $request->input('template_path', 'contracts.standard_coaching_agreement_1');
         
@@ -59,9 +77,9 @@ class ContractController extends Controller
         // Remove dates from validated data as they're handled separately
         unset($validated['start_date'], $validated['end_date']);
 
-        // Create contract using the updated service method
+        // Create contract between the client and their assigned coach (not the current user)
         $contract = $this->contractService->createContract(
-            Auth::user(),
+            $assignedCoach,
             $client,
             $template,
             $startDate,
@@ -70,7 +88,7 @@ class ContractController extends Controller
         );
 
         return redirect()->route('tenant.coach.clients.contracts.show', [$client, $contract])
-            ->with('success', 'Contract created successfully!');
+            ->with('success', 'Contract created successfully between ' . $assignedCoach->name . ' and ' . $client->name . '!');
     }
 
     /**
@@ -560,6 +578,13 @@ class ContractController extends Controller
         if (auth()->check() && auth()->id() === $contract->client_id) {
             return back()->withErrors([
                 'signature' => 'Clients cannot sign on behalf of coaches. This link is intended for the coach only.'
+            ])->withInput();
+        }
+
+        // Prevent admins from signing on behalf of coaches
+        if (auth()->check() && auth()->user()->hasRole('admin') && auth()->id() !== $contract->coach_id) {
+            return back()->withErrors([
+                'signature' => 'Administrators cannot sign on behalf of coaches. This link is intended for the coach only.'
             ])->withInput();
         }
 

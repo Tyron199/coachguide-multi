@@ -66,6 +66,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'status' => UserRegistrationStatus::ACCEPTED,
             'email_verified_at' => now(), // Auto-verify since coach invited them
+            'timezone' => $request->input('timezone', 'UTC'),
         ]);
 
         // If there was a valid token, consume it (remove from cache)

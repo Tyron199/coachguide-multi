@@ -1,5 +1,5 @@
 <template>
-    <PageLayout :sidebar-nav-items="sidebarNavItems" :title="`Growth Tracker`"
+    <PageLayout :sidebar-nav-items="sidebarNavItems" :title="`Growth Tracker`" :sidebar-width="14"
         :description="`Keep track of your coaching development and growth​`">
         <slot />
     </PageLayout>

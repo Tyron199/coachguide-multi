@@ -82,6 +82,13 @@ class ContractController extends Controller
             ])->withInput();
         }
 
+        // Prevent admins from signing on behalf of clients
+        if (auth()->check() && auth()->user()->hasRole('admin') && auth()->id() !== $contract->client_id) {
+            return back()->withErrors([
+                'signature' => 'Administrators cannot sign on behalf of clients. This link is intended for the client only.'
+            ])->withInput();
+        }
+
         $validated = $request->validate([
             'signature' => 'required|string',
         ]);

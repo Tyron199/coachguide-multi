@@ -180,12 +180,12 @@ const weekDays = computed(() => {
 
 // Get sessions for a specific date
 const getSessionsForDate = (date: Date) => {
-    // Use local date comparison to avoid timezone conversion issues
-    const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const targetDate = date.toDateString();
+
     return props.sessions.filter(session => {
+        // Browser automatically converts UTC session time to local timezone
         const sessionDate = new Date(session.scheduled_at);
-        const sessionLocalDate = new Date(sessionDate.getFullYear(), sessionDate.getMonth(), sessionDate.getDate());
-        return sessionLocalDate.getTime() === targetDate.getTime();
+        return sessionDate.toDateString() === targetDate;
     });
 };
 
@@ -224,7 +224,6 @@ const isToday = (date: Date) => {
 
 const isShowingToday = computed(() => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
     // Check if today falls within the current 5-day period
     const start = new Date(currentWeekStart.value);
     const end = new Date(currentWeekStart.value);

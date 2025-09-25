@@ -52,6 +52,7 @@ class RegisterRequest extends FormRequest
                     ->uncompromised(),
             ],
             'token' => 'nullable|string',
+            'timezone' => 'nullable|string|max:255',
         ];
     }
 

@@ -40,6 +40,7 @@ class User extends Authenticatable
         'google2fa_secret',
         'google2fa_enabled',
         'google2fa_enabled_at',
+        'timezone'
     ];
 
     /**
@@ -280,6 +281,7 @@ class User extends Authenticatable
             'name' => $this->name,
             'email' => $this->email,
             'avatar' => $this->avatar, // Only adding avatar since it's needed for layout
+            'timezone' => $this->timezone,
             'roles' => $this->getRoleNames(),
             'permissions' => $this->getPermissionsViaRoles()->pluck('name'),
         ];

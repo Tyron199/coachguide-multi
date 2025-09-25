@@ -20,6 +20,12 @@ class CoachingContractPolicy
      */
     public function view(User $user, CoachingContract $contract): bool
     {
+        // Admins can view any contract
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+        
+        // Coaches and clients can only view contracts where they are a party
         return $user->hasRole(['coach', 'admin']) && 
                ($user->id === $contract->coach_id || $user->id === $contract->client_id);
     }
@@ -37,6 +43,12 @@ class CoachingContractPolicy
      */
     public function update(User $user, CoachingContract $contract): bool
     {
+        // Admins can update any contract
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+        
+        // Coaches and clients can only update contracts where they are a party
         return $user->hasRole(['coach', 'admin']) && 
                ($user->id === $contract->coach_id || $user->id === $contract->client_id);
     }
@@ -46,6 +58,12 @@ class CoachingContractPolicy
      */
     public function delete(User $user, CoachingContract $contract): bool
     {
-        return $user->hasRole(['coach', 'admin']) && $user->id === $contract->coach_id;
+        // Admins can delete any contract
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+        
+        // Only the coach who owns the contract can delete it
+        return $user->hasRole('coach') && $user->id === $contract->coach_id;
     }
 }

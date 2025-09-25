@@ -10,9 +10,18 @@ import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
+import { getAllTimezones, getCurrentTimezone } from '@/utils/timezone';
+import { ref, onMounted } from 'vue';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -30,6 +39,17 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 const page = usePage();
 const user = page.props.auth.user;
+
+// Timezone functionality
+const timezones = ref(getAllTimezones());
+const selectedTimezone = ref(user.timezone || getCurrentTimezone());
+
+onMounted(() => {
+    // If user doesn't have a timezone set, use their current detected timezone
+    if (!user.timezone) {
+        selectedTimezone.value = getCurrentTimezone();
+    }
+});
 </script>
 
 <template>
@@ -55,6 +75,24 @@ const user = page.props.auth.user;
                         <Input id="email" type="email" class="mt-1 block w-full" name="email"
                             :default-value="user.email" required autocomplete="username" placeholder="Email address" />
                         <InputError class="mt-2" :message="errors.email" />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="timezone">Timezone</Label>
+                        <Select name="timezone" v-model="selectedTimezone">
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select your timezone" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem v-for="timezone in timezones" :key="timezone.value" :value="timezone.value">
+                                    {{ timezone.label }}
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <p class="text-xs text-muted-foreground">
+                            This will be used to display times in your local timezone throughout the platform.
+                        </p>
+                        <InputError class="mt-2" :message="errors.timezone" />
                     </div>
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">

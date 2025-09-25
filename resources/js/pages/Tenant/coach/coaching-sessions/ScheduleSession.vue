@@ -187,6 +187,7 @@ import coachingSessions from '@/routes/tenant/coach/coaching-sessions';
 import { store as storeSessionAction } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 import { LoaderCircle, Calendar, Clock, Users, Video, MonitorSpeaker } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
+import { getUserTimezone } from '@/utils/timezone';
 
 interface Client {
     id: number;
@@ -216,7 +217,7 @@ const formData = ref({
     scheduled_time: '',
     duration: 60 as number, // Default to 1 hour
     session_type: 'online' as 'in_person' | 'online' | 'hybrid', // Default to online
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // User's timezone
+    timezone: getUserTimezone(), // User's timezone from auth data or browser
     sync_to_calendar: true, // Default to true if user has calendar integration
 });
 
@@ -248,7 +249,7 @@ const selectedClient = computed(() => {
 
 const assignedCoach = computed(() => {
     if (!selectedClient.value?.assigned_coach_id) return null;
-    return props.coaches.find(c => c.id === selectedClient.value.assigned_coach_id) || null;
+    return props.coaches.find(c => c.id === selectedClient.value!.assigned_coach_id) || null;
 });
 
 const selectedSessionType = computed(() => {

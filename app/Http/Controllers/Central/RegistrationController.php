@@ -171,6 +171,7 @@ class RegistrationController extends Controller
                 // Add your password rules here
             ],
             'subdomain' => ['required', new SubdomainValidation()],
+            'timezone' => 'nullable|string|max:255',
         ]);
 
         try {
@@ -195,6 +196,7 @@ class RegistrationController extends Controller
                     'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
                     'email_verified_at' => now(),
                     'status' => \App\Enums\Tenant\UserRegistrationStatus::ACCEPTED,
+                    'timezone' => $validated['timezone'] ?? 'UTC',
                 ]);
 
                 // Assign admin and coach roles

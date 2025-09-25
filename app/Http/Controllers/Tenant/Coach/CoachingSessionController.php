@@ -168,7 +168,9 @@ class CoachingSessionController extends Controller
         
         // Auto-apply date range - default to current 7-day period if no range provided
         if (!$request->has('date_from') || !$request->has('date_to')) {
-            $today = now()->startOfDay();
+            // Use the user's timezone for calculating the default date range
+            $userTimezone = auth()->user()->timezone ?? 'UTC';
+            $today = now($userTimezone)->startOfDay();
             $endDate = $today->copy()->addDays(6)->endOfDay();
             
             $request->merge([
@@ -178,8 +180,10 @@ class CoachingSessionController extends Controller
         }
         
 
-        $dateFrom = now()->parse($request->date_from)->startOfDay();
-        $dateTo = now()->parse($request->date_to)->endOfDay();
+        // Parse dates in user's timezone, then convert to UTC for database query
+        $userTimezone = auth()->user()->timezone ?? 'UTC';
+        $dateFrom = \Carbon\Carbon::parse($request->date_from, $userTimezone)->startOfDay()->utc();
+        $dateTo = \Carbon\Carbon::parse($request->date_to, $userTimezone)->endOfDay()->utc();
         $query->whereBetween('scheduled_at', [$dateFrom, $dateTo]);
         
         // Scope sessions based on user role

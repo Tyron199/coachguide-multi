@@ -10,7 +10,7 @@ import { Form, Head, usePage } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 import { useSubdomain } from '@/composables/useSubdomain';
 import { submitConfirm } from '@/actions/App/Http/Controllers/Central/RegistrationController';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const page = usePage();
 const registration = page.props.registration as any;
@@ -27,9 +27,20 @@ const {
     markAsManuallyEdited
 } = useSubdomain(reservedSubdomains);
 
-//on mount set suggested subdomain
+// Detect user's timezone
+const timezone = ref('');
+
+//on mount set suggested subdomain and detect timezone
 onMounted(() => {
     companyName.value = registration.company_name;
+
+    // Detect timezone from browser
+    try {
+        timezone.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (error) {
+        console.warn('Could not detect timezone, falling back to UTC:', error);
+        timezone.value = 'UTC';
+    }
 });
 
 </script>
@@ -90,6 +101,9 @@ onMounted(() => {
                     </div>
                     <InputError :message="subdomainError || errors.subdomain" />
                 </div>
+
+                <!-- Hidden timezone field -->
+                <input type="hidden" name="timezone" :value="timezone" />
 
                 <!-- Password Fields -->
                 <div class="grid gap-2">

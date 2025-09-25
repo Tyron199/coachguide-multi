@@ -26,9 +26,10 @@ const formData = ref({
     name: '',
     email: '',
     token: '',
+    timezone: '',
 });
 
-// Pre-fill form data if token is valid
+// Pre-fill form data if token is valid and detect timezone
 onMounted(() => {
     if (props.isTokenValid && props.prefilledData) {
         formData.value.name = props.prefilledData.name;
@@ -36,6 +37,14 @@ onMounted(() => {
     }
     if (props.token) {
         formData.value.token = props.token;
+    }
+
+    // Detect timezone from browser
+    try {
+        formData.value.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (error) {
+        console.warn('Could not detect timezone, falling back to UTC:', error);
+        formData.value.timezone = 'UTC';
     }
 });
 </script>
@@ -67,8 +76,9 @@ onMounted(() => {
                     </p>
                 </div>
 
-                <!-- Hidden token field -->
+                <!-- Hidden fields -->
                 <input type="hidden" name="token" v-model="formData.token" />
+                <input type="hidden" name="timezone" v-model="formData.timezone" />
 
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
