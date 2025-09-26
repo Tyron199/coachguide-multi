@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('user_professional_credentials', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('professional_credential_provider_id')->constrained()->onDelete('cascade');
+            $table->foreignId('professional_credential_provider_id')
+                  ->constrained('professional_credential_providers')
+                  ->onDelete('cascade')
+                  ->name('fk_user_creds_provider_id');
             $table->string('credential_name')->nullable(); // e.g., "Master Coach"
             $table->date('expiry_date')->nullable();
             $table->string('file_path');
