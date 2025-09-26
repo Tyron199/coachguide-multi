@@ -20,4 +20,5 @@ export interface AlertService {
     info(message: string): Promise<void>;
     warning(message: string): Promise<void>;
     error(message: string): Promise<void>;
+    success(message: string): Promise<void>;
 }

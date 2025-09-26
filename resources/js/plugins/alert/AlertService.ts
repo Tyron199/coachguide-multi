@@ -99,6 +99,24 @@ class AlertService {
         });
     }
 
+    success(message: string): Promise<void> {
+        return new Promise((resolve) => {
+            const options: AlertOptions = {
+                title: 'Success',
+                description: message,
+                variant: 'default',
+                confirmText: 'OK',
+                showCancel: false,
+            };
+
+            this.state.value = {
+                isOpen: true,
+                options,
+                resolve: () => resolve(),
+            };
+        });
+    }
+
     handleConfirm() {
         const { resolve, options } = this.state.value;
         this.close();

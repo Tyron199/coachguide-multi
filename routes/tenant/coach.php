@@ -117,8 +117,15 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(
         //Resource lib
         Route::get('resource-library', [ResourceLibraryController::class, 'index'])->name('resource-library.index');
 
-        //Professional credential
-        Route::get('professional-credential', [ProfessionalCredentialController::class, 'index'])->name('professional-credential.index');
+        //Professional credentials
+        Route::prefix('professional-credentials')->name('professional-credentials.')->group(function () {
+            Route::get('/', [ProfessionalCredentialController::class, 'index'])->name('index');
+            Route::post('/', [ProfessionalCredentialController::class, 'store'])->name('store');
+            Route::patch('/{credential}', [ProfessionalCredentialController::class, 'update'])->name('update');
+            Route::post('/{credential}/replace', [ProfessionalCredentialController::class, 'replace'])->name('replace');
+            Route::delete('/{credential}', [ProfessionalCredentialController::class, 'destroy'])->name('destroy');
+            Route::get('/{credential}/download', [ProfessionalCredentialController::class, 'download'])->name('download');
+        });
 
     });
 

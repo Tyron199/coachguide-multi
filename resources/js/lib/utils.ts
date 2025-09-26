@@ -26,7 +26,45 @@ export function formatDate(dateString: string | Date): string {
         month: 'short',
         day: 'numeric',
     });
+}
 
+// Format relative date (e.g., "2 days ago", "in 3 months")
+export function formatRelativeDate(dateString: string | Date): string {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now.getTime() - date.getTime();
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) {
+        return 'today';
+    } else if (diffInDays === 1) {
+        return 'yesterday';
+    } else if (diffInDays < 7) {
+        return `${diffInDays} days ago`;
+    } else if (diffInDays < 30) {
+        const weeks = Math.floor(diffInDays / 7);
+        return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
+    } else if (diffInDays < 365) {
+        const months = Math.floor(diffInDays / 30);
+        return `${months} ${months === 1 ? 'month' : 'months'} ago`;
+    } else {
+        const years = Math.floor(diffInDays / 365);
+        return `${years} ${years === 1 ? 'year' : 'years'} ago`;
+    }
+}
+
+// Format file size to human readable format
+export function formatFileSize(bytes: number): string {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let size = bytes;
+    let unitIndex = 0;
+
+    while (size >= 1024 && unitIndex < units.length - 1) {
+        size /= 1024;
+        unitIndex++;
+    }
+
+    return `${size.toFixed(unitIndex === 0 ? 0 : 2)} ${units[unitIndex]}`;
 }
 
 // Get appropriate icon and color for a file based on extension and MIME type

@@ -28,5 +28,10 @@ class LoadFrameworksForNewTenant implements ShouldQueue
         Artisan::call('frameworks:load-system', [
             '--tenants' => [$event->tenant->id]
         ]);
+        
+        // Load professional credential providers for the newly created tenant
+        Artisan::call('credentials:load-providers', [
+            '--tenants' => [$event->tenant->id]
+        ]);
     }
 }

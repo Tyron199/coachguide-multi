@@ -225,6 +225,14 @@ class User extends Authenticatable
         });
     }
     /**
+     * Get all professional credentials for this user
+     */
+    public function professionalCredentials()
+    {
+        return $this->hasMany(UserProfessionalCredential::class);
+    }
+
+    /**
      * Normalize email to lowercase and trim whitespace
      */
     protected function setEmailAttribute($value)

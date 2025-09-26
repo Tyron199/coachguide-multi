@@ -9,6 +9,7 @@ export function useAlert(): AlertService {
         info: alertService.info.bind(alertService),
         warning: alertService.warning.bind(alertService),
         error: alertService.error.bind(alertService),
+        success: alertService.success.bind(alertService),
     };
 }
 
@@ -17,6 +18,7 @@ export const alertConfirm = alertService.confirm.bind(alertService);
 export const alertInfo = alertService.info.bind(alertService);
 export const alertWarning = alertService.warning.bind(alertService);
 export const alertError = alertService.error.bind(alertService);
+export const alertSuccess = alertService.success.bind(alertService);
 
 // Vue plugin
 export default {
@@ -27,6 +29,7 @@ export default {
             info: alertService.info.bind(alertService),
             warning: alertService.warning.bind(alertService),
             error: alertService.error.bind(alertService),
+            success: alertService.success.bind(alertService),
         };
 
         // Provide for injection (accessible via inject('alert'))
@@ -35,6 +38,7 @@ export default {
             info: alertService.info.bind(alertService),
             warning: alertService.warning.bind(alertService),
             error: alertService.error.bind(alertService),
+            success: alertService.success.bind(alertService),
         });
     },
 };
