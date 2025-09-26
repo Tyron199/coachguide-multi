@@ -15,7 +15,7 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedClient">{{ selectedClient.name }} ({{ selectedClient.email
-                                            }})</span>
+                                        }})</span>
                                         <span v-else class="text-muted-foreground">Select a client</span>
                                     </SelectValue>
                                 </SelectTrigger>

@@ -9,12 +9,12 @@
 
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem } from '@/types';
-import { Brain } from 'lucide-vue-next';
-import { models as showModels, tools as showTools } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingFrameworkController';
+import { Brain, Settings, ExternalLink } from 'lucide-vue-next';
+import { models as showModels, tools as showTools, profiling as showProfiling } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingFrameworkController';
 import { Hammer } from 'lucide-vue-next';
-import { BookOpen } from 'lucide-vue-next';
-import { Settings } from 'lucide-vue-next';
+
 import customFrameworks from '@/routes/tenant/coach/custom-frameworks';
+
 
 
 const sidebarNavItems: NavItem[] = [
@@ -29,14 +29,14 @@ const sidebarNavItems: NavItem[] = [
         icon: Hammer,
     },
     {
-        title: 'Custom Frameworks',
+        title: 'Custom',
         href: customFrameworks.index().url,
         icon: Settings,
     },
     {
-        title: 'Training',
-        href: "#",
-        icon: BookOpen,
+        title: 'Profiling',
+        href: showProfiling().url,
+        icon: ExternalLink,
     }
 ];
 

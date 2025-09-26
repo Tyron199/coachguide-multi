@@ -65,6 +65,7 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(
         Route::get('coaching-frameworks', [CoachingFrameworkController::class, 'index'])->name('coaching-frameworks.index');
         Route::get('coaching-frameworks/models', [CoachingFrameworkController::class, 'models'])->name('coaching-frameworks.models');
         Route::get('coaching-frameworks/tools', [CoachingFrameworkController::class, 'tools'])->name('coaching-frameworks.tools');
+        Route::get('coaching-frameworks/profiling', [CoachingFrameworkController::class, 'profiling'])->name('coaching-frameworks.profiling');
         Route::get('coaching-frameworks/{framework}', [CoachingFrameworkController::class, 'show'])->name('coaching-frameworks.show');
 
         // Coaching Framework Instance routes

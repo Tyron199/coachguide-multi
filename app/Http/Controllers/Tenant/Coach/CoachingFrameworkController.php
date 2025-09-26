@@ -37,6 +37,13 @@ class CoachingFrameworkController extends Controller
     }
 
     /**
+     * Display only profiling frameworks
+     */
+    public function profiling(Request $request)
+    {
+        return Inertia::render('Tenant/coach/coaching-frameworks/Profiling');
+    }
+    /**
      * Get frameworks with filtering and search
      */
     private function getFrameworks(Request $request)
