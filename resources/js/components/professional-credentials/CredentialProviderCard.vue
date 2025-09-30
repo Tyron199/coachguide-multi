@@ -7,7 +7,7 @@
                     <!-- Provider Logo -->
                     <div v-if="provider.logo_url && !logoError" class="flex-shrink-0">
                         <img :src="provider.logo_url" :alt="`${provider.name} logo`"
-                            class="h-16 w-16 object-contain rounded" @error="handleLogoError" />
+                            class="h-auto w-24 object-contain rounded" @error="handleLogoError" />
                     </div>
                     <div v-else class="flex-shrink-0 h-12 w-12 rounded bg-muted flex items-center justify-center">
                         <span class="text-xs font-semibold text-muted-foreground">{{ provider.name.substring(0, 2)
@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="text-xs text-muted-foreground">
-                             Uploaded {{ provider.credential?.created_at
+                            Uploaded {{ provider.credential?.created_at
                                 ?
                                 formatRelativeDate(provider.credential.created_at) : '' }}
                         </div>
