@@ -5,7 +5,7 @@ return [
     'plans' => [
         'tier1' => [
             'name' => 'Basic',
-            'monthly_price' => 'R235',
+            'monthly_price' => 'R295',
             'yearly_price' => 'R2538',
             'yearly_discount' => '10%',
             'description' => 'Essential coaching tools',
@@ -38,7 +38,7 @@ return [
         ],
         'tier2' => [
             'name' => 'Professional',
-            'monthly_price' => 'R465',
+            'monthly_price' => 'R495',
             'yearly_price' => 'R4743',
             'yearly_discount' => '15%',
             'description' => 'Advanced tools with client access and CPD tracking',
