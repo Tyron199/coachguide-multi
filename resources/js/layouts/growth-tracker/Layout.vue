@@ -19,9 +19,8 @@ import {
     Award
 } from 'lucide-vue-next';
 import CoachingLogController from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingLogController';
-import TrainingLogController from '@/actions/App/Http/Controllers/Tenant/Coach/TrainingLogController';
-import SupervisionLogController from '@/actions/App/Http/Controllers/Tenant/Coach/SupervisionLogController';
-import ResourceLibraryController from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
+import ProfessionalDevelopmentController from '@/actions/App/Http/Controllers/Tenant/Coach/ProfessionalDevelopmentController';
+import SupervisionController from '@/actions/App/Http/Controllers/Tenant/Coach/SupervisionController';
 import ProfessionalCredentialController from '@/actions/App/Http/Controllers/Tenant/Coach/ProfessionalCredentialController';
 
 const sidebarNavItems: NavItem[] = [
@@ -32,17 +31,13 @@ const sidebarNavItems: NavItem[] = [
     },
     {
         title: 'Training & Development',
-        href: TrainingLogController.index().url,
+        href: ProfessionalDevelopmentController.index().url,
         icon: GraduationCap,
     },
-    {
-        title: 'Resource Library',
-        href: ResourceLibraryController.index().url,
-        icon: BookOpenCheck,
-    },
+
     {
         title: 'Supervision Sessions',
-        href: SupervisionLogController.index().url,
+        href: SupervisionController.index().url,
         icon: Video,
     },
     {

@@ -12,8 +12,10 @@ use App\Http\Controllers\Tenant\Coach\ContractController;
 use App\Http\Controllers\Tenant\Coach\CoachingLogController;
 use App\Http\Controllers\Tenant\Coach\TrainingLogController;
 use App\Http\Controllers\Tenant\Coach\SupervisionLogController;
+use App\Http\Controllers\Tenant\Coach\SupervisionController;
 use App\Http\Controllers\Tenant\Coach\ResourceLibraryController;
 use App\Http\Controllers\Tenant\Coach\ProfessionalCredentialController;
+use App\Http\Controllers\Tenant\Coach\ProfessionalDevelopmentController;
 
 
 
@@ -125,6 +127,30 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(
             Route::post('/{credential}/replace', [ProfessionalCredentialController::class, 'replace'])->name('replace');
             Route::delete('/{credential}', [ProfessionalCredentialController::class, 'destroy'])->name('destroy');
             Route::get('/{credential}/download', [ProfessionalCredentialController::class, 'download'])->name('download');
+        });
+
+        //Training & Development (Growth Tracker)
+        Route::prefix('growth-tracker/training-development')->name('growth-tracker.training-development.')->group(function () {
+            Route::get('/', [ProfessionalDevelopmentController::class, 'index'])->name('index');
+            Route::get('/create', [ProfessionalDevelopmentController::class, 'create'])->name('create');
+            Route::post('/', [ProfessionalDevelopmentController::class, 'store'])->name('store');
+            Route::post('/delete', [ProfessionalDevelopmentController::class, 'destroyBatch'])->name('delete.batch');
+            Route::get('/{professionalDevelopment}', [ProfessionalDevelopmentController::class, 'show'])->name('show');
+            Route::get('/{professionalDevelopment}/edit', [ProfessionalDevelopmentController::class, 'edit'])->name('edit');
+            Route::patch('/{professionalDevelopment}', [ProfessionalDevelopmentController::class, 'update'])->name('update');
+            Route::delete('/{professionalDevelopment}', [ProfessionalDevelopmentController::class, 'destroy'])->name('destroy');
+        });
+
+        //Supervision Log (Growth Tracker)
+        Route::prefix('growth-tracker/supervision-log')->name('growth-tracker.supervision-log.')->group(function () {
+            Route::get('/', [SupervisionController::class, 'index'])->name('index');
+            Route::get('/create', [SupervisionController::class, 'create'])->name('create');
+            Route::post('/', [SupervisionController::class, 'store'])->name('store');
+            Route::post('/delete', [SupervisionController::class, 'destroyBatch'])->name('delete.batch');
+            Route::get('/{supervision}', [SupervisionController::class, 'show'])->name('show');
+            Route::get('/{supervision}/edit', [SupervisionController::class, 'edit'])->name('edit');
+            Route::patch('/{supervision}', [SupervisionController::class, 'update'])->name('update');
+            Route::delete('/{supervision}', [SupervisionController::class, 'destroy'])->name('destroy');
         });
 
     });
