@@ -10,7 +10,7 @@
 
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem, type Client } from '@/types';
-import { User, Target, FileText, CheckSquare, HandshakeIcon } from 'lucide-vue-next';
+import { User, Target, FileText, CheckSquare, HandshakeIcon, Calendar1Icon } from 'lucide-vue-next';
 import clients from '@/routes/tenant/coach/clients';
 import contracts from '@/routes/tenant/coach/clients/contracts';
 import { computed } from 'vue';
@@ -31,6 +31,11 @@ const sidebarNavItems: NavItem[] = [
         title: 'Objectives',
         href: clients.objectives(props.client.id),
         icon: Target,
+    },
+    {
+        title: 'Sessions',
+        href: clients.sessions(props.client.id),
+        icon: Calendar1Icon,
     },
     {
         title: 'Notes',

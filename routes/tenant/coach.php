@@ -31,6 +31,7 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(
         Route::get('clients/{client}/objectives/edit', [ClientController::class, 'editObjectives'])->name('clients.objectives.edit');
         Route::put('clients/{client}/objectives', [ClientController::class, 'updateObjectives'])->name('clients.objectives.update');
         Route::get('clients/{client}/notes', [CoachingNoteController::class, 'clientNotes'])->name('clients.notes');
+        Route::get('clients/{client}/sessions', [CoachingSessionController::class, 'clientSessions'])->name('clients.sessions');
         Route::post('clients/archive', [ClientController::class, 'archiveBatch'])->name('clients.archive.batch');
         Route::patch('clients/{client}/archive', [ClientController::class, 'archive'])->name('clients.archive');
         Route::post('clients/unarchive', [ClientController::class, 'unarchiveBatch'])->name('clients.unarchive.batch');
@@ -113,8 +114,7 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(
         //Training log
         Route::get('training-log', [TrainingLogController::class, 'index'])->name('training-log.index');
 
-        //Supervision log
-        Route::get('supervision-log', [SupervisionLogController::class, 'index'])->name('supervision-log.index');
+    
 
         //Resource lib
         Route::get('resource-library', [ResourceLibraryController::class, 'index'])->name('resource-library.index');

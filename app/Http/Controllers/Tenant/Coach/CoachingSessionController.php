@@ -12,6 +12,34 @@ use Inertia\Inertia;
 class CoachingSessionController extends Controller
 {
     /**
+     * Display sessions for a specific client
+     */
+    public function clientSessions(User $client)
+    {
+        // Authorize access to this client
+        $this->authorize('view', $client);
+        
+        // Load the client with basic relationships
+        $client->load(['company', 'profile', 'assignedCoach']);
+        
+        // Get all sessions for this client (both past and future)
+        $sessions = CoachingSession::where('client_id', $client->id)
+            ->with(['coach'])
+            ->orderBy('scheduled_at', 'desc')
+            ->get();
+        
+        return Inertia::render('Tenant/coach/client/ClientSessions', [
+            'client' => $client,
+            'sessions' => $sessions,
+            'can' => [
+                'create' => auth()->user()->can('create', CoachingSession::class),
+                'update' => auth()->user()->can('update', $client),
+                'delete' => auth()->user()->can('update', $client),
+            ]
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request) //upcoming by default
