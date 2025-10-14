@@ -24,13 +24,18 @@ class LoadFrameworksForNewTenant implements ShouldQueue
      */
     public function handle(TenantCreated $event): void
     {
-        // Load system frameworks for the newly created tenant
+        // Load system frameworks
         Artisan::call('frameworks:load-system', [
             '--tenants' => [$event->tenant->id]
         ]);
         
-        // Load professional credential providers for the newly created tenant
+        // Load professional credential providers
         Artisan::call('credentials:load-providers', [
+            '--tenants' => [$event->tenant->id]
+        ]);
+
+        // Load resource library for the newly created tenant
+        Artisan::call('resources:load', [
             '--tenants' => [$event->tenant->id]
         ]);
     }

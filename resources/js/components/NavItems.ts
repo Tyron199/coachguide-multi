@@ -1,5 +1,5 @@
 import { type NavItem } from "@/types";
-import { Calendar1Icon, Settings2, LayoutGrid, Users, CreditCard, Hammer, ChartLine, UserStar } from "lucide-vue-next";
+import { Calendar1Icon, Settings2, LayoutGrid, Users, CreditCard, Hammer, ChartLine, UserStar, BookOpen } from "lucide-vue-next";
 import { dashboard } from "@/routes/tenant";
 import clients from "@/routes/tenant/coach/clients";
 import coachingSessions from "@/routes/tenant/coach/coaching-sessions";
@@ -9,6 +9,7 @@ import { models as showModels } from '@/actions/App/Http/Controllers/Tenant/Coac
 import { index as coachingLogIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingLogController';
 import { index as coachesIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/CoachController';
 import { index as administratorsIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/AdminController';
+import { index as resourceLibraryIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
@@ -34,6 +35,11 @@ const mainNavItems: NavItem[] = [
         title: 'Growth Tracker',
         href: coachingLogIndex().url,
         icon: ChartLine
+    },
+    {
+        title: 'Resource Library',
+        href: resourceLibraryIndex().url,
+        icon: BookOpen
     }
 ];
 
