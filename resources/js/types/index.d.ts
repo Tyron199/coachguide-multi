@@ -151,9 +151,14 @@ export interface CalendarEvent {
     meeting_url?: string;
     meeting_id?: string;
     sync_status: string;
+    sync_error?: string;
     last_synced_at?: string;
     created_at: string;
     updated_at: string;
+    user?: {
+        id: number;
+        name: string;
+    };
 }
 
 export interface CoachingSession {

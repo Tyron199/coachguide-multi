@@ -77,6 +77,48 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Calendar Integration Card -->
+                <div v-if="session.calendar_events && session.calendar_events.length > 0"
+                    class="rounded-lg border bg-card p-6">
+                    <h2 class="text-lg font-medium mb-4">Calendar Sync Status</h2>
+                    <div class="space-y-4">
+                        <div v-for="event in session.calendar_events" :key="event.id"
+                            class="flex items-start justify-between p-4 rounded-lg border bg-muted/30">
+                            <div class="flex-1 space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <Calendar class="h-4 w-4 text-muted-foreground" />
+                                    <span class="font-medium">{{ formatProvider(event.provider) }}</span>
+                                    <Badge v-if="event.user" variant="outline" class="text-xs">
+                                        {{ event.user.name }}
+                                    </Badge>
+                                </div>
+                                <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                                    <div class="flex items-center gap-1">
+                                        <span>Status:</span>
+                                        <Badge :variant="getSyncStatusVariant(event.sync_status)" class="text-xs">
+                                            {{ formatSyncStatus(event.sync_status) }}
+                                        </Badge>
+                                    </div>
+                                    <div v-if="event.last_synced_at" class="flex items-center gap-1">
+                                        <Clock class="h-3 w-3" />
+                                        <span>{{ formatRelativeTime(event.last_synced_at) }}</span>
+                                    </div>
+                                </div>
+                                <div v-if="event.sync_error" class="text-sm text-destructive">
+                                    Error: {{ event.sync_error }}
+                                </div>
+                                <div v-if="event.meeting_url" class="flex items-center gap-2">
+                                    <a :href="event.meeting_url" target="_blank" rel="noopener noreferrer"
+                                        class="text-sm text-primary hover:underline inline-flex items-center gap-1">
+                                        <ExternalLink class="h-3 w-3" />
+                                        <span>Meeting Link</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </CoachingSessionLayout>
     </AppLayout>
@@ -93,7 +135,7 @@ import { Badge } from '@/components/ui/badge';
 import { type BreadcrumbItem, type CoachingSession } from '@/types';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
 import clients from '@/routes/tenant/coach/clients';
-import { Edit, Trash2, ExternalLink } from 'lucide-vue-next';
+import { Edit, Trash2, ExternalLink, Calendar, Clock } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
 import { alertConfirm } from '@/plugins/alert';
 
@@ -155,6 +197,67 @@ const getMeetingUrl = (): string | null => {
     // Get the first calendar event with a meeting URL
     const eventWithUrl = props.session.calendar_events?.find(event => event.meeting_url);
     return eventWithUrl?.meeting_url || null;
+};
+
+const formatProvider = (provider: string): string => {
+    switch (provider.toLowerCase()) {
+        case 'google':
+            return 'Google Calendar';
+        case 'microsoft':
+        case 'outlook':
+            return 'Microsoft Outlook';
+        default:
+            return provider;
+    }
+};
+
+const formatSyncStatus = (status: string): string => {
+    switch (status) {
+        case 'created':
+            return 'Synced';
+        case 'updated':
+            return 'Updated';
+        case 'failed':
+            return 'Failed';
+        case 'deleted':
+            return 'Deleted';
+        default:
+            return status;
+    }
+};
+
+const getSyncStatusVariant = (status: string) => {
+    switch (status) {
+        case 'created':
+        case 'updated':
+            return 'default';
+        case 'failed':
+            return 'destructive';
+        case 'deleted':
+            return 'secondary';
+        default:
+            return 'outline';
+    }
+};
+
+const formatRelativeTime = (dateString: string): string => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+    });
 };
 
 // Delete session function

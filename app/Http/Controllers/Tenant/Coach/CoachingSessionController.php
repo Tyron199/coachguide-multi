@@ -457,7 +457,7 @@ class CoachingSessionController extends Controller
     public function show(CoachingSession $coachingSession)
     {
         // Load relationships
-        $coachingSession->load(['client', 'coach']);
+        $coachingSession->load(['client', 'coach', 'calendarEvents.user']);
         
         // Authorization: coaches can only view their own sessions unless admin
         if (auth()->user()->hasRole('coach') && !auth()->user()->hasRole('admin')) {
