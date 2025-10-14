@@ -63,7 +63,7 @@
                                     class="flex-shrink-0">
                                     <a :href="getMeetingUrl(session)" target="_blank" rel="noopener noreferrer">
                                         <ExternalLink class="mr-1 h-3 w-3" />
-                                        <span class="hidden xs:inline">Join</span>
+                                        <span class="hidden xs:inline">Join Meeting</span>
                                     </a>
                                 </Button>
                                 <Button variant="outline" size="sm" as-child class="flex-shrink-0">
@@ -127,7 +127,7 @@
                                     class="flex-shrink-0">
                                     <a :href="getMeetingUrl(session)" target="_blank" rel="noopener noreferrer">
                                         <ExternalLink class="mr-1 h-3 w-3" />
-                                        <span class="hidden xs:inline">Join</span>
+                                        <span class="hidden xs:inline">Join Meeting</span>
                                     </a>
                                 </Button>
                                 <Button variant="outline" size="sm" as-child class="flex-shrink-0">

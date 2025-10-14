@@ -71,9 +71,10 @@
                                 </Badge>
                                 <a v-if="getMeetingUrl(session)" :href="getMeetingUrl(session)" target="_blank"
                                     rel="noopener noreferrer"
-                                    class="text-primary hover:text-primary/80 inline-flex items-center"
+                                    class="text-primary hover:text-primary/80 inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap"
                                     title="Join Meeting">
                                     <ExternalLink class="h-3.5 w-3.5" />
+                                    <span>Join Meeting</span>
                                 </a>
                             </div>
                         </TableCell>
@@ -157,9 +158,10 @@
                                 </Badge>
                                 <a v-if="getMeetingUrl(session)" :href="getMeetingUrl(session)" target="_blank"
                                     rel="noopener noreferrer"
-                                    class="text-primary hover:text-primary/80 inline-flex items-center"
+                                    class="text-primary hover:text-primary/80 inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap"
                                     title="Join Meeting">
                                     <ExternalLink class="h-3.5 w-3.5" />
+                                    <span>Join Meeting</span>
                                 </a>
                             </div>
                         </div>
