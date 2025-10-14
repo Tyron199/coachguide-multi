@@ -65,9 +65,17 @@
                         </TableCell>
                         <TableCell>{{ session.formatted_duration || '-' }}</TableCell>
                         <TableCell>
-                            <Badge :variant="getSessionTypeVariant(session.session_type)">
-                                {{ formatSessionType(session.session_type) }}
-                            </Badge>
+                            <div class="flex items-center gap-2">
+                                <Badge :variant="getSessionTypeVariant(session.session_type)">
+                                    {{ formatSessionType(session.session_type) }}
+                                </Badge>
+                                <a v-if="getMeetingUrl(session)" :href="getMeetingUrl(session)" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary hover:text-primary/80 inline-flex items-center"
+                                    title="Join Meeting">
+                                    <ExternalLink class="h-3.5 w-3.5" />
+                                </a>
+                            </div>
                         </TableCell>
                         <TableCell v-if="showAttendanceColumn">
                             <Badge v-if="isSessionInPast(session.scheduled_at)"
@@ -143,9 +151,17 @@
 
                         <div class="flex items-center justify-between gap-4">
                             <span class="text-muted-foreground">Type</span>
-                            <Badge :variant="getSessionTypeVariant(session.session_type)">
-                                {{ formatSessionType(session.session_type) }}
-                            </Badge>
+                            <div class="flex items-center gap-2">
+                                <Badge :variant="getSessionTypeVariant(session.session_type)">
+                                    {{ formatSessionType(session.session_type) }}
+                                </Badge>
+                                <a v-if="getMeetingUrl(session)" :href="getMeetingUrl(session)" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary hover:text-primary/80 inline-flex items-center"
+                                    title="Join Meeting">
+                                    <ExternalLink class="h-3.5 w-3.5" />
+                                </a>
+                            </div>
                         </div>
 
                         <div v-if="showAttendanceColumn && isSessionInPast(session.scheduled_at)"
@@ -183,6 +199,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { ExternalLink } from 'lucide-vue-next';
 
 import {
     Table,
@@ -198,6 +215,12 @@ import { PaginationComplete } from '@/components/ui/pagination';
 import SessionFilters from '@/components/SessionFilters.vue';
 import clientRoutes from '@/routes/tenant/coach/clients';
 import sessionRoutes from '@/routes/tenant/coach/coaching-sessions';
+
+interface CalendarEvent {
+    id: number;
+    meeting_url?: string;
+    sync_status: string;
+}
 
 interface CoachingSession {
     id: number;
@@ -217,6 +240,7 @@ interface CoachingSession {
     client_attended: boolean | null;
     created_at: string;
     is_active: boolean;
+    calendar_events?: CalendarEvent[];
 }
 
 interface PaginatedSessions {
@@ -416,6 +440,16 @@ const toggleSelectAll = (checked: boolean | 'indeterminate') => {
     }
 };
 
+const getMeetingUrl = (session: CoachingSession): string | null => {
+    // Only show meeting URL for online or hybrid sessions
+    if (session.session_type !== 'online' && session.session_type !== 'hybrid') {
+        return null;
+    }
+
+    // Get the first calendar event with a meeting URL
+    const eventWithUrl = session.calendar_events?.find(event => event.meeting_url);
+    return eventWithUrl?.meeting_url || null;
+};
 
 
 

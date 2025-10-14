@@ -141,6 +141,21 @@ export interface CompanyFilters extends SortableFilters {
     search?: string;
 }
 
+export interface CalendarEvent {
+    id: number;
+    coaching_session_id: number;
+    user_id: number;
+    provider: string;
+    external_event_id: string;
+    external_calendar_id?: string;
+    meeting_url?: string;
+    meeting_id?: string;
+    sync_status: string;
+    last_synced_at?: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface CoachingSession {
     id: number;
     client_id: number;
@@ -159,6 +174,7 @@ export interface CoachingSession {
     client?: Client;
     coach?: User;
     is_past: boolean;
+    calendar_events?: CalendarEvent[];
 }
 
 export interface CoachingNote {

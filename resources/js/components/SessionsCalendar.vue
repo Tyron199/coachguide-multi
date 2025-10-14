@@ -89,6 +89,12 @@ import SessionCard from '@/components/SessionCard.vue';
 import SessionFilters from '@/components/SessionFilters.vue';
 
 
+interface CalendarEvent {
+    id: number;
+    meeting_url?: string;
+    sync_status: string;
+}
+
 interface CoachingSession {
     id: number;
     session_number: number;
@@ -107,6 +113,7 @@ interface CoachingSession {
     client_attended: boolean | null;
     created_at: string;
     is_active: boolean;
+    calendar_events?: CalendarEvent[];
 }
 
 interface Props {

@@ -24,7 +24,7 @@ class CoachingSessionController extends Controller
         
         // Get all sessions for this client (both past and future)
         $sessions = CoachingSession::where('client_id', $client->id)
-            ->with(['coach'])
+            ->with(['coach', 'calendarEvents'])
             ->orderBy('scheduled_at', 'desc')
             ->get();
         
@@ -59,7 +59,7 @@ class CoachingSessionController extends Controller
 
     private function getSessions(Request $request, bool $upcoming = true)
     {
-        $query = CoachingSession::with(['client', 'coach'])
+        $query = CoachingSession::with(['client', 'coach', 'calendarEvents'])
             ->when($upcoming, 
                 fn($q) => $q->where('end_at', '>', now()),
                 fn($q) => $q->where('end_at', '<', now())
@@ -192,7 +192,7 @@ class CoachingSessionController extends Controller
 
     private function getCalendarSessions(Request $request)
     {
-        $query = CoachingSession::with(['client', 'coach']);
+        $query = CoachingSession::with(['client', 'coach', 'calendarEvents']);
         
         // Auto-apply date range - default to current 7-day period if no range provided
         if (!$request->has('date_from') || !$request->has('date_to')) {

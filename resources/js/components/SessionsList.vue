@@ -59,6 +59,13 @@
 
                             <!-- Actions -->
                             <div class="flex items-center gap-2">
+                                <Button v-if="getMeetingUrl(session)" variant="default" size="sm" as-child
+                                    class="flex-shrink-0">
+                                    <a :href="getMeetingUrl(session)" target="_blank" rel="noopener noreferrer">
+                                        <ExternalLink class="mr-1 h-3 w-3" />
+                                        <span class="hidden xs:inline">Join</span>
+                                    </a>
+                                </Button>
                                 <Button variant="outline" size="sm" as-child class="flex-shrink-0">
                                     <Link :href="sessionRoutes.show(session.id).url">
                                     <Eye class="mr-1 h-3 w-3" />
@@ -116,6 +123,13 @@
 
                             <!-- Actions -->
                             <div class="flex items-center gap-2">
+                                <Button v-if="getMeetingUrl(session)" variant="default" size="sm" as-child
+                                    class="flex-shrink-0">
+                                    <a :href="getMeetingUrl(session)" target="_blank" rel="noopener noreferrer">
+                                        <ExternalLink class="mr-1 h-3 w-3" />
+                                        <span class="hidden xs:inline">Join</span>
+                                    </a>
+                                </Button>
                                 <Button variant="outline" size="sm" as-child class="flex-shrink-0">
                                     <Link :href="sessionRoutes.show(session.id).url">
                                     <Eye class="mr-1 h-3 w-3" />
@@ -137,7 +151,7 @@ import { Link } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { type CoachingSession } from '@/types';
-import { Calendar1Icon, Clock, Timer, User, Eye } from 'lucide-vue-next';
+import { Calendar1Icon, Clock, Timer, User, Eye, ExternalLink } from 'lucide-vue-next';
 import sessionRoutes from '@/routes/tenant/coach/coaching-sessions';
 
 interface Props {
@@ -206,6 +220,17 @@ const formatSessionType = (type: string) => {
 };
 
 // Get session type badge variant
+const getMeetingUrl = (session: CoachingSession): string | null => {
+    // Only show meeting URL for online or hybrid sessions
+    if (session.session_type !== 'online' && session.session_type !== 'hybrid') {
+        return null;
+    }
+
+    // Get the first calendar event with a meeting URL
+    const eventWithUrl = session.calendar_events?.find(event => event.meeting_url);
+    return eventWithUrl?.meeting_url || null;
+};
+
 const getSessionTypeVariant = (type: string) => {
     switch (type) {
         case 'in_person':

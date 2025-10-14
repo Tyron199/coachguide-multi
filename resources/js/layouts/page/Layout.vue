@@ -37,7 +37,7 @@ const currentPath = typeof window !== undefined ? window.location.pathname + win
                         <img :src="avatar" :alt="title" class="w-32 h-auto overflow-hidden rounded-lg">
                     </div>
                     <div v-if="title || description">
-                        <div v-text="title" class="text-lg font-bold"></div>
+                        <div v-text="title" class=" font-bold"></div>
                         <p v-text="description" class="text-muted-foreground"></p>
                     </div>
 

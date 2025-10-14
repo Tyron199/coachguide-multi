@@ -52,14 +52,14 @@
                 </Badge>
             </div>
 
-            <Button variant="ghost" size="sm" class="h-4 px-1 text-[10px] text-muted-foreground hover:text-foreground"
-                disabled>
+            <a v-if="getMeetingUrl(session)" :href="getMeetingUrl(session)" target="_blank" rel="noopener noreferrer"
+                class="h-4 px-1 text-[10px] text-primary hover:text-primary/80 inline-flex items-center" @click.stop>
                 <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
                     <path
                         d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
                     <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
                 </svg>
-            </Button>
+            </a>
         </div>
         </Link>
     </div>
@@ -71,6 +71,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import coachingSessions from '@/routes/tenant/coach/coaching-sessions';
+
+interface CalendarEvent {
+    id: number;
+    meeting_url?: string;
+    sync_status: string;
+}
 
 interface CoachingSession {
     id: number;
@@ -90,6 +96,7 @@ interface CoachingSession {
     client_attended: boolean | null;
     created_at: string;
     is_active: boolean;
+    calendar_events?: CalendarEvent[];
 }
 
 interface Props {
@@ -182,5 +189,16 @@ const isSessionWithinHour = (scheduledAt: string) => {
 
     // Session is within the next hour if it's after now and before one hour from now
     return sessionDate >= now && sessionDate <= oneHourFromNow;
+};
+
+const getMeetingUrl = (session: CoachingSession): string | null => {
+    // Only show meeting URL for online or hybrid sessions
+    if (session.session_type !== 'online' && session.session_type !== 'hybrid') {
+        return null;
+    }
+
+    // Get the first calendar event with a meeting URL
+    const eventWithUrl = session.calendar_events?.find(event => event.meeting_url);
+    return eventWithUrl?.meeting_url || null;
 };
 </script>

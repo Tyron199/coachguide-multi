@@ -47,8 +47,14 @@
                         </div>
                         <div>
                             <Label class="text-sm font-medium text-muted-foreground">Session Type</Label>
-                            <div class="mt-1">
+                            <div class="mt-1 flex items-center gap-2">
                                 <Badge>{{ formatSessionType(session.session_type) }}</Badge>
+                                <Button v-if="getMeetingUrl()" variant="default" size="sm" as-child>
+                                    <a :href="getMeetingUrl()" target="_blank" rel="noopener noreferrer">
+                                        <ExternalLink class="mr-2 h-4 w-4" />
+                                        Join Meeting
+                                    </a>
+                                </Button>
                             </div>
                         </div>
                         <div>
@@ -87,7 +93,7 @@ import { Badge } from '@/components/ui/badge';
 import { type BreadcrumbItem, type CoachingSession } from '@/types';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
 import clients from '@/routes/tenant/coach/clients';
-import { Edit, Trash2 } from 'lucide-vue-next';
+import { Edit, Trash2, ExternalLink } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
 import { alertConfirm } from '@/plugins/alert';
 
@@ -139,6 +145,17 @@ const isSessionInPast = computed(() => {
     if (!props.session.scheduled_at) return false;
     return new Date(props.session.scheduled_at) < new Date();
 });
+
+const getMeetingUrl = (): string | null => {
+    // Only show meeting URL for online or hybrid sessions
+    if (props.session.session_type !== 'online' && props.session.session_type !== 'hybrid') {
+        return null;
+    }
+
+    // Get the first calendar event with a meeting URL
+    const eventWithUrl = props.session.calendar_events?.find(event => event.meeting_url);
+    return eventWithUrl?.meeting_url || null;
+};
 
 // Delete session function
 const handleDeleteSession = async () => {
