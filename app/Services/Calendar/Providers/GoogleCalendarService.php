@@ -30,10 +30,17 @@ class GoogleCalendarService extends BaseCalendarService
         $payload = $this->buildEventPayload($session);
         $calendarId = 'primary'; // Use primary calendar by default
         
+        // Build URL with conferenceDataVersion as query parameter if present
+        $url = "{$this->getApiBaseUrl()}/calendars/{$calendarId}/events";
+        if (isset($payload['conferenceDataVersion'])) {
+            $url .= "?conferenceDataVersion=" . $payload['conferenceDataVersion'];
+            unset($payload['conferenceDataVersion']); // Remove from body
+        }
+        
         $response = $this->makeAuthenticatedRequest(
             $integration,
             'POST',
-            "{$this->getApiBaseUrl()}/calendars/{$calendarId}/events",
+            $url,
             $payload
         );
 
@@ -62,10 +69,17 @@ class GoogleCalendarService extends BaseCalendarService
         $payload = $this->buildEventPayload($session);
         $calendarId = $calendarEvent->external_calendar_id ?: 'primary';
         
+        // Build URL with conferenceDataVersion as query parameter if present
+        $url = "{$this->getApiBaseUrl()}/calendars/{$calendarId}/events/{$calendarEvent->external_event_id}";
+        if (isset($payload['conferenceDataVersion'])) {
+            $url .= "?conferenceDataVersion=" . $payload['conferenceDataVersion'];
+            unset($payload['conferenceDataVersion']); // Remove from body
+        }
+        
         $response = $this->makeAuthenticatedRequest(
             $integration,
             'PUT',
-            "{$this->getApiBaseUrl()}/calendars/{$calendarId}/events/{$calendarEvent->external_event_id}",
+            $url,
             $payload
         );
 
