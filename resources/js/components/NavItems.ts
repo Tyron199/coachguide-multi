@@ -60,11 +60,11 @@ const adminNavItems: NavItem[] = [
         href: themeIndex().url,
         icon: Settings2,
     },
-    {
-        title: 'Subscription',
-        href: manage().url,
-        icon: CreditCard,
-    },
+    // {
+    //     title: 'Subscription',
+    //     href: manage().url,
+    //     icon: CreditCard,
+    // },
 ];
 
 const footerNavItems: NavItem[] = [

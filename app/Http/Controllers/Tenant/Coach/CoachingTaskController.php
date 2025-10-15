@@ -8,6 +8,7 @@ use App\Models\Tenant\CoachingSession;
 use App\Models\Tenant\CoachingTaskReminder;
 use App\Models\Tenant\User;
 use App\Enums\Tenant\TaskReminderStatus;
+use App\Enums\Tenant\CoachingTaskStatus;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -68,6 +69,86 @@ class CoachingTaskController extends Controller
                 'update' => auth()->user()->can('update', $client),
                 'delete' => auth()->user()->can('create', CoachingTask::class),
             ]
+        ]);
+    }
+
+    /**
+     * Display a listing of all coaching tasks
+     */
+    public function index(Request $request)
+    {
+        $query = CoachingTask::with(['client:id,name', 'session:id'])
+            ->where('coach_id', auth()->id());
+        
+        // Filter by status view (pending, overdue, completed)
+        $view = $request->get('view', 'pending');
+        
+        switch ($view) {
+            case 'pending':
+                $query->whereIn('status', [CoachingTaskStatus::PENDING, CoachingTaskStatus::IN_PROGRESS]);
+                break;
+            case 'overdue':
+                $query->overdue(); // Use existing scope
+                break;
+            case 'completed':
+                $query->where('status', CoachingTaskStatus::COMPLETED);
+                break;
+        }
+        
+        // Search filter
+        if ($request->has('search') && $request->search) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+        
+        // Client filter
+        if ($request->has('client_id') && $request->client_id) {
+            $query->where('client_id', $request->client_id);
+        }
+        
+        // Status filter (within the view)
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+        
+        // Evidence required filter
+        if ($request->has('evidence_required') && $request->evidence_required !== null) {
+            $query->where('evidence_required', $request->boolean('evidence_required'));
+        }
+        
+        // Sorting
+        $sortBy = $request->get('sort_by', 'deadline');
+        $sortDirection = $request->get('sort_direction', 'asc');
+        
+        if ($sortBy === 'client') {
+            $query->join('users', 'users.id', '=', 'coaching_tasks.client_id')
+                  ->select('coaching_tasks.*')
+                  ->orderBy('users.name', $sortDirection);
+        } else {
+            $query->orderBy($sortBy, $sortDirection);
+        }
+        
+        // Get clients for filter dropdown
+        $clients = auth()->user()->assignedClients()
+            ->whereHas('roles', fn($q) => $q->where('name', 'client'))
+            ->where('archived', false)
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+        
+        $tasks = $query->paginate(15)->withQueryString();
+        
+        return Inertia::render('Tenant/coach/coaching-tasks/ListCoachingTasks', [
+            'tasks' => $tasks,
+            'clients' => $clients,
+            'filters' => [
+                'search' => $request->search,
+                'client_id' => $request->client_id,
+                'status' => $request->status,
+                'evidence_required' => $request->evidence_required,
+                'sort_by' => $sortBy,
+                'sort_direction' => $sortDirection,
+                'view' => $view,
+            ],
         ]);
     }
 
