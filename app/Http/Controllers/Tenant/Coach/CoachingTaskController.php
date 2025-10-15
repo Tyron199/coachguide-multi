@@ -77,7 +77,7 @@ class CoachingTaskController extends Controller
      */
     public function index(Request $request)
     {
-        $query = CoachingTask::with(['client:id,name', 'session:id'])
+        $query = CoachingTask::with(['client:id,name'])
             ->where('coach_id', auth()->id());
         
         // Filter by status view (pending, overdue, completed)
@@ -309,6 +309,26 @@ class CoachingTaskController extends Controller
         } else {
             return to_route('tenant.coach.clients.tasks', $task->client_id);
         }
+    }
+
+    /**
+     * Update the task status (quick action)
+     */
+    public function updateStatus(Request $request, CoachingTask $task)
+    {
+        $this->authorize('view', $task->client);
+        $this->authorize('update', $task);
+        
+        $request->validate([
+            'status' => 'required|in:pending,in_progress,review,completed,cancelled',
+        ]);
+        
+        $task->update([
+            'status' => $request->status,
+            'completed_at' => $request->status === 'completed' ? now() : $task->completed_at,
+        ]);
+        
+        return back();
     }
 
     /**

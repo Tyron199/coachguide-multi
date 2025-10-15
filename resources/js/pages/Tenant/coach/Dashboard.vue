@@ -25,6 +25,7 @@ import { create as createSession } from '@/actions/App/Http/Controllers/Tenant/C
 import { create as createClient } from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
 import { show as showSession, index as indexSessions } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 import coachingTasks from '@/routes/tenant/coach/coaching-tasks';
+import { show as showTask } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingTaskController';
 
 interface Props {
     dashboardStats: {
@@ -275,7 +276,7 @@ const getDateLabel = (dateString: string) => {
                                 <CardTitle>Outstanding Actions</CardTitle>
                                 <CardDescription>Tasks requiring attention</CardDescription>
                             </div>
-                            <Link :href="indexTasks['/coach/coaching-tasks']().url">
+                            <Link :href="coachingTasks.index().url">
                             <Button variant="outline" size="sm">
                                 <Eye class="mr-2 h-4 w-4" />
                                 View All
@@ -302,9 +303,11 @@ const getDateLabel = (dateString: string) => {
                                     </div>
                                 </div>
                             </div>
-                            <Button variant="ghost" size="sm" disabled>
+                            <Link :href="showTask(action.id).url">
+                            <Button variant="ghost" size="sm">
                                 <ArrowRight class="h-4 w-4" />
                             </Button>
+                            </Link>
                         </div>
                     </CardContent>
                 </Card>

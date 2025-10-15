@@ -7,6 +7,10 @@
             <div class="space-y-6">
                 <PageHeader :title="task.title" :description="pageDescription">
                     <template #actions>
+                        <Button v-if="canMarkComplete" @click="markAsComplete">
+                            <CheckCircle class="mr-2 h-4 w-4" />
+                            Mark as Complete
+                        </Button>
                         <Button variant="outline" as-child>
                             <Link :href="taskRoutes.edit(task.id).url">
                             <Edit class="mr-2 h-4 w-4" />
@@ -143,7 +147,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ClientLayout from '@/layouts/client/Layout.vue';
@@ -156,7 +160,9 @@ import { type BreadcrumbItem, type CoachingTask } from '@/types';
 import clients from '@/routes/tenant/coach/clients';
 import sessions from '@/routes/tenant/coach/coaching-sessions';
 import taskRoutes from '@/routes/tenant/coach/coaching-tasks';
-import { Calendar, Clock, Bell, MessageSquare, User, Paperclip, File, Edit } from 'lucide-vue-next';
+import { updateStatus as updateTaskStatus } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingTaskController';
+import { alertConfirm } from '@/plugins/alert';
+import { Calendar, Clock, Bell, MessageSquare, User, Paperclip, File, Edit, CheckCircle } from 'lucide-vue-next';
 
 const props = defineProps<{
     task: CoachingTask & {
@@ -292,6 +298,29 @@ const isOverdue = (task: CoachingTask) => {
     const deadline = new Date(task.deadline);
     const now = new Date();
     return deadline < now && !['completed', 'cancelled'].includes(task.status);
+};
+
+// Check if task can be marked as complete
+const canMarkComplete = computed(() => {
+    return props.task.status !== 'completed' && props.task.status !== 'cancelled';
+});
+
+// Mark task as complete
+const markAsComplete = async () => {
+    const confirmed = await alertConfirm({
+        title: 'Mark Task as Complete',
+        description: `Are you sure you want to mark "${props.task.title}" as completed?`,
+        confirmText: 'Mark as Complete',
+        variant: 'default'
+    });
+
+    if (confirmed) {
+        router.patch(updateTaskStatus(props.task.id).url, {
+            status: 'completed',
+        }, {
+            preserveScroll: true,
+        });
+    }
 };
 
 
