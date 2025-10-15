@@ -56,6 +56,8 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(
         Route::get('coaching-sessions/{session}/notes', [CoachingNoteController::class, 'sessionNotes'])->name('coaching-sessions.notes');
         
         // Coaching Tasks routes
+        Route::get('coaching-tasks/overdue', [CoachingTaskController::class, 'index'])->defaults('view', 'overdue')->name('coaching-tasks.overdue');
+        Route::get('coaching-tasks/completed', [CoachingTaskController::class, 'index'])->defaults('view', 'completed')->name('coaching-tasks.completed');
         Route::resource('coaching-tasks', CoachingTaskController::class)->parameters(['coaching-tasks' => 'task']);
         Route::get('coaching-sessions/{session}/tasks', [CoachingTaskController::class, 'sessionTasks'])->name('coaching-sessions.tasks');
         Route::get('clients/{client}/tasks', [CoachingTaskController::class, 'clientTasks'])->name('clients.tasks');

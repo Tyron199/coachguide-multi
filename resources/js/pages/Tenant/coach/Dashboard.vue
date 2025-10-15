@@ -24,6 +24,7 @@ import { show as showCalendarIntegration } from '@/actions/App/Http/Controllers/
 import { create as createSession } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 import { create as createClient } from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
 import { show as showSession, index as indexSessions } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
+import coachingTasks from '@/routes/tenant/coach/coaching-tasks';
 
 interface Props {
     dashboardStats: {
@@ -274,10 +275,12 @@ const getDateLabel = (dateString: string) => {
                                 <CardTitle>Outstanding Actions</CardTitle>
                                 <CardDescription>Tasks requiring attention</CardDescription>
                             </div>
-                            <Button variant="outline" size="sm" disabled>
+                            <Link :href="indexTasks['/coach/coaching-tasks']().url">
+                            <Button variant="outline" size="sm">
                                 <Eye class="mr-2 h-4 w-4" />
                                 View All
                             </Button>
+                            </Link>
                         </div>
                     </CardHeader>
                     <CardContent class="space-y-4">

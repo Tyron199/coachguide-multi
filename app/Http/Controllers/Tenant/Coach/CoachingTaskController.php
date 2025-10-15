@@ -81,7 +81,8 @@ class CoachingTaskController extends Controller
             ->where('coach_id', auth()->id());
         
         // Filter by status view (pending, overdue, completed)
-        $view = $request->get('view', 'pending');
+        // Check route defaults first (for named routes), then query param, then default to 'pending'
+        $view = $request->route()->parameter('view') ?? $request->get('view', 'pending');
         
         switch ($view) {
             case 'pending':

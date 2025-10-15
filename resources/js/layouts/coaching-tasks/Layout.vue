@@ -13,19 +13,18 @@ import tasks from '@/routes/tenant/coach/coaching-tasks';
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Pending',
-        href: tasks.index({ view: 'pending' }),
+        href: tasks.index(),
         icon: Clock,
     },
     {
         title: 'Overdue',
-        href: tasks.index({ view: 'overdue' }),
+        href: tasks.overdue(),
         icon: AlertTriangle,
     },
     {
         title: 'Completed',
-        href: tasks.index({ view: 'completed' }),
+        href: tasks.completed(),
         icon: CheckCircle,
     }
 ];
 </script>
-
