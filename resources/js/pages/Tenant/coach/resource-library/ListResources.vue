@@ -103,7 +103,7 @@ import {
     ExternalLink
 } from 'lucide-vue-next';
 import { type BreadcrumbItem } from '@/types';
-import { index as resourceLibraryIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
+import { all as resourceLibraryAll } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
 
 interface Resource {
     id: number;
@@ -126,7 +126,7 @@ const props = defineProps<Props>();
 const breadcrumbs = computed<BreadcrumbItem[]>(() => [
     {
         title: 'Resource Library',
-        href: resourceLibraryIndex().url
+        href: resourceLibraryAll().url
     },
 ]);
 

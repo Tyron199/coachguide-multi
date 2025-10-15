@@ -1,9 +1,14 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Tenant\Coach\ContractController;
+use App\Http\Controllers\Tenant\Coach\SearchController;
 
 Route::middleware(['auth', 'verified', 'two-factor'])->group(function () {
      // API routes
+        // Global Search
+        Route::get('/api/search', [SearchController::class, 'search'])
+            ->middleware(['role:coach|admin']);
+
         Route::get('/api/templates/{templatePath}/variables', [ContractController::class, 'getTemplateVariables'])
             ->where('templatePath', '.*');
         Route::get('/api/templates', [ContractController::class, 'getAvailableTemplates']);

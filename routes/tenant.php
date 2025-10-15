@@ -33,7 +33,19 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('dashboard', function () {
-    return Inertia::render('Tenant/Dashboard');
+    // Redirect to role-specific dashboard
+    if (auth()->user()->hasRole('coach')) {
+        return app(\App\Http\Controllers\Tenant\Coach\DashboardController::class)->index();
+    }
+    if (auth()->user()->hasRole('client')) {
+        return app(\App\Http\Controllers\Tenant\Client\DashboardController::class)->index();
+    }
+    // Default fallback for admin or other roles - show coach dashboard
+    if (auth()->user()->hasRole('admin')) {
+        return app(\App\Http\Controllers\Tenant\Coach\DashboardController::class)->index();
+    }
+    // If user has no recognized role
+    abort(403, 'No dashboard available for your role');
 })->middleware(['auth', 'verified', 'two-factor'])->name('dashboard');
 
 require __DIR__.'/tenant/settings.php';

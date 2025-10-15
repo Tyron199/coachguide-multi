@@ -4,21 +4,47 @@ namespace App\Http\Controllers\Tenant\Coach;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tenant\ResourceLibraryItem;
-use Illuminate\Http\Request;
+use App\Enums\Tenant\ResourceLibraryItemType;
 use Inertia\Inertia;
 
 class ResourceLibraryController extends Controller
 {
-    public function index(Request $request)
+    public function all()
     {
-        $typeFilter = $request->query('type');
-        
-        // Query resources from database
+        return $this->renderResources();
+    }
+
+    public function books()
+    {
+        return $this->renderResources(ResourceLibraryItemType::BOOK);
+    }
+
+    public function podcasts()
+    {
+        return $this->renderResources(ResourceLibraryItemType::PODCAST);
+    }
+
+    public function videos()
+    {
+        return $this->renderResources(ResourceLibraryItemType::VIDEO);
+    }
+
+    public function courses()
+    {
+        return $this->renderResources(ResourceLibraryItemType::COURSE);
+    }
+
+    public function articles()
+    {
+        return $this->renderResources(ResourceLibraryItemType::ARTICLE);
+    }
+
+    private function renderResources(?ResourceLibraryItemType $type = null)
+    {
         $query = ResourceLibraryItem::query();
         
-        // Filter by type if provided
-        if ($typeFilter) {
-            $query->where('type', (int) $typeFilter);
+        if ($type) {
+            $query->where('type', $type->value);
         }
         
         $resources = $query->get()->map(function ($resource) {
@@ -36,7 +62,7 @@ class ResourceLibraryController extends Controller
 
         return Inertia::render('Tenant/coach/resource-library/ListResources', [
             'resources' => $resources,
-            'typeFilter' => $typeFilter,
+            'typeFilter' => $type?->value,
         ]);
     }
 }

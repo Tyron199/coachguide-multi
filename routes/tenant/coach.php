@@ -116,8 +116,13 @@ Route::prefix('coach')->name('coach.')->middleware(['role:coach|admin'])->group(
 
     
 
-        //Resource lib
-        Route::get('resource-library', [ResourceLibraryController::class, 'index'])->name('resource-library.index');
+        //Resource Library
+        Route::get('resource-library', [ResourceLibraryController::class, 'all'])->name('resource-library.all');
+        Route::get('resource-library/books', [ResourceLibraryController::class, 'books'])->name('resource-library.books');
+        Route::get('resource-library/podcasts', [ResourceLibraryController::class, 'podcasts'])->name('resource-library.podcasts');
+        Route::get('resource-library/videos', [ResourceLibraryController::class, 'videos'])->name('resource-library.videos');
+        Route::get('resource-library/courses', [ResourceLibraryController::class, 'courses'])->name('resource-library.courses');
+        Route::get('resource-library/articles', [ResourceLibraryController::class, 'articles'])->name('resource-library.articles');
 
         //Professional credentials
         Route::prefix('professional-credentials')->name('professional-credentials.')->group(function () {

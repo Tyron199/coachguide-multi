@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\Tenant\CoachingTaskStatus;
 
 class CoachingTask extends Model
 {
@@ -26,6 +27,7 @@ class CoachingTask extends Model
         'evidence_required' => 'boolean',
         'completed_at' => 'datetime',
         'reviewed_at' => 'datetime',
+        'status' => CoachingTaskStatus::class,
     ];
 
     /**

@@ -2,6 +2,7 @@
 import AppLogo from '@/components/AppLogo.vue';
 import { mainNavItems, footerNavItems, adminNavItems } from '@/components/NavItems';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import GlobalSearch from '@/components/GlobalSearch.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from '@/components/ui/dropdown-menu';
@@ -14,7 +15,7 @@ import { dashboard } from '@/routes/tenant';
 import type { BreadcrumbItem } from '@/types';
 import { InertiaLinkProps, Link, usePage } from '@inertiajs/vue3';
 import { Menu, Search, Shield } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 
 interface Props {
@@ -34,6 +35,8 @@ const activeItemStyles = computed(
     () => (url: NonNullable<InertiaLinkProps['href']>) =>
         isCurrentRoute.value(typeof url === 'string' ? url : url.url) ? 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100' : '',
 );
+
+const searchOpen = ref(false);
 
 </script>
 
@@ -104,7 +107,8 @@ const activeItemStyles = computed(
 
                 <div class="ml-auto flex items-center space-x-2">
                     <div class="relative flex items-center space-x-1">
-                        <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer">
+                        <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer"
+                            @click="searchOpen = true">
                             <Search class="size-5 opacity-80 group-hover:opacity-100" />
                         </Button>
 
@@ -177,5 +181,7 @@ const activeItemStyles = computed(
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </div>
         </div>
+
+        <GlobalSearch v-model:open="searchOpen" />
     </div>
 </template>

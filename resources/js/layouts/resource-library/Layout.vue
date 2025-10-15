@@ -11,37 +11,44 @@
 import PageLayout from '@/layouts/page/Layout.vue';
 import { type NavItem } from '@/types';
 import { BookOpen, Podcast, Video, GraduationCap, FileText } from 'lucide-vue-next';
-import { index as resourceLibraryIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
+import {
+    all as resourceLibraryAll,
+    books as resourceLibraryBooks,
+    podcasts as resourceLibraryPodcasts,
+    videos as resourceLibraryVideos,
+    courses as resourceLibraryCourses,
+    articles as resourceLibraryArticles,
+} from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'All Resources',
-        href: resourceLibraryIndex().url,
+        href: resourceLibraryAll().url,
         icon: BookOpen,
     },
     {
         title: 'Books',
-        href: resourceLibraryIndex({ query: { type: '1' } }).url,
+        href: resourceLibraryBooks().url,
         icon: BookOpen,
     },
     {
         title: 'Podcasts',
-        href: resourceLibraryIndex({ query: { type: '2' } }).url,
+        href: resourceLibraryPodcasts().url,
         icon: Podcast,
     },
     {
         title: 'Videos',
-        href: resourceLibraryIndex({ query: { type: '3' } }).url,
+        href: resourceLibraryVideos().url,
         icon: Video,
     },
     {
         title: 'Courses',
-        href: resourceLibraryIndex({ query: { type: '4' } }).url,
+        href: resourceLibraryCourses().url,
         icon: GraduationCap,
     },
     {
         title: 'Articles',
-        href: resourceLibraryIndex({ query: { type: '5' } }).url,
+        href: resourceLibraryArticles().url,
         icon: FileText,
     }
 ];

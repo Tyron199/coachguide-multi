@@ -9,7 +9,7 @@ import { models as showModels } from '@/actions/App/Http/Controllers/Tenant/Coac
 import { index as coachingLogIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingLogController';
 import { index as coachesIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/CoachController';
 import { index as administratorsIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/AdminController';
-import { index as resourceLibraryIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
+import { all as resourceLibraryAll } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
@@ -33,12 +33,12 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Growth Tracker',
-        href: coachingLogIndex().url,
+        href: coachingLogIndex(),
         icon: ChartLine
     },
     {
         title: 'Resource Library',
-        href: resourceLibraryIndex().url,
+        href: resourceLibraryAll(),
         icon: BookOpen
     }
 ];

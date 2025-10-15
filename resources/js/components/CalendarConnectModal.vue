@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Calendar, CheckCircle, Clock, Users, Settings } from 'lucide-vue-next';
@@ -37,6 +37,13 @@ onMounted(() => {
         setTimeout(() => {
             isOpen.value = true;
         }, 1000);
+    }
+});
+
+// Watch for changes to the show prop to open modal on demand
+watch(() => props.show, (newValue) => {
+    if (newValue) {
+        isOpen.value = true;
     }
 });
 

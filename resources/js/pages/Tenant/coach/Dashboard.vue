@@ -19,17 +19,6 @@ import {
     ArrowRight
 } from 'lucide-vue-next';
 
-// import {
-//     AlertDialog,
-//     AlertDialogAction,
-//     AlertDialogCancel,
-//     AlertDialogContent,
-//     AlertDialogDescription,
-//     AlertDialogFooter,
-//     AlertDialogHeader,
-//     AlertDialogTitle,
-//     AlertDialogTrigger
-// } from '@/components/ui/alert-dialog';
 import { dashboard } from "@/routes/tenant"
 import { show as showCalendarIntegration } from '@/actions/App/Http/Controllers/Tenant/Settings/CalendarIntegrationController';
 import { create as createSession } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
@@ -37,6 +26,35 @@ import { create as createClient } from '@/actions/App/Http/Controllers/Tenant/Co
 import { show as showSession, index as indexSessions } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
 
 interface Props {
+    dashboardStats: {
+        activeClients: number;
+        upcomingSessions: {
+            today: number;
+            thisWeek: number;
+        };
+        outstandingActions: number;
+        cpdHours: number;
+        monthlyTarget: number;
+    };
+    upcomingSessions: Array<{
+        id: number;
+        client: { name: string; email: string };
+        scheduled_at: string;
+        duration: number;
+        session_type: string;
+    }>;
+    outstandingActions: Array<{
+        id: number;
+        title: string;
+        client: string;
+        due_date: string;
+        status: string;
+    }>;
+    quickStats: {
+        sessionsCompleted: number;
+        contractsSigned: number;
+        completionRate: number;
+    };
     hasMicrosoftCalendar: boolean;
     hasGoogleCalendar: boolean;
     connectedProvider: string | null;
@@ -69,71 +87,6 @@ function handleCalendarModalNotNow() {
     });
 }
 
-// Dummy data - will be replaced with real data from backend
-const dashboardStats = {
-    activeClients: 24,
-    upcomingSessions: {
-        today: 3,
-        thisWeek: 12
-    },
-    outstandingActions: 8,
-    cpdHours: 6.5,
-    monthlyTarget: 10,
-    quickStats: {
-        sessionsCompleted: 18,
-        contractsSigned: 3,
-        completionRate: 92
-    }
-};
-
-const upcomingSessionsData = [
-    {
-        id: 1,
-        client: { name: 'Sarah Johnson', email: 'sarah@example.com' },
-        scheduled_at: new Date(2024, 11, 19, 10, 0),
-        duration: 60,
-        session_type: 'online'
-    },
-    {
-        id: 2,
-        client: { name: 'Michael Chen', email: 'michael@example.com' },
-        scheduled_at: new Date(2024, 11, 19, 14, 30),
-        duration: 45,
-        session_type: 'in_person'
-    },
-    {
-        id: 3,
-        client: { name: 'Emma Wilson', email: 'emma@example.com' },
-        scheduled_at: new Date(2024, 11, 20, 9, 0),
-        duration: 90,
-        session_type: 'hybrid'
-    }
-];
-
-const outstandingActionsData = [
-    {
-        id: 1,
-        title: 'Complete career assessment worksheet',
-        client: 'Sarah Johnson',
-        due_date: new Date(2024, 11, 20),
-        priority: 'high'
-    },
-    {
-        id: 2,
-        title: 'Review quarterly goals',
-        client: 'Michael Chen',
-        due_date: new Date(2024, 11, 22),
-        priority: 'medium'
-    },
-    {
-        id: 3,
-        title: 'Prepare presentation materials',
-        client: 'Emma Wilson',
-        due_date: new Date(2024, 11, 25),
-        priority: 'low'
-    }
-];
-
 const getSessionTypeLabel = (type: string) => {
     switch (type) {
         case 'online': return 'Online';
@@ -143,40 +96,34 @@ const getSessionTypeLabel = (type: string) => {
     }
 };
 
-const getPriorityVariant = (priority: string) => {
-    switch (priority) {
-        case 'high': return 'destructive' as const;
-        case 'medium': return 'secondary' as const;
-        case 'low': return 'outline' as const;
-        default: return 'outline' as const;
-    }
-};
-
-const formatTime = (date: Date) => {
+const formatTime = (dateString: string) => {
+    const date = new Date(dateString);
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 };
 
-const formatDate = (date: Date) => {
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 
-const isToday = (date: Date) => {
+const isToday = (dateString: string) => {
+    const date = new Date(dateString);
     const today = new Date();
     return date.toDateString() === today.toDateString();
 };
 
-const isTomorrow = (date: Date) => {
+const isTomorrow = (dateString: string) => {
+    const date = new Date(dateString);
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     return date.toDateString() === tomorrow.toDateString();
 };
 
-const getDateLabel = (date: Date) => {
-    if (isToday(date)) return 'Today';
-    if (isTomorrow(date)) return 'Tomorrow';
-    return formatDate(date);
+const getDateLabel = (dateString: string) => {
+    if (isToday(dateString)) return 'Today';
+    if (isTomorrow(dateString)) return 'Tomorrow';
+    return formatDate(dateString);
 };
-
 
 </script>
 
@@ -218,9 +165,9 @@ const getDateLabel = (date: Date) => {
                         <Users class="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div class="text-2xl font-bold">{{ dashboardStats.activeClients }}</div>
+                        <div class="text-2xl font-bold">{{ props.dashboardStats.activeClients }}</div>
                         <p class="text-xs text-muted-foreground">
-                            <span class="text-green-600">+2</span> from last month
+                            Total active clients
                         </p>
                     </CardContent>
                 </Card>
@@ -231,9 +178,9 @@ const getDateLabel = (date: Date) => {
                         <Calendar class="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div class="text-2xl font-bold">{{ dashboardStats.upcomingSessions.thisWeek }}</div>
+                        <div class="text-2xl font-bold">{{ props.dashboardStats.upcomingSessions.thisWeek }}</div>
                         <p class="text-xs text-muted-foreground">
-                            {{ dashboardStats.upcomingSessions.today }} scheduled today
+                            {{ props.dashboardStats.upcomingSessions.today }} scheduled today
                         </p>
                     </CardContent>
                 </Card>
@@ -244,9 +191,9 @@ const getDateLabel = (date: Date) => {
                         <CheckSquare class="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div class="text-2xl font-bold">{{ dashboardStats.outstandingActions }}</div>
+                        <div class="text-2xl font-bold">{{ props.dashboardStats.outstandingActions }}</div>
                         <p class="text-xs text-muted-foreground">
-                            <span class="text-amber-600">3 due this week</span>
+                            Tasks pending or in progress
                         </p>
                     </CardContent>
                 </Card>
@@ -257,9 +204,10 @@ const getDateLabel = (date: Date) => {
                         <GraduationCap class="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div class="text-2xl font-bold">{{ dashboardStats.cpdHours }}h</div>
+                        <div class="text-2xl font-bold">{{ props.dashboardStats.cpdHours }}h</div>
                         <p class="text-xs text-muted-foreground">
-                            {{ dashboardStats.monthlyTarget - dashboardStats.cpdHours }}h remaining this month
+                            {{ Math.max(0, props.dashboardStats.monthlyTarget - props.dashboardStats.cpdHours) }}h
+                            remaining this month
                         </p>
                     </CardContent>
                 </Card>
@@ -285,7 +233,10 @@ const getDateLabel = (date: Date) => {
                         </div>
                     </CardHeader>
                     <CardContent class="space-y-4">
-                        <div v-for="session in upcomingSessionsData" :key="session.id"
+                        <div v-if="props.upcomingSessions.length === 0" class="text-center text-muted-foreground py-8">
+                            No upcoming sessions scheduled
+                        </div>
+                        <div v-for="session in props.upcomingSessions" :key="session.id"
                             class="flex items-center justify-between p-3 border rounded-lg">
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-1">
@@ -323,21 +274,22 @@ const getDateLabel = (date: Date) => {
                                 <CardTitle>Outstanding Actions</CardTitle>
                                 <CardDescription>Tasks requiring attention</CardDescription>
                             </div>
-                            <Button variant="outline" size="sm">
+                            <Button variant="outline" size="sm" disabled>
                                 <Eye class="mr-2 h-4 w-4" />
                                 View All
                             </Button>
                         </div>
                     </CardHeader>
                     <CardContent class="space-y-4">
-                        <div v-for="action in outstandingActionsData" :key="action.id"
+                        <div v-if="props.outstandingActions.length === 0"
+                            class="text-center text-muted-foreground py-8">
+                            No outstanding actions
+                        </div>
+                        <div v-for="action in props.outstandingActions" :key="action.id"
                             class="flex items-center justify-between p-3 border rounded-lg">
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="font-medium">{{ action.title }}</span>
-                                    <Badge :variant="getPriorityVariant(action.priority)" class="text-xs">
-                                        {{ action.priority }}
-                                    </Badge>
                                 </div>
                                 <div class="flex items-center gap-4 text-sm text-muted-foreground">
                                     <span>{{ action.client }}</span>
@@ -347,7 +299,7 @@ const getDateLabel = (date: Date) => {
                                     </div>
                                 </div>
                             </div>
-                            <Button variant="ghost" size="sm">
+                            <Button variant="ghost" size="sm" disabled>
                                 <ArrowRight class="h-4 w-4" />
                             </Button>
                         </div>
@@ -366,18 +318,18 @@ const getDateLabel = (date: Date) => {
                 <CardContent>
                     <div class="grid gap-4 md:grid-cols-3">
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-blue-600">{{ dashboardStats.quickStats.sessionsCompleted
-                                }}</div>
+                            <div class="text-3xl font-bold text-blue-600">{{ props.quickStats.sessionsCompleted
+                            }}</div>
                             <div class="text-sm text-muted-foreground">Sessions Completed</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-green-600">{{ dashboardStats.quickStats.contractsSigned
-                                }}</div>
+                            <div class="text-3xl font-bold text-green-600">{{ props.quickStats.contractsSigned
+                            }}</div>
                             <div class="text-sm text-muted-foreground">New Contracts Signed</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-purple-600">{{ dashboardStats.quickStats.completionRate
-                                }}%</div>
+                            <div class="text-3xl font-bold text-purple-600">{{ props.quickStats.completionRate
+                            }}%</div>
                             <div class="text-sm text-muted-foreground">Action Completion Rate</div>
                         </div>
                     </div>

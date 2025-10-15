@@ -15,7 +15,7 @@
                                 <SelectTrigger class="w-full">
                                     <SelectValue>
                                         <span v-if="selectedClient">{{ selectedClient.name }} ({{ selectedClient.email
-                                        }})</span>
+                                            }})</span>
                                         <span v-else class="text-muted-foreground">Select a client</span>
                                     </SelectValue>
                                 </SelectTrigger>
@@ -136,6 +136,27 @@
                             <input type="hidden" name="sync_to_calendar"
                                 :value="formData.sync_to_calendar ? '1' : '0'" />
                         </div>
+                        <!-- Alert for users without calendar integration -->
+                        <div v-else
+                            class="p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
+                            <div class="flex items-start gap-3">
+                                <Calendar class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-blue-900 dark:text-blue-100">
+                                        Calendar Integration Available
+                                    </p>
+                                    <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                                        Connect your Microsoft or Google calendar to automatically sync coaching
+                                        sessions.
+                                    </p>
+                                    <Button type="button" variant="link"
+                                        class="text-blue-600 dark:text-blue-400 h-auto p-0 mt-2"
+                                        @click="showCalendarConnectModal">
+                                        Learn more and set up →
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Computed End Time Display -->
                         <div v-if="computedEndTime" class="p-4 bg-muted rounded-lg">
@@ -162,6 +183,9 @@
                 </div>
             </div>
         </CoachingSessionsLayout>
+
+        <CalendarConnectModal :show="showModal" :has-microsoft-calendar="false" :has-google-calendar="false"
+            @close="showModal = false" @not-now="showModal = false" />
     </AppLayout>
 </template>
 
@@ -188,6 +212,7 @@ import { store as storeSessionAction } from '@/actions/App/Http/Controllers/Tena
 import { LoaderCircle, Calendar, Clock, Users, Video, MonitorSpeaker } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
 import { getUserTimezone } from '@/utils/timezone';
+import CalendarConnectModal from '@/components/CalendarConnectModal.vue';
 
 interface Client {
     id: number;
@@ -220,6 +245,12 @@ const formData = ref({
     timezone: getUserTimezone(), // User's timezone from auth data or browser
     sync_to_calendar: true, // Default to true if user has calendar integration
 });
+
+const showModal = ref(false);
+
+const showCalendarConnectModal = () => {
+    showModal.value = true;
+};
 
 // Set up form defaults and handle pre-selected client
 onMounted(() => {

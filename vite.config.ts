@@ -23,4 +23,12 @@ export default defineConfig({
             },
         }),
     ],
+    server: {
+        watch: {
+            ignored: [
+                '**/resources/js/routes/**',
+                '**/resources/js/actions/**',
+            ],
+        },
+    },
 });
