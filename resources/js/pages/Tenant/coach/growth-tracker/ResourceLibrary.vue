@@ -33,7 +33,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import GrowthTrackerLayout from '@/layouts/growth-tracker/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import { type BreadcrumbItem, type PaginatedCompanies, type CompanyFilters } from '@/types';
-import { index } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
+import { all } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
 
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 
@@ -50,11 +50,11 @@ defineProps<Props>();
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Growth Tracker',
-        href: index().url
+        href: all().url
     },
     {
         title: 'Resource Library',
-        href: index().url
+        href: all().url
     },
 ];
 </script>

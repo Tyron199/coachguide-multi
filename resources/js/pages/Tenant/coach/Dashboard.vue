@@ -325,17 +325,17 @@ const getDateLabel = (dateString: string) => {
                     <div class="grid gap-4 md:grid-cols-3">
                         <div class="text-center">
                             <div class="text-3xl font-bold text-blue-600">{{ props.quickStats.sessionsCompleted
-                            }}</div>
+                                }}</div>
                             <div class="text-sm text-muted-foreground">Sessions Completed</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-green-600">{{ props.quickStats.contractsSigned
-                            }}</div>
+                                }}</div>
                             <div class="text-sm text-muted-foreground">New Contracts Signed</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-purple-600">{{ props.quickStats.completionRate
-                            }}%</div>
+                                }}%</div>
                             <div class="text-sm text-muted-foreground">Action Completion Rate</div>
                         </div>
                     </div>

@@ -124,7 +124,7 @@
                                         <File class="h-4 w-4 flex-shrink-0" />
                                         <span class="truncate">{{ attachment.original_name }}</span>
                                         <span class="text-xs text-muted-foreground">({{ attachment.formatted_size
-                                        }})</span>
+                                            }})</span>
                                     </a>
                                 </div>
                             </div>
