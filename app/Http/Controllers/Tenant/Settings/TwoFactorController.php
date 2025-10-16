@@ -67,6 +67,7 @@ class TwoFactorController extends Controller
     public function confirm(Request $request): RedirectResponse
     {
         $request->validate([
+            'password' => 'required|current_password',
             'code' => 'required|string|size:6',
         ]);
 
