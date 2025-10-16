@@ -62,8 +62,8 @@ function updateCompanyName() {
             <template #header>
                 <h1 class="text-2xl font-semibold text-foreground">Company Name</h1>
                 <p class="text-muted-foreground">
-                    Customize your company name. This will be used as the "from" name in all email notifications sent to
-                    users.
+                    Set your company name to personalize the platform. This appears in the browser title, emails, and
+                    throughout the application.
                 </p>
             </template>
 
@@ -74,7 +74,7 @@ function updateCompanyName() {
                     <CardHeader>
                         <CardTitle>Current Company Name</CardTitle>
                         <CardDescription>
-                            This is how your company name appears in email notifications
+                            Your company name is displayed across the platform for consistent branding
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -92,7 +92,9 @@ function updateCompanyName() {
                     <CardHeader>
                         <CardTitle>Update Company Name</CardTitle>
                         <CardDescription>
-                            Enter a new company name. Maximum 30 characters to ensure compatibility with email headers.
+                            Choose a name that represents your organization. Limited to 30 characters for optimal
+                            display across all
+                            features.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -111,8 +113,9 @@ function updateCompanyName() {
                                     </p>
                                 </div>
                                 <p class="text-xs text-muted-foreground">
-                                    This name will appear as the sender in emails sent to your users (e.g., invitations,
-                                    notifications).
+                                    This name represents your brand throughout the platform, including browser tabs,
+                                    emails, and
+                                    user-facing content.
                                 </p>
                             </div>
 
@@ -130,21 +133,27 @@ function updateCompanyName() {
                 <!-- Preview Section -->
                 <Card>
                     <CardHeader>
-                        <CardTitle>Email Preview</CardTitle>
+                        <CardTitle>Branding Preview</CardTitle>
                         <CardDescription>
-                            See how your company name will appear in email notifications
+                            See how your company name appears throughout the platform
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div class="p-4 bg-muted rounded-lg space-y-3">
-                            <div>
-                                <p class="text-xs text-muted-foreground mb-1">From:</p>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-muted rounded-lg">
+                                <p class="text-xs text-muted-foreground mb-1">Browser title:</p>
+                                <p class="text-sm font-medium">
+                                    Dashboard - {{ previewCompanyName }}
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg">
+                                <p class="text-xs text-muted-foreground mb-1">Email sender:</p>
                                 <p class="text-sm font-medium">
                                     {{ previewCompanyName }}
                                 </p>
                             </div>
-                            <div>
-                                <p class="text-xs text-muted-foreground mb-1">Example subject:</p>
+                            <div class="p-4 bg-muted rounded-lg">
+                                <p class="text-xs text-muted-foreground mb-1">Email subject example:</p>
                                 <p class="text-sm">
                                     {{ previewSubject }}
                                 </p>

@@ -1,6 +1,6 @@
 import '../css/app.css';
 
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
@@ -9,8 +9,8 @@ import AlertPlugin from './plugins/alert';
 
 createInertiaApp({
     title: (title) => {
-        // Access the shared 'name' prop from Inertia page props (dynamic company name)
-        const appName = (window as any).__INERTIA_DATA__?.props?.name || import.meta.env.VITE_APP_NAME || 'Laravel';
+        // Use the global appName set in app.blade.php (dynamic company name)
+        const appName = (window as any).appName || import.meta.env.VITE_APP_NAME || 'Laravel';
         return title ? `${title} - ${appName}` : appName;
     },
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
