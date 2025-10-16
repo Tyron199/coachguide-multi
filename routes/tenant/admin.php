@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Tenant\Admin\ThemeController;
 use App\Http\Controllers\Tenant\Admin\LogoController;
+use App\Http\Controllers\Tenant\Admin\CompanyNameController;
 use App\Http\Controllers\Tenant\Admin\SubscriptionController;
 use App\Http\Controllers\Tenant\Admin\CoachController;
 use App\Http\Controllers\Tenant\Admin\AdminController;
@@ -72,6 +73,9 @@ Route::middleware(['auth', 'verified', 'two-factor', 'role:admin'])->prefix('adm
     Route::post('platform-settings/logo/upload', [LogoController::class, 'upload'])->name('platform-settings.logo.upload');
     Route::post('platform-settings/logo/reset', [LogoController::class, 'reset'])->name('platform-settings.logo.reset');
 
+    // Company name management routes
+    Route::get('platform-settings/company-name', [CompanyNameController::class, 'index'])->name('platform-settings.company-name');
+    Route::post('platform-settings/company-name', [CompanyNameController::class, 'update'])->name('platform-settings.company-name.update');
 
     // Subscription management routes
     Route::get('subscription/manage', [SubscriptionController::class, 'manage'])->name('subscription.manage');

@@ -32,6 +32,7 @@ return [
     config('app.env') === 'production' ? Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper::class : null,
     Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper::class,
     Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper::class,
+    \App\Bootstrappers\MailTenancyBootstrapper::class,
 ]),
 
     /**

@@ -4,6 +4,7 @@ namespace App\Notifications\Tenant;
 
 use App\Models\Tenant\CoachingTask;
 use App\Models\Tenant\CoachingTaskReminder;
+use App\Notifications\Concerns\HasTenantBranding;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Notification;
 
 class TaskReminderNotification extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, HasTenantBranding;
 
     /**
      * Create a new notification instance.
@@ -39,7 +40,7 @@ class TaskReminderNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $appName = config('app.name');
+        $companyName = $this->getCompanyName();
         $clientName = $this->task->client->name;
         $coachName = $this->task->coach->name;
         $taskTitle = $this->task->title;
@@ -65,7 +66,7 @@ class TaskReminderNotification extends Notification implements ShouldQueue
             ->action('View Task Details', $taskUrl)
             ->line("If you've already completed this task, please mark it as complete or submit your evidence on the platform.")
             ->line("If you have any questions or need assistance, feel free to reach out to {$coachName}.")
-            ->salutation("Best regards,\nThe {$appName} Team");
+            ->salutation("Best regards,\nThe {$companyName} Team");
     }
 
     /**

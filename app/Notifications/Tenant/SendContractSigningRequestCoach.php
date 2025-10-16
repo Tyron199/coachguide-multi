@@ -4,6 +4,7 @@ namespace App\Notifications\Tenant;
 
 use App\Models\Tenant\CoachingContract;
 use App\Models\Tenant\CoachingContractSignature;
+use App\Notifications\Concerns\HasTenantBranding;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Notification;
 
 class SendContractSigningRequestCoach extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, HasTenantBranding;
 
     /**
      * Create a new notification instance.

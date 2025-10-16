@@ -30,7 +30,7 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ tenant() ? (\App\Models\Tenant\PlatformBranding::current()->company_name ?? config('app.name', 'Laravel')) : config('app.name', 'Laravel') }}</title>
 
    
         <link rel="icon" href="{{ app(\App\Services\Tenant\LogoService::class)->getFaviconUrl() }}" sizes="any">

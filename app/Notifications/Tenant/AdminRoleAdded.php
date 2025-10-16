@@ -3,6 +3,7 @@
 namespace App\Notifications\Tenant;
 
 use App\Models\Tenant\User;
+use App\Notifications\Concerns\HasTenantBranding;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notification;
 
 class AdminRoleAdded extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, HasTenantBranding;
 
     /**
      * Create a new notification instance.
@@ -36,13 +37,13 @@ class AdminRoleAdded extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $appName = config('app.name');
+        $companyName = $this->getCompanyName();
         $userName = $this->user->name;
         
         return (new MailMessage)
-            ->subject("You've been granted Administrator privileges on {$appName}")
+            ->subject("You've been granted Administrator privileges on {$companyName}")
             ->greeting("Hello {$userName}!")
-            ->line("Congratulations! You've been granted administrator privileges on {$appName}.")
+            ->line("Congratulations! You've been granted administrator privileges on {$companyName}.")
             ->line("In addition to your existing access, you now have administrative capabilities that will allow you to:")
             ->line("**New administrative features available to you:**")
             ->line("• Complete user management (coaches, clients, and other administrators)")
@@ -59,7 +60,7 @@ class AdminRoleAdded extends Notification implements ShouldQueue
             ->line("**Getting started with administration:**")
             ->line("You can access your new administrative features immediately by logging into your existing account. Look for the admin sections in your navigation menu.")
             ->line("If you have any questions about your new administrative role or need assistance with platform management, please contact our support team.")
-            ->salutation("Welcome to the administrative team!\nThe {$appName} Team");
+            ->salutation("Welcome to the administrative team!\nThe {$companyName} Team");
     }
 
     /**

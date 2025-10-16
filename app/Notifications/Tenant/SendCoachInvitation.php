@@ -3,6 +3,7 @@
 namespace App\Notifications\Tenant;
 
 use App\Models\Tenant\User;
+use App\Notifications\Concerns\HasTenantBranding;
 use App\Services\Tenant\InvitationTokenService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Notification;
 
 class SendCoachInvitation extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, HasTenantBranding;
 
     /**
      * Create a new notification instance.
@@ -38,7 +39,7 @@ class SendCoachInvitation extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $appName = config('app.name');
+        $companyName = $this->getCompanyName();
         $coachName = $this->user->name;
         
         // Generate secure token for pre-filling registration
@@ -49,9 +50,9 @@ class SendCoachInvitation extends Notification implements ShouldQueue
         $registrationUrl = tenant()->getRoute('tenant.register', ['token' => $token]);
         
         return (new MailMessage)
-            ->subject("You're invited to join {$appName} as a Coach")
+            ->subject("You're invited to join {$companyName} as a Coach")
             ->greeting("Hello {$coachName}!")
-            ->line("Congratulations! You've been invited to join {$appName} as a coach.")
+            ->line("Congratulations! You've been invited to join {$companyName} as a coach.")
             ->line("As a coach on our platform, you'll have access to powerful tools designed to enhance your coaching practice and help you better serve your clients.")
             ->line("**What you can do as a coach:**")
             ->line("• Manage your client roster and track their progress")
@@ -67,7 +68,7 @@ class SendCoachInvitation extends Notification implements ShouldQueue
             ->action('Join as Coach', $registrationUrl)
             ->line("Your registration details will be pre-filled for your convenience - you'll just need to set your password and complete your profile.")
             ->line("If you have any questions about the platform or need assistance getting started, please don't hesitate to reach out to our support team.")
-            ->salutation("Welcome to the team!\nThe {$appName} Team");
+            ->salutation("Welcome to the team!\nThe {$companyName} Team");
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Notifications\Tenant;
 
 use App\Models\Tenant\User;
+use App\Notifications\Concerns\HasTenantBranding;
 use App\Services\Tenant\InvitationTokenService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Notification;
 
 class SendClientInvitation extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, HasTenantBranding;
 
     private User $coach;
     
@@ -41,7 +42,7 @@ class SendClientInvitation extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $appName = config('app.name');
+        $companyName = $this->getCompanyName();
         $coachName = $this->coach->name;
         $clientName = $this->user->name;
         
@@ -53,10 +54,10 @@ class SendClientInvitation extends Notification implements ShouldQueue
         $registrationUrl = tenant()->getRoute('tenant.register', ['token' => $token]);
         
         return (new MailMessage)
-            ->subject("You're invited to join {$appName}")
+            ->subject("You're invited to join {$companyName}")
             ->greeting("Hello {$clientName}!")
-            ->line("Great news! {$coachName} has invited you to join {$appName}.")
-            ->line("As your coach, {$coachName} is already using {$appName} to manage your coaching journey, track your progress, and schedule sessions.")
+            ->line("Great news! {$coachName} has invited you to join {$companyName}.")
+            ->line("As your coach, {$coachName} is already using {$companyName} to manage your coaching journey, track your progress, and schedule sessions.")
             ->line("**What you can do on the platform:**")
             ->line("• View your coaching sessions and progress")
             ->line("• Access your personalized goals and objectives") 
@@ -67,7 +68,7 @@ class SendClientInvitation extends Notification implements ShouldQueue
             ->action('Join the Platform', $registrationUrl)
             ->line("Your registration details will be pre-filled for your convenience - you'll just need to set your password.")
             ->line("If you have any questions, feel free to reach out to {$coachName} directly.")
-            ->salutation("Best regards,\nThe {$appName} Team");
+            ->salutation("Best regards,\nThe {$companyName} Team");
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Notifications\Tenant;
 
 use App\Models\Tenant\User;
+use App\Notifications\Concerns\HasTenantBranding;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notification;
 
 class CoachRoleAdded extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, HasTenantBranding;
 
     /**
      * Create a new notification instance.
@@ -36,13 +37,13 @@ class CoachRoleAdded extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $appName = config('app.name');
+        $companyName = $this->getCompanyName();
         $userName = $this->user->name;
         
         return (new MailMessage)
-            ->subject("You've been granted Coach privileges on {$appName}")
+            ->subject("You've been granted Coach privileges on {$companyName}")
             ->greeting("Hello {$userName}!")
-            ->line("Great news! You've been granted coach privileges on {$appName}.")
+            ->line("Great news! You've been granted coach privileges on {$companyName}.")
             ->line("In addition to your existing access, you now have coaching capabilities that will allow you to:")
             ->line("**New coach features available to you:**")
             ->line("• Manage your own client roster and track their progress")
@@ -56,7 +57,7 @@ class CoachRoleAdded extends Notification implements ShouldQueue
             ->line("**Getting started with coaching:**")
             ->line("You can access your new coaching features immediately by logging into your existing account. Look for the coaching sections in your navigation menu.")
             ->line("If you have any questions about your new coaching privileges or need assistance getting started with the coaching tools, please don't hesitate to reach out to our support team.")
-            ->salutation("Welcome to the coaching team!\nThe {$appName} Team");
+            ->salutation("Welcome to the coaching team!\nThe {$companyName} Team");
     }
 
     /**

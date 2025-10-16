@@ -6,11 +6,17 @@ import { Separator } from '@/components/ui/separator';
 // import avatar from '@/routes/tenant/avatar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { Palette, Image } from 'lucide-vue-next';
+import { Palette, Image, Building2 } from 'lucide-vue-next';
 import ThemeController from '@/actions/App/Http/Controllers/Tenant/Admin/ThemeController';
 import LogoController from '@/actions/App/Http/Controllers/Tenant/Admin/LogoController';
+import CompanyNameController from '@/actions/App/Http/Controllers/Tenant/Admin/CompanyNameController';
 
 const sidebarNavItems: NavItem[] = [
+    {
+        title: 'Company Name',
+        href: CompanyNameController.index().url,
+        icon: Building2,
+    },
     {
         title: 'Theme',
         href: ThemeController.index().url,

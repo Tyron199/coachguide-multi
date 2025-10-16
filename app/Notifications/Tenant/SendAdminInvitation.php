@@ -3,6 +3,7 @@
 namespace App\Notifications\Tenant;
 
 use App\Models\Tenant\User;
+use App\Notifications\Concerns\HasTenantBranding;
 use App\Services\Tenant\InvitationTokenService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Notification;
 
 class SendAdminInvitation extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, HasTenantBranding;
 
     /**
      * Create a new notification instance.
@@ -38,7 +39,7 @@ class SendAdminInvitation extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $appName = config('app.name');
+        $companyName = $this->getCompanyName();
         $adminName = $this->user->name;
         
         // Generate secure token for pre-filling registration
@@ -49,9 +50,9 @@ class SendAdminInvitation extends Notification implements ShouldQueue
         $registrationUrl = tenant()->getRoute('tenant.register', ['token' => $token]);
         
         return (new MailMessage)
-            ->subject("You're invited to join {$appName} as an Administrator")
+            ->subject("You're invited to join {$companyName} as an Administrator")
             ->greeting("Hello {$adminName}!")
-            ->line("You've been invited to join {$appName} as an administrator.")
+            ->line("You've been invited to join {$companyName} as an administrator.")
             ->line("As an administrator, you'll have full access to manage the platform and oversee all coaching operations within your organization.")
             ->line("**Administrative privileges include:**")
             ->line("• Complete user management (coaches, clients, and other administrators)")
@@ -70,7 +71,7 @@ class SendAdminInvitation extends Notification implements ShouldQueue
             ->action('Join as Administrator', $registrationUrl)
             ->line("Your registration details will be pre-filled for your convenience - you'll just need to set your password and complete your profile.")
             ->line("If you have any questions about your administrative role or need assistance with platform management, please contact our support team.")
-            ->salutation("Welcome to the administrative team!\nThe {$appName} Team");
+            ->salutation("Welcome to the administrative team!\nThe {$companyName} Team");
     }
 
     /**
