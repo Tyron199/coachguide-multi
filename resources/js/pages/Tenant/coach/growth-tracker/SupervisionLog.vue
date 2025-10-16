@@ -364,10 +364,7 @@ const handleDeleteSelected = async () => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Growth Tracker',
-        href: SupervisionController.index().url
-    },
+ 
     {
         title: 'Supervision Log',
         href: SupervisionController.index().url

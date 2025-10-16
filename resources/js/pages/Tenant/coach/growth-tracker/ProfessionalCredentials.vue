@@ -87,10 +87,7 @@ const badgeText = computed(() => {
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Growth Tracker',
-        href: index().url
-    },
+
     {
         title: 'Professional Credentials',
         href: index().url

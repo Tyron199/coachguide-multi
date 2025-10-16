@@ -48,10 +48,7 @@ defineProps<Props>();
 // const selectedCompanies = ref<number[]>([]);
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Growth Tracker',
-        href: all().url
-    },
+
     {
         title: 'Resource Library',
         href: all().url

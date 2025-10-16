@@ -184,10 +184,8 @@ const canSubmit = computed(() => {
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Tools & Models',
-        href: frameworkRoutes.index().url
-    },
+
+
     {
         title: 'My Custom Frameworks',
         href: customFrameworkRoutes.index().url

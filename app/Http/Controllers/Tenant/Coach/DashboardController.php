@@ -53,9 +53,9 @@ class DashboardController extends Controller
         // Monthly Target (hardcoded for now, could be user preference later)
         $monthlyTarget = 10;
         
-        // Upcoming Sessions (next 3)
+        // Upcoming Sessions (next 3) - includes currently active sessions
         $upcomingSessions = CoachingSession::where('coach_id', $coach->id)
-            ->where('scheduled_at', '>', now())
+            ->where('end_at', '>', now())
             ->with(['client:id,name,email'])
             ->orderBy('scheduled_at', 'asc')
             ->limit(3)
@@ -70,6 +70,7 @@ class DashboardController extends Controller
                     'scheduled_at' => $session->scheduled_at,
                     'duration' => $session->duration,
                     'session_type' => $session->session_type->value,
+                    'is_active' => $session->is_active,
                 ];
             });
         

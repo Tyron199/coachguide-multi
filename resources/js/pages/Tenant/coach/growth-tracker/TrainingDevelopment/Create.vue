@@ -157,10 +157,7 @@ const trainingType = ref('');
 const accredited = ref(false);
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Growth Tracker',
-        href: ProfessionalDevelopmentController.index().url
-    },
+
     {
         title: 'Training & Development',
         href: ProfessionalDevelopmentController.index().url

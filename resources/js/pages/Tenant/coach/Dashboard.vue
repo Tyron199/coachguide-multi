@@ -44,6 +44,7 @@ interface Props {
         scheduled_at: string;
         duration: number;
         session_type: string;
+        is_active: boolean;
     }>;
     outstandingActions: Array<{
         id: number;
@@ -239,10 +240,14 @@ const getDateLabel = (dateString: string) => {
                             No upcoming sessions scheduled
                         </div>
                         <div v-for="session in props.upcomingSessions" :key="session.id"
-                            class="flex items-center justify-between p-3 border rounded-lg">
+                            class="flex items-center justify-between p-3 border rounded-lg"
+                            :class="{ 'border-primary bg-primary/5': session.is_active }">
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="font-medium">{{ session.client.name }}</span>
+                                    <Badge v-if="session.is_active" variant="default" class="text-xs animate-pulse">
+                                        LIVE
+                                    </Badge>
                                     <Badge variant="outline" class="text-xs">
                                         {{ getSessionTypeLabel(session.session_type) }}
                                     </Badge>

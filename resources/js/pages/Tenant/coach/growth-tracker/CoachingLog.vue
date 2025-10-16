@@ -169,10 +169,7 @@ const applyFilters = () => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Growth Tracker',
-        href: index().url
-    },
+
     {
         title: 'Coaching Log',
         href: index().url

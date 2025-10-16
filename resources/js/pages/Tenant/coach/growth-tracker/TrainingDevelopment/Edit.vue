@@ -179,10 +179,6 @@ const accredited = ref(props.development.accredited);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Growth Tracker',
-        href: ProfessionalDevelopmentController.index().url
-    },
-    {
         title: 'Training & Development',
         href: ProfessionalDevelopmentController.index().url
     },

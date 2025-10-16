@@ -20,23 +20,49 @@
                     <!-- Framework Selection -->
                     <div v-if="!preSelectedFramework" class="space-y-2">
                         <Label for="framework">Select Framework</Label>
-                        <Select v-model="selectedFramework" @update:model-value="handleFrameworkChange">
-                            <SelectTrigger>
-                                <SelectValue placeholder="Choose a framework..." />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem v-for="framework in frameworks" :key="framework.id"
-                                    :value="framework.id.toString()">
-                                    <div class="flex items-center justify-between w-full">
-                                        <span>{{ framework.name }}</span>
-                                        <Badge :variant="framework.category === 'models' ? 'default' : 'secondary'"
-                                            class="ml-2 text-xs">
-                                            {{ framework.category === 'models' ? 'Model' : 'Tool' }}
-                                        </Badge>
+                        <div class="relative" @click.stop>
+                            <Button variant="outline" role="combobox" :aria-expanded="frameworkComboboxOpen"
+                                class="w-full justify-between text-left font-normal"
+                                @click="frameworkComboboxOpen = !frameworkComboboxOpen">
+                                <span v-if="selectedFrameworkName" class="truncate">{{ selectedFrameworkName }}</span>
+                                <span v-else class="text-muted-foreground">Choose a framework...</span>
+                                <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+
+                            <!-- Custom Dropdown -->
+                            <div v-if="frameworkComboboxOpen"
+                                class="absolute z-50 w-full mt-1 bg-background border rounded-md shadow-lg" @click.stop>
+                                <div class="p-2">
+                                    <Input v-model="frameworkSearchQuery" placeholder="Search frameworks..."
+                                        class="text-sm" ref="frameworkSearchInput" />
+                                </div>
+                                <div class="max-h-60 overflow-auto">
+                                    <div v-if="filteredFrameworks.length === 0"
+                                        class="px-3 py-2 text-sm text-muted-foreground">
+                                        No frameworks found
                                     </div>
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
+                                    <div v-for="framework in filteredFrameworks" :key="framework.id"
+                                        class="px-3 py-2 cursor-pointer hover:bg-accent hover:text-accent-foreground text-sm"
+                                        @click="() => {
+                                            handleFrameworkChange(framework.id);
+                                            frameworkComboboxOpen = false;
+                                            frameworkSearchQuery = '';
+                                        }">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex-1 min-w-0">
+                                                <div class="font-medium truncate">{{ framework.name }}</div>
+                                                <div class="text-xs text-muted-foreground truncate">{{
+                                                    framework.description }}</div>
+                                            </div>
+                                            <Badge :variant="framework.category === 'models' ? 'default' : 'secondary'"
+                                                class="ml-2 text-xs shrink-0">
+                                                {{ framework.category === 'models' ? 'Model' : 'Tool' }}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div v-if="errors.framework_id" class="text-sm text-destructive">{{ errors.framework_id }}</div>
 
                         <!-- Explore Frameworks Link -->
@@ -234,6 +260,9 @@ const selectedFramework = ref<string>(props.preSelectedFramework?.id.toString() 
 const selectedClient = ref<string>(props.preSelectedClient?.id.toString() || '');
 const selectedSession = ref<string>(props.preSelectedSession?.id.toString() || '');
 const errors = ref<Record<string, string>>({});
+const frameworkComboboxOpen = ref<boolean>(false);
+const frameworkSearchQuery = ref<string>('');
+const frameworkSearchInput = ref<HTMLInputElement | null>(null);
 const clientComboboxOpen = ref<boolean>(false);
 const clientSearchQuery = ref<string>('');
 const searchInput = ref<HTMLInputElement | null>(null);
@@ -244,6 +273,14 @@ const canSubmit = computed(() => {
     const hasClient = selectedClient.value || props.preSelectedClient;
     const hasSession = selectedSession.value || props.preSelectedSession;
     return !!(hasFramework && hasClient && hasSession) && !loading.value;
+});
+
+const selectedFrameworkName = computed(() => {
+    if (props.preSelectedFramework) return props.preSelectedFramework.name;
+    if (!selectedFramework.value) return '';
+
+    const framework = frameworks.value.find(f => f.id.toString() === selectedFramework.value);
+    return framework ? framework.name : '';
 });
 
 const selectedClientName = computed(() => {
@@ -274,6 +311,19 @@ const selectedSessionInfo = computed(() => {
     };
 });
 
+const filteredFrameworks = computed(() => {
+    if (!frameworkSearchQuery.value) {
+        return frameworks.value;
+    }
+
+    const query = frameworkSearchQuery.value.toLowerCase();
+    return frameworks.value.filter(framework =>
+        framework.name.toLowerCase().includes(query) ||
+        framework.description.toLowerCase().includes(query) ||
+        framework.category.toLowerCase().includes(query)
+    );
+});
+
 const filteredClients = computed(() => {
     if (!clientSearchQuery.value) {
         return clients.value;
@@ -301,6 +351,13 @@ watch(selectedClient, (newClientId) => {
 });
 
 // Watch for combobox opening to focus search input
+watch(frameworkComboboxOpen, async (isOpen) => {
+    if (isOpen) {
+        await nextTick();
+        frameworkSearchInput.value?.focus();
+    }
+});
+
 watch(clientComboboxOpen, async (isOpen) => {
     if (isOpen) {
         await nextTick();
@@ -456,6 +513,8 @@ function handleClose(isOpen: boolean) {
         selectedSession.value = props.preSelectedSession?.id.toString() || '';
         clientSessions.value = [];
         errors.value = {};
+        frameworkComboboxOpen.value = false;
+        frameworkSearchQuery.value = '';
         clientComboboxOpen.value = false;
         clientSearchQuery.value = '';
     }
@@ -469,12 +528,16 @@ function handleCancel() {
     selectedSession.value = props.preSelectedSession?.id.toString() || '';
     clientSessions.value = [];
     errors.value = {};
+    frameworkComboboxOpen.value = false;
+    frameworkSearchQuery.value = '';
     clientComboboxOpen.value = false;
     clientSearchQuery.value = '';
 }
 
 // Close dropdown when clicking outside
 function handleClickOutside() {
+    frameworkComboboxOpen.value = false;
+    frameworkSearchQuery.value = '';
     clientComboboxOpen.value = false;
     clientSearchQuery.value = '';
 }
