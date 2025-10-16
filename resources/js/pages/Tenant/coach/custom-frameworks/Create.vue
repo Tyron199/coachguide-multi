@@ -93,8 +93,8 @@
                                             <SelectContent>
                                                 <SelectItem value="none">No subcategory</SelectItem>
                                                 <SelectItem value="custom">Create New Subcategory</SelectItem>
-                                                <SelectSeparator v-if="existingSubcategories.length > 0" />
-                                                <SelectItem v-for="subcategory in existingSubcategories"
+                                                <SelectSeparator v-if="existingSubcategories.value.length > 0" />
+                                                <SelectItem v-for="subcategory in existingSubcategories.value"
                                                     :key="subcategory" :value="subcategory">
                                                     {{ subcategory }}
                                                 </SelectItem>
@@ -155,7 +155,6 @@ import {
 } from '@/components/ui/select';
 import { LoaderCircle, Plus } from 'lucide-vue-next';
 import { type BreadcrumbItem } from '@/types';
-import frameworkRoutes from '@/routes/tenant/coach/coaching-frameworks';
 import * as customFrameworkRoutes from '@/routes/tenant/coach/custom-frameworks';
 
 interface Props {
@@ -164,6 +163,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const existingSubcategories = computed(() => props.existingSubcategories);
 
 // Form state
 const formData = ref({
@@ -227,7 +228,7 @@ function handleSubmit(): void {
         // Default values
         best_for: [],
     }, {
-        onSuccess: (page) => {
+        onSuccess: () => {
             // The controller should redirect to edit page with the new framework ID
         }
     });

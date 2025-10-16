@@ -273,14 +273,6 @@ const toggleSelection = (id: number, checked: boolean | 'indeterminate') => {
     selectedDevelopments.value = currentSelection;
 };
 
-const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-    });
-};
-
 const formatHours = (hours: number | null) => {
     if (!hours) return '0';
     return Math.round(hours * 10) / 10;
@@ -367,7 +359,7 @@ const handleDeleteSelected = async () => {
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
- 
+
     {
         title: 'Training & Development',
         href: ProfessionalDevelopmentController.index().url

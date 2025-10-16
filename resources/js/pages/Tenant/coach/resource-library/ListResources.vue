@@ -87,12 +87,7 @@ import PageHeader from '@/components/PageHeader.vue';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { Badge } from '@/components/ui/badge';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+    Card
 } from '@/components/ui/card';
 import {
     BookOpen,

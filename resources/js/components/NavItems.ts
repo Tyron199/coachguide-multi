@@ -1,10 +1,9 @@
 import { type NavItem } from "@/types";
-import { Calendar1Icon, Settings2, LayoutGrid, Users, CreditCard, Hammer, ChartLine, UserStar, BookOpen } from "lucide-vue-next";
+import { Calendar1Icon, Settings2, LayoutGrid, Users, Hammer, ChartLine, UserStar, BookOpen } from "lucide-vue-next";
 import { dashboard } from "@/routes/tenant";
 import clients from "@/routes/tenant/coach/clients";
 import coachingSessions from "@/routes/tenant/coach/coaching-sessions";
 import { index as themeIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/ThemeController';
-import { manage } from '@/actions/App/Http/Controllers/Tenant/Admin/SubscriptionController';
 import { models as showModels } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingFrameworkController';
 import { index as coachingLogIndex } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingLogController';
 import { index as coachesIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/CoachController';

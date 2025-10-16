@@ -202,7 +202,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import { ChevronsUpDown, LoaderCircle, Plus, ExternalLink } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import { Link } from '@inertiajs/vue3';

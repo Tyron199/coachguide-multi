@@ -5,7 +5,7 @@
             <Label for="name" class="text-sm font-medium">
                 Framework Name *
             </Label>
-            <Input id="name" v-model="modelValue.name" placeholder="e.g., My Custom GROW Model"
+            <Input id="name" v-model="frameworkName" placeholder="e.g., My Custom GROW Model"
                 :class="{ 'border-destructive': errors.name }" maxlength="255" />
             <div v-if="errors.name" class="text-sm text-destructive">
                 {{ errors.name }}
@@ -20,7 +20,7 @@
             <Label for="description" class="text-sm font-medium">
                 Description *
             </Label>
-            <Textarea id="description" v-model="modelValue.description"
+            <Textarea id="description" v-model="frameworkDescription"
                 placeholder="Describe what your framework helps coaches achieve and when to use it..."
                 :class="{ 'border-destructive': errors.description }" rows="4" maxlength="1000" />
             <div v-if="errors.description" class="text-sm text-destructive">
@@ -36,7 +36,7 @@
             <Label class="text-sm font-medium">
                 Category *
             </Label>
-            <RadioGroup v-model="modelValue.category" class="flex gap-6">
+            <RadioGroup v-model="frameworkCategory" class="flex gap-6">
                 <div class="flex items-center space-x-2">
                     <RadioGroupItem value="models" id="models" />
                     <Label for="models" class="font-normal cursor-pointer">
@@ -87,7 +87,7 @@
             </div>
 
             <!-- Custom Subcategory Input -->
-            <Input v-if="showCustomSubcategory" v-model="modelValue.subcategory" placeholder="Enter new subcategory..."
+            <Input v-if="showCustomSubcategory" v-model="frameworkSubcategory" placeholder="Enter new subcategory..."
                 maxlength="100" />
 
             <div v-if="errors.subcategory" class="text-sm text-destructive">
@@ -107,7 +107,7 @@
             <!-- Tag Input -->
             <div class="flex gap-2">
                 <Input v-model="newTag" placeholder="Add coaching type..." @keydown.enter.prevent="addTag"
-                    @keydown.comma.prevent="addTag" maxlength="100" />
+                    maxlength="100" />
                 <Button type="button" variant="outline" @click="addTag" :disabled="!newTag.trim()">
                     <Plus class="h-4 w-4" />
                 </Button>
@@ -189,6 +189,35 @@ const selectedSubcategory = ref('');
 const showCustomSubcategory = ref(false);
 const newTag = ref('');
 
+// Computed properties for two-way binding
+const frameworkName = computed({
+    get: () => props.modelValue.name,
+    set: (value: string) => {
+        emit('update:modelValue', { ...props.modelValue, name: value });
+    }
+});
+
+const frameworkDescription = computed({
+    get: () => props.modelValue.description,
+    set: (value: string) => {
+        emit('update:modelValue', { ...props.modelValue, description: value });
+    }
+});
+
+const frameworkCategory = computed({
+    get: () => props.modelValue.category,
+    set: (value: string) => {
+        emit('update:modelValue', { ...props.modelValue, category: value });
+    }
+});
+
+const frameworkSubcategory = computed({
+    get: () => props.modelValue.subcategory,
+    set: (value: string) => {
+        emit('update:modelValue', { ...props.modelValue, subcategory: value });
+    }
+});
+
 // Computed
 const availableExistingOptions = computed(() => {
     return props.existingBestForOptions.filter(option =>
@@ -200,10 +229,10 @@ const availableExistingOptions = computed(() => {
 function handleSubcategoryChange(value: string): void {
     if (value === 'custom') {
         showCustomSubcategory.value = true;
-        props.modelValue.subcategory = '';
+        frameworkSubcategory.value = '';
     } else {
         showCustomSubcategory.value = false;
-        props.modelValue.subcategory = value;
+        frameworkSubcategory.value = value;
     }
 }
 
@@ -212,7 +241,8 @@ function addTag(): void {
     if (tag &&
         !props.modelValue.best_for.includes(tag) &&
         props.modelValue.best_for.length < 10) {
-        props.modelValue.best_for.push(tag);
+        const updatedBestFor = [...props.modelValue.best_for, tag];
+        emit('update:modelValue', { ...props.modelValue, best_for: updatedBestFor });
         newTag.value = '';
     }
 }
@@ -221,15 +251,14 @@ function addExistingTag(tag: string): void {
     if (tag &&
         !props.modelValue.best_for.includes(tag) &&
         props.modelValue.best_for.length < 10) {
-        props.modelValue.best_for.push(tag);
+        const updatedBestFor = [...props.modelValue.best_for, tag];
+        emit('update:modelValue', { ...props.modelValue, best_for: updatedBestFor });
     }
 }
 
 function removeTag(tag: string): void {
-    const index = props.modelValue.best_for.indexOf(tag);
-    if (index > -1) {
-        props.modelValue.best_for.splice(index, 1);
-    }
+    const updatedBestFor = props.modelValue.best_for.filter(t => t !== tag);
+    emit('update:modelValue', { ...props.modelValue, best_for: updatedBestFor });
 }
 
 // Initialize subcategory selection on mount

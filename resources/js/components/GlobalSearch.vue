@@ -40,7 +40,7 @@ const emit = defineEmits<{
     'update:open': [value: boolean];
 }>();
 
-const open = ref(false);
+const localOpen = ref(false);
 const searchInput = ref('');
 const isLoading = ref(false);
 const searchResults = ref<SearchResponse['results'] | null>(null);
@@ -61,14 +61,14 @@ watch([Meta_K, Ctrl_K], (v) => {
 });
 
 watch(() => props.open, (newVal) => {
-    open.value = newVal;
+    localOpen.value = newVal;
     if (!newVal) {
         searchInput.value = '';
         searchResults.value = null;
     }
 });
 
-watch(open, (newVal) => {
+watch(localOpen, (newVal) => {
     emit('update:open', newVal);
 });
 
@@ -99,7 +99,7 @@ const groupLabels: Record<string, string> = {
 };
 
 function handleOpenChange() {
-    open.value = !open.value;
+    localOpen.value = !localOpen.value;
 }
 
 async function handleSearch() {
@@ -124,7 +124,7 @@ async function handleSearch() {
 
 function handleResultClick(result: SearchResult) {
     router.visit(result.url);
-    open.value = false;
+    localOpen.value = false;
     searchInput.value = '';
     searchResults.value = null;
 }
@@ -136,7 +136,7 @@ const hasResults = () => {
 </script>
 
 <template>
-    <CommandDialog v-model:open="open" :shouldFilter="false">
+    <CommandDialog v-model:open="localOpen" :shouldFilter="false">
         <!-- Custom input that doesn't bind to Command's filter state -->
         <div class="flex items-center border-b px-3" cmdk-input-wrapper>
             <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />

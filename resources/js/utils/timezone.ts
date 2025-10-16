@@ -62,7 +62,7 @@ export function formatTimezone(timezone: string): string {
 
         const label = timezone.replace(/_/g, ' ').replace('/', ' - ');
         return `${label} (${offset})`;
-    } catch (error) {
+    } catch {
         return timezone;
     }
 }

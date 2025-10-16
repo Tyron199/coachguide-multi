@@ -81,7 +81,7 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
-import { CalendarDate, getLocalTimeZone, today, fromDate } from '@internationalized/date';
+import { getLocalTimeZone, fromDate } from '@internationalized/date';
 import { toDate } from 'reka-ui/date';
 import AppLayout from '@/layouts/AppLayout.vue';
 import GrowthTrackerLayout from '@/layouts/growth-tracker/Layout.vue';

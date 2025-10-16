@@ -15,7 +15,6 @@ import {
     NotebookPen,
     GraduationCap,
     Video,
-    BookOpenCheck,
     Award
 } from 'lucide-vue-next';
 import CoachingLogController from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingLogController';

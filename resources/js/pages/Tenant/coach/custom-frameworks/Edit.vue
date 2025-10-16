@@ -25,7 +25,6 @@ import CoachingFrameworksLayout from '@/layouts/coaching-frameworks/Layout.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import CustomFrameworkBuilder from '@/components/CustomFrameworkBuilder.vue';
 import { type BreadcrumbItem } from '@/types';
-import frameworkRoutes from '@/routes/tenant/coach/coaching-frameworks';
 import * as customFrameworkRoutes from '@/routes/tenant/coach/custom-frameworks';
 
 interface Field {

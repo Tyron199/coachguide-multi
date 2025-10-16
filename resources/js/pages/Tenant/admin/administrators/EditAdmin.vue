@@ -99,7 +99,6 @@ import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { type BreadcrumbItem } from '@/types';
 import administrators from '@/routes/tenant/admin/administrators';
 import AdminController from '@/actions/App/Http/Controllers/Tenant/Admin/AdminController';

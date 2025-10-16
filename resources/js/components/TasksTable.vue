@@ -8,18 +8,14 @@
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <SortableTableHead label="Title" sort-key="title"
-                            :current-sort="props.filters.sort_by" :current-direction="props.filters.sort_direction"
-                            @sort="handleSort" />
-                        <SortableTableHead label="Client" sort-key="client"
-                            :current-sort="props.filters.sort_by" :current-direction="props.filters.sort_direction"
-                            @sort="handleSort" />
-                        <SortableTableHead label="Deadline" sort-key="deadline"
-                            :current-sort="props.filters.sort_by" :current-direction="props.filters.sort_direction"
-                            @sort="handleSort" />
-                        <SortableTableHead label="Status" sort-key="status"
-                            :current-sort="props.filters.sort_by" :current-direction="props.filters.sort_direction"
-                            @sort="handleSort" />
+                        <SortableTableHead label="Title" sort-key="title" :current-sort="props.filters.sort_by"
+                            :current-direction="props.filters.sort_direction" @sort="handleSort" />
+                        <SortableTableHead label="Client" sort-key="client" :current-sort="props.filters.sort_by"
+                            :current-direction="props.filters.sort_direction" @sort="handleSort" />
+                        <SortableTableHead label="Deadline" sort-key="deadline" :current-sort="props.filters.sort_by"
+                            :current-direction="props.filters.sort_direction" @sort="handleSort" />
+                        <SortableTableHead label="Status" sort-key="status" :current-sort="props.filters.sort_by"
+                            :current-direction="props.filters.sort_direction" @sort="handleSort" />
                         <TableHead>Evidence</TableHead>
                         <TableHead>Session</TableHead>
                     </TableRow>
@@ -164,7 +160,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { router, Link } from '@inertiajs/vue3';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -241,10 +236,10 @@ const getDeadlineLabel = (dateString: string) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     deadline.setHours(0, 0, 0, 0);
-    
+
     const diffTime = deadline.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays < 0) return 'Overdue';
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Tomorrow';
@@ -321,4 +316,3 @@ const updatePage = (page: number) => {
     });
 };
 </script>
-

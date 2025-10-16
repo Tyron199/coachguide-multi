@@ -246,12 +246,12 @@ function clearTest(): void {
 function fillSampleData(): void {
     props.frameworkData.fields.forEach(field => {
         if (field.key) {
-            testData.value[field.key] = getSampleResponse(field.title, field.description);
+            testData.value[field.key] = getSampleResponse(field.title);
         }
     });
 }
 
-function getSampleResponse(title: string, description: string): string {
+function getSampleResponse(title: string): string {
     // Generate contextual sample data based on the question
     const lowerTitle = title.toLowerCase();
 

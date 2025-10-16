@@ -97,7 +97,6 @@ import {
     FileText
 } from 'lucide-vue-next';
 import { type BreadcrumbItem } from '@/types';
-import frameworkRoutes from '@/routes/tenant/coach/coaching-frameworks';
 import * as customFrameworkRoutes from '@/routes/tenant/coach/custom-frameworks';
 
 interface Framework {
@@ -124,7 +123,7 @@ interface Props {
     frameworks: Framework[];
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 // State
 const deleteDialogOpen = ref(false);
@@ -191,13 +190,5 @@ function handleAssignFramework(framework: Framework): void {
 function handleAssignmentSuccess(instance: any): void {
     // The modal component already handles page refresh
     console.log('Custom framework assigned successfully:', instance);
-}
-
-function formatDate(dateString: string): string {
-    return new Date(dateString).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-    });
 }
 </script>
