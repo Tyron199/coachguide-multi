@@ -187,7 +187,7 @@ const getStatusLabel = (status: string) => {
                             class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                         </div>
                         <CardHeader class="relative flex flex-row items-center justify-between space-y-0 pb-3">
-                            <CardTitle class="text-sm font-semibold text-emerald-700 dark:text-emerald-300">Total
+                            <CardTitle class="text-sm font-semibold text-emerald-700 dark:text-emerald-300">Completed
                                 Sessions</CardTitle>
                             <div class="rounded-full bg-emerald-500/20 p-2">
                                 <Calendar class="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
@@ -197,7 +197,7 @@ const getStatusLabel = (status: string) => {
                             <div class="text-3xl font-bold text-emerald-900 dark:text-emerald-100">{{
                                 props.quickStats.totalSessions }}</div>
                             <p class="text-sm text-emerald-600/80 dark:text-emerald-300/80 mt-1">
-                                Completed sessions
+                                All time
                             </p>
                         </CardContent>
                     </Card>
