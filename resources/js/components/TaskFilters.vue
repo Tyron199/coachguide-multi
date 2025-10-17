@@ -2,8 +2,8 @@
     <div class="flex flex-col sm:flex-row gap-4">
         <!-- Search -->
         <div class="flex-1">
-            <Input v-model="localFilters.search" placeholder="Search tasks by title..."
-                @input="debouncedSearch" class="max-w-sm" />
+            <Input v-model="localFilters.search" placeholder="Search tasks by title..." @input="debouncedSearch"
+                class="max-w-sm" />
         </div>
 
         <div class="flex gap-2">
@@ -105,7 +105,7 @@ interface TaskFilters {
     evidence_required?: boolean | null;
     sort_by?: string;
     sort_direction?: 'asc' | 'desc';
-    view?: 'pending' | 'overdue' | 'completed';
+    view?: 'pending' | 'overdue' | 'review' | 'completed';
 }
 
 interface Props {
@@ -213,4 +213,3 @@ watch(() => props.filters, (newFilters) => {
     };
 }, { deep: true });
 </script>
-

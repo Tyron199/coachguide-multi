@@ -212,7 +212,7 @@ interface TaskFilters {
     evidence_required?: boolean | null;
     sort_by?: string;
     sort_direction?: 'asc' | 'desc';
-    view: 'pending' | 'overdue' | 'completed';
+    view: 'pending' | 'overdue' | 'review' | 'completed';
 }
 
 interface Props {

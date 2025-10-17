@@ -86,10 +86,13 @@ class CoachingTaskController extends Controller
         
         switch ($view) {
             case 'pending':
-                $query->whereIn('status', [CoachingTaskStatus::PENDING, CoachingTaskStatus::IN_PROGRESS, CoachingTaskStatus::REVIEW]);
+                $query->whereIn('status', [CoachingTaskStatus::PENDING, CoachingTaskStatus::IN_PROGRESS]);
                 break;
             case 'overdue':
                 $query->overdue(); // Use existing scope
+                break;
+            case 'review':
+                $query->where('status', CoachingTaskStatus::REVIEW);
                 break;
             case 'completed':
                 $query->where('status', CoachingTaskStatus::COMPLETED);

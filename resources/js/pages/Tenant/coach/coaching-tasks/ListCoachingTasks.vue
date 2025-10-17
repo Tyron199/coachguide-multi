@@ -62,7 +62,7 @@ interface TaskFilters {
     evidence_required?: boolean | null;
     sort_by?: string;
     sort_direction?: 'asc' | 'desc';
-    view: 'pending' | 'overdue' | 'completed';
+    view: 'pending' | 'overdue' | 'review' | 'completed';
 }
 
 interface Props {
@@ -77,6 +77,7 @@ const title = computed(() => {
     switch (props.filters.view) {
         case 'pending': return 'Pending Tasks';
         case 'overdue': return 'Overdue Tasks';
+        case 'review': return 'Tasks in Review';
         case 'completed': return 'Completed Tasks';
         default: return 'Tasks';
     }
@@ -86,6 +87,7 @@ const description = computed(() => {
     switch (props.filters.view) {
         case 'pending': return 'Tasks that are pending or in progress';
         case 'overdue': return 'Tasks that are past their deadline';
+        case 'review': return 'Tasks that require your review';
         case 'completed': return 'Tasks that have been completed';
         default: return 'Manage your coaching tasks';
     }
@@ -102,6 +104,11 @@ if (props.filters.view === 'pending') {
     breadcrumbs.push({
         title: 'Overdue Tasks',
         href: coachingTasks.overdue().url
+    });
+} else if (props.filters.view === 'review') {
+    breadcrumbs.push({
+        title: 'Tasks in Review',
+        href: coachingTasks.review().url
     });
 } else if (props.filters.view === 'completed') {
     breadcrumbs.push({
