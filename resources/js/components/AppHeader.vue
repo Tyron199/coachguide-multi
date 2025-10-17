@@ -81,7 +81,7 @@ const currentNavItems = computed(() => {
                                 <div class="flex flex-col space-y-4">
                                     <a v-for="item in footerNavItems" :key="item.title"
                                         :href="typeof item.href === 'string' ? item.href : item.href?.url"
-                                        target="_blank" rel="noopener noreferrer"
+                                        :target="item.target || '_blank'" rel="noopener noreferrer"
                                         class="flex items-center space-x-2 text-sm font-medium">
                                         <component v-if="item.icon" :is="item.icon" class="h-5 w-5" />
                                         <span>{{ item.title }}</span>
@@ -132,7 +132,7 @@ const currentNavItems = computed(() => {
                                             <Button variant="ghost" size="icon" as-child
                                                 class="group h-9 w-9 cursor-pointer">
                                                 <a :href="typeof item.href === 'string' ? item.href : item.href?.url"
-                                                    target="_blank" rel="noopener noreferrer">
+                                                    :target="item.target || '_blank'" rel="noopener noreferrer">
                                                     <span class="sr-only">{{ item.title }}</span>
                                                     <component :is="item.icon"
                                                         class="size-5 opacity-80 group-hover:opacity-100" />

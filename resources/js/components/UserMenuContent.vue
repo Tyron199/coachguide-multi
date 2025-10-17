@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import UserInfo from '@/components/UserInfo.vue';
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { logout } from '@/routes/tenant';
+import { logout, support } from '@/routes/tenant';
 import { edit } from '@/routes/tenant/profile';
 import type { User } from '@/types';
 import { Link, router } from '@inertiajs/vue3';
-import { LogOut, Settings } from 'lucide-vue-next';
+import { LogOut, Settings, MessageSquare } from 'lucide-vue-next';
 
 interface Props {
     user: User;
@@ -30,6 +30,12 @@ defineProps<Props>();
             <Link class="block w-full" :href="edit()" prefetch as="button">
             <Settings class="mr-2 h-4 w-4" />
             Settings
+            </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem :as-child="true">
+            <Link class="block w-full" :href="support()" prefetch as="button">
+            <MessageSquare class="mr-2 h-4 w-4" />
+            Support
             </Link>
         </DropdownMenuItem>
     </DropdownMenuGroup>

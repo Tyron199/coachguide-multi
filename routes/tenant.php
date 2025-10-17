@@ -48,6 +48,14 @@ Route::get('dashboard', function () {
     abort(403, 'No dashboard available for your role');
 })->middleware(['auth', 'verified', 'two-factor'])->name('dashboard');
 
+Route::get('support', [\App\Http\Controllers\Tenant\SupportController::class, 'index'])
+    ->middleware(['auth', 'verified', 'two-factor'])
+    ->name('support');
+
+Route::post('support', [\App\Http\Controllers\Tenant\SupportController::class, 'store'])
+    ->middleware(['auth', 'verified', 'two-factor'])
+    ->name('support.store');
+
 require __DIR__.'/tenant/settings.php';
 require __DIR__.'/tenant/auth.php';
 require __DIR__.'/tenant/coach.php';

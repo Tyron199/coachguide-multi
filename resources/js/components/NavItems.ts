@@ -1,5 +1,5 @@
 import { type NavItem } from "@/types";
-import { Calendar1Icon, Settings2, LayoutGrid, Users, Hammer, ChartLine, UserStar, BookOpen, CheckSquare } from "lucide-vue-next";
+import { Calendar1Icon, Settings2, LayoutGrid, Users, Hammer, ChartLine, UserStar, BookOpen, CheckSquare, HelpCircle } from "lucide-vue-next";
 import { dashboard } from "@/routes/tenant";
 import clients from "@/routes/tenant/coach/clients";
 import coachingSessions from "@/routes/tenant/coach/coaching-sessions";
@@ -11,6 +11,7 @@ import { index as administratorsIndex } from '@/actions/App/Http/Controllers/Ten
 import { all as resourceLibraryAll } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
 import { index as clientSessionsIndex } from '@/actions/App/Http/Controllers/Tenant/Client/SessionController';
 import { index as clientTasksIndex } from '@/actions/App/Http/Controllers/Tenant/Client/TaskController';
+import { index as supportIndex } from '@/actions/App/Http/Controllers/Tenant/SupportController';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
@@ -87,7 +88,12 @@ const clientNavItems: NavItem[] = [
 ];
 
 const footerNavItems: NavItem[] = [
-
+    {
+        title: 'Support',
+        href: supportIndex(),
+        icon: HelpCircle,
+        target: '_self',
+    },
 ];
 
 export {
