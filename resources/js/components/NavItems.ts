@@ -1,5 +1,5 @@
 import { type NavItem } from "@/types";
-import { Calendar1Icon, Settings2, LayoutGrid, Users, Hammer, ChartLine, UserStar, BookOpen } from "lucide-vue-next";
+import { Calendar1Icon, Settings2, LayoutGrid, Users, Hammer, ChartLine, UserStar, BookOpen, CheckSquare } from "lucide-vue-next";
 import { dashboard } from "@/routes/tenant";
 import clients from "@/routes/tenant/coach/clients";
 import coachingSessions from "@/routes/tenant/coach/coaching-sessions";
@@ -9,6 +9,8 @@ import { index as coachingLogIndex } from '@/actions/App/Http/Controllers/Tenant
 import { index as coachesIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/CoachController';
 import { index as administratorsIndex } from '@/actions/App/Http/Controllers/Tenant/Admin/AdminController';
 import { all as resourceLibraryAll } from '@/actions/App/Http/Controllers/Tenant/Coach/ResourceLibraryController';
+import { index as clientSessionsIndex } from '@/actions/App/Http/Controllers/Tenant/Client/SessionController';
+import { index as clientTasksIndex } from '@/actions/App/Http/Controllers/Tenant/Client/TaskController';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
@@ -66,6 +68,24 @@ const adminNavItems: NavItem[] = [
     // },
 ];
 
+const clientNavItems: NavItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Sessions',
+        href: clientSessionsIndex(),
+        icon: Calendar1Icon,
+    },
+    {
+        title: 'Tasks',
+        href: clientTasksIndex(),
+        icon: CheckSquare,
+    },
+];
+
 const footerNavItems: NavItem[] = [
 
 ];
@@ -74,4 +94,5 @@ export {
     mainNavItems,
     footerNavItems,
     adminNavItems,
+    clientNavItems,
 }

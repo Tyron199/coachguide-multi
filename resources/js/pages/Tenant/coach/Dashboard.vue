@@ -295,10 +295,15 @@ const getDateLabel = (dateString: string) => {
                             No outstanding actions
                         </div>
                         <div v-for="action in props.outstandingActions" :key="action.id"
-                            class="flex items-center justify-between p-3 border rounded-lg">
+                            class="flex items-center justify-between p-3 border rounded-lg"
+                            :class="{ 'border-orange-500 bg-orange-50 dark:bg-orange-950/20': action.status === 'review' }">
                             <div class="flex-1">
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="font-medium">{{ action.title }}</span>
+                                    <Badge v-if="action.status === 'review'" variant="default"
+                                        class="text-xs bg-orange-500 hover:bg-orange-600">
+                                        NEEDS REVIEW
+                                    </Badge>
                                 </div>
                                 <div class="flex items-center gap-4 text-sm text-muted-foreground">
                                     <span>{{ action.client }}</span>
@@ -330,17 +335,17 @@ const getDateLabel = (dateString: string) => {
                     <div class="grid gap-4 md:grid-cols-3">
                         <div class="text-center">
                             <div class="text-3xl font-bold text-blue-600">{{ props.quickStats.sessionsCompleted
-                                }}</div>
+                            }}</div>
                             <div class="text-sm text-muted-foreground">Sessions Completed</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-green-600">{{ props.quickStats.contractsSigned
-                                }}</div>
+                            }}</div>
                             <div class="text-sm text-muted-foreground">New Contracts Signed</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-purple-600">{{ props.quickStats.completionRate
-                                }}%</div>
+                            }}%</div>
                             <div class="text-sm text-muted-foreground">Action Completion Rate</div>
                         </div>
                     </div>

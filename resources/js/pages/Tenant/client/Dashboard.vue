@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import CalendarConnectModal from '@/components/CalendarConnectModal.vue';
 import { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +19,8 @@ import {
 
 import { dashboard } from "@/routes/tenant"
 import { show as showCalendarIntegration } from '@/actions/App/Http/Controllers/Tenant/Settings/CalendarIntegrationController';
+import { index as sessionsIndex, show as sessionShow } from '@/actions/App/Http/Controllers/Tenant/Client/SessionController';
+import { index as tasksIndex, show as taskShow } from '@/actions/App/Http/Controllers/Tenant/Client/TaskController';
 
 interface Props {
     upcomingSessions: Array<{
@@ -148,7 +150,7 @@ const getStatusLabel = (status: string) => {
 
                 <!-- Coach Info Card -->
                 <Card v-if="props.assignedCoach">
-                    <CardContent class="pt-6">
+                    <CardContent>
                         <div class="flex items-center gap-3">
                             <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                                 <User class="h-6 w-6 text-primary" />
@@ -216,41 +218,42 @@ const getStatusLabel = (status: string) => {
                                 <CardTitle>Upcoming Sessions</CardTitle>
                                 <CardDescription>Your next coaching sessions</CardDescription>
                             </div>
-                            <Button variant="outline" size="sm" disabled>
+                            <Link :href="sessionsIndex().url">
+                            <Button variant="outline" size="sm">
                                 <Eye class="mr-2 h-4 w-4" />
                                 View All
                             </Button>
+                            </Link>
                         </div>
                     </CardHeader>
                     <CardContent class="space-y-4">
                         <div v-if="props.upcomingSessions.length === 0" class="text-center text-muted-foreground py-8">
                             No upcoming sessions scheduled
                         </div>
-                        <div v-for="session in props.upcomingSessions" :key="session.id"
-                            class="flex items-center justify-between p-3 border rounded-lg">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="font-medium">{{ session.coach.name }}</span>
-                                    <Badge variant="outline" class="text-xs">
-                                        {{ getSessionTypeLabel(session.session_type) }}
-                                    </Badge>
-                                </div>
-                                <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                                    <div class="flex items-center gap-1">
-                                        <Calendar class="h-3 w-3" />
-                                        {{ getDateLabel(session.scheduled_at) }}
-                                    </div>
-                                    <div class="flex items-center gap-1">
-                                        <Clock class="h-3 w-3" />
-                                        {{ formatTime(session.scheduled_at) }}
-                                    </div>
-                                    <span>{{ session.duration }}min</span>
-                                </div>
+                        <Link v-for="session in props.upcomingSessions" :key="session.id"
+                            :href="sessionShow(session.id).url"
+                            class="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-medium">{{ session.coach.name }}</span>
+                                <Badge variant="outline" class="text-xs">
+                                    {{ getSessionTypeLabel(session.session_type) }}
+                                </Badge>
                             </div>
-                            <Button variant="ghost" size="sm" disabled>
-                                <ArrowRight class="h-4 w-4" />
-                            </Button>
+                            <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                                <div class="flex items-center gap-1">
+                                    <Calendar class="h-3 w-3" />
+                                    {{ getDateLabel(session.scheduled_at) }}
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <Clock class="h-3 w-3" />
+                                    {{ formatTime(session.scheduled_at) }}
+                                </div>
+                                <span>{{ session.duration }}min</span>
+                            </div>
                         </div>
+                        <ArrowRight class="h-4 w-4 text-muted-foreground" />
+                        </Link>
                     </CardContent>
                 </Card>
 
@@ -262,39 +265,39 @@ const getStatusLabel = (status: string) => {
                                 <CardTitle>Outstanding Tasks</CardTitle>
                                 <CardDescription>Tasks assigned to you</CardDescription>
                             </div>
-                            <Button variant="outline" size="sm" disabled>
+                            <Link :href="tasksIndex().url">
+                            <Button variant="outline" size="sm">
                                 <Eye class="mr-2 h-4 w-4" />
                                 View All
                             </Button>
+                            </Link>
                         </div>
                     </CardHeader>
                     <CardContent class="space-y-4">
                         <div v-if="props.outstandingTasks.length === 0" class="text-center text-muted-foreground py-8">
                             No outstanding tasks
                         </div>
-                        <div v-for="task in props.outstandingTasks" :key="task.id"
-                            class="flex items-center justify-between p-3 border rounded-lg">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="font-medium">{{ task.title }}</span>
-                                    <Badge :variant="getStatusVariant(task.status)" class="text-xs">
-                                        {{ getStatusLabel(task.status) }}
-                                    </Badge>
+                        <Link v-for="task in props.outstandingTasks" :key="task.id" :href="taskShow(task.id).url"
+                            class="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-medium">{{ task.title }}</span>
+                                <Badge :variant="getStatusVariant(task.status)" class="text-xs">
+                                    {{ getStatusLabel(task.status) }}
+                                </Badge>
+                            </div>
+                            <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                                <div v-if="task.deadline" class="flex items-center gap-1">
+                                    <Calendar class="h-3 w-3" />
+                                    Due {{ formatDate(task.deadline) }}
                                 </div>
-                                <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                                    <div v-if="task.deadline" class="flex items-center gap-1">
-                                        <Calendar class="h-3 w-3" />
-                                        Due {{ formatDate(task.deadline) }}
-                                    </div>
-                                    <div v-else>
-                                        No deadline set
-                                    </div>
+                                <div v-else>
+                                    No deadline set
                                 </div>
                             </div>
-                            <Button variant="ghost" size="sm" disabled>
-                                <ArrowRight class="h-4 w-4" />
-                            </Button>
                         </div>
+                        <ArrowRight class="h-4 w-4 text-muted-foreground" />
+                        </Link>
                     </CardContent>
                 </Card>
             </div>

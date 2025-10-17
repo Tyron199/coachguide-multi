@@ -21,14 +21,14 @@ const props = withDefaults(defineProps<Props>(), {
 const responsiveClasses = computed(() => {
   if (!props.size || props.size === 'default') {
     // Mobile: sm size, Desktop: default size
-    return 'h-8 px-3 has-[>svg]:px-2.5 md:h-9 md:px-4 md:has-[>svg]:px-3'
+    return 'h-8 px-3 has-[>svg]:px-2.5 md:h-9 md:px-4 md:has-[>svg]:px-3 cursor-pointer'
   }
   if (props.size === 'lg') {
     // Mobile: default size, Desktop: lg size  
-    return 'h-9 px-4 has-[>svg]:px-3 md:h-10 md:px-6 md:has-[>svg]:px-4'
+    return 'h-9 px-4 has-[>svg]:px-3 md:h-10 md:px-6 md:has-[>svg]:px-4 cursor-pointer'
   }
   // For 'sm' and 'icon', return empty string to use original size
-  return ''
+  return 'cursor-pointer'
 })
 </script>
 

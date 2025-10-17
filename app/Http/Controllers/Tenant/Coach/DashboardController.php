@@ -9,7 +9,7 @@ use App\Models\Tenant\CoachingContract;
 use App\Enums\Tenant\ContractStatus;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use App\Enums\Tenant\CoachingTaskStatus;
 class DashboardController extends Controller
 {
     /**
@@ -38,7 +38,7 @@ class DashboardController extends Controller
         
         // Outstanding Actions (Tasks)
         $outstandingActionsCount = CoachingTask::where('coach_id', $coach->id)
-            ->whereIn('status', ['pending', 'in_progress'])
+            ->whereIn('status', [CoachingTaskStatus::PENDING, CoachingTaskStatus::IN_PROGRESS,CoachingTaskStatus::REVIEW])
             ->count();
         
         // CPD Hours (from completed sessions this month, convert minutes to hours)
@@ -76,7 +76,7 @@ class DashboardController extends Controller
         
         // Outstanding Actions (next 3)
         $outstandingActions = CoachingTask::where('coach_id', $coach->id)
-            ->whereIn('status', ['pending', 'in_progress'])
+            ->whereIn('status', [CoachingTaskStatus::PENDING, CoachingTaskStatus::IN_PROGRESS, CoachingTaskStatus::REVIEW])
             ->with(['client:id,name'])
             ->orderBy('deadline', 'asc')
             ->limit(3)
@@ -116,7 +116,7 @@ class DashboardController extends Controller
             ->count();
         
         $completedTasksThisMonth = CoachingTask::where('coach_id', $coach->id)
-            ->where('status', 'completed')
+            ->where('status', CoachingTaskStatus::COMPLETED)
             ->whereNotNull('deadline')
             ->whereMonth('deadline', now()->month)
             ->whereYear('deadline', now()->year)

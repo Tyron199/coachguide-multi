@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
-import { mainNavItems, footerNavItems, adminNavItems } from '@/components/NavItems';
+import { mainNavItems, footerNavItems, adminNavItems, clientNavItems } from '@/components/NavItems';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import GlobalSearch from '@/components/GlobalSearch.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -38,6 +38,18 @@ const activeItemStyles = computed(
 
 const searchOpen = ref(false);
 
+// Determine which nav items to show based on user role
+const isClient = computed(() => auth.value.user.roles.includes('client'));
+const isCoach = computed(() => auth.value.user.roles.includes('coach'));
+const isAdmin = computed(() => auth.value.user.roles.includes('admin'));
+
+const currentNavItems = computed(() => {
+    if (isClient.value && !isCoach.value && !isAdmin.value) {
+        return clientNavItems;
+    }
+    return mainNavItems;
+});
+
 </script>
 
 <template>
@@ -59,7 +71,7 @@ const searchOpen = ref(false);
                             </SheetHeader>
                             <div class="flex h-full flex-1 flex-col justify-between space-y-4 py-6">
                                 <nav class="-mx-3 space-y-1">
-                                    <Link v-for="item in mainNavItems" :key="item.title" :href="item.href"
+                                    <Link v-for="item in currentNavItems" :key="item.title" :href="item.href"
                                         class="flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
                                         :class="activeItemStyles(item.href)">
                                     <component v-if="item.icon" :is="item.icon" class="h-5 w-5" />
@@ -88,7 +100,7 @@ const searchOpen = ref(false);
                 <div class="hidden h-full lg:flex lg:flex-1">
                     <NavigationMenu class="ml-10 flex h-full items-stretch">
                         <NavigationMenuList class="flex h-full items-stretch space-x-2">
-                            <NavigationMenuItem v-for="(item, index) in mainNavItems" :key="index"
+                            <NavigationMenuItem v-for="(item, index) in currentNavItems" :key="index"
                                 class="relative flex h-full items-center">
                                 <Link
                                     :class="[navigationMenuTriggerStyle(), activeItemStyles(item.href), 'h-9 cursor-pointer px-3']"
@@ -108,7 +120,7 @@ const searchOpen = ref(false);
                 <div class="ml-auto flex items-center space-x-2">
                     <div class="relative flex items-center space-x-1">
                         <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer"
-                            @click="searchOpen = true">
+                            @click="searchOpen = true" v-if="!isClient">
                             <Search class="size-5 opacity-80 group-hover:opacity-100" />
                         </Button>
 
@@ -134,7 +146,7 @@ const searchOpen = ref(false);
                                 </TooltipProvider>
                             </template>
 
-                            <DropdownMenu v-if="adminNavItems.length > 0">
+                            <DropdownMenu v-if="isAdmin && adminNavItems.length > 0">
                                 <DropdownMenuTrigger :as-child="true">
                                     <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer">
                                         <Shield class="size-5 opacity-80 group-hover:opacity-100" />

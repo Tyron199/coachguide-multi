@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import GlobalSearch from '@/components/GlobalSearch.vue';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Search } from 'lucide-vue-next';
 import type { BreadcrumbItemType } from '@/types';
+import { usePage } from '@inertiajs/vue3';
 
 withDefaults(
     defineProps<{
@@ -17,6 +18,7 @@ withDefaults(
 );
 
 const searchOpen = ref(false);
+const isClient = computed(() => usePage().props.auth.user.roles.includes('client'));
 </script>
 
 <template>
@@ -29,7 +31,8 @@ const searchOpen = ref(false);
                     <Breadcrumbs :breadcrumbs="breadcrumbs" />
                 </template>
             </div>
-            <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer" @click="searchOpen = true">
+            <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer" @click="searchOpen = true"
+                v-if="!isClient">
                 <Search class="size-5 opacity-80 group-hover:opacity-100" />
             </Button>
         </div>

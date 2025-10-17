@@ -6,12 +6,13 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/compone
 import { dashboard } from '@/routes/tenant';
 import { Link } from '@inertiajs/vue3';
 import AppLogo from './AppLogo.vue';
-import { mainNavItems, footerNavItems, adminNavItems } from '@/components/NavItems';
+import { mainNavItems, footerNavItems, adminNavItems, clientNavItems } from '@/components/NavItems';
 import { usePage } from '@inertiajs/vue3';
 
 const user = usePage().props.auth.user;
 const isAdmin = user.roles.includes('admin');
 const isCoach = user.roles.includes('coach');
+const isClient = user.roles.includes('client');
 
 </script>
 
@@ -26,9 +27,9 @@ const isCoach = user.roles.includes('coach');
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain title="Coach" :items="mainNavItems" v-if="isCoach || isAdmin
-            " />
+            <NavMain title="Coach" :items="mainNavItems" v-if="isCoach || isAdmin" />
             <NavMain title="Admin" :items="adminNavItems" v-if="isAdmin" />
+            <NavMain title="Client" :items="clientNavItems" v-if="isClient && !isCoach && !isAdmin" />
         </SidebarContent>
 
         <SidebarFooter>

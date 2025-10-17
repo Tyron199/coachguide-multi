@@ -160,11 +160,22 @@ const passwordInput = ref<HTMLInputElement | null>(null);
                             preserveScroll: true,
                         }" reset-on-success class="space-y-4" v-slot="{ errors, processing, recentlySuccessful }">
                             <div class="grid gap-2">
-                                <Label for="password">Confirm Password</Label>
-                                <Input id="password" ref="passwordInput" name="password" type="password"
+                                <Label for="disable_password">Confirm Password</Label>
+                                <Input id="disable_password" ref="passwordInput" name="password" type="password"
                                     class="mt-1 block w-full" autocomplete="current-password"
                                     placeholder="Enter your password to confirm" />
                                 <InputError :message="errors.password" />
+                            </div>
+
+                            <div class="grid gap-2">
+                                <Label for="disable_code">Verification Code</Label>
+                                <Input id="disable_code" name="code" type="text" maxlength="6"
+                                    class="text-center text-lg tracking-widest font-mono" placeholder="000000"
+                                    autocomplete="one-time-code" />
+                                <InputError :message="errors.code" />
+                                <p class="text-xs text-muted-foreground">
+                                    Enter the current code from your authenticator app
+                                </p>
                             </div>
 
                             <div class="flex items-center gap-4">

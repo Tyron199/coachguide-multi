@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 class Attachment extends Model
 {
     protected $fillable = [
+        'attachable_type',
+        'attachable_id',
         'original_name',
         'file_name',
         'file_path',

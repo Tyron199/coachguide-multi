@@ -99,9 +99,25 @@ class TwoFactorController extends Controller
     {
         $request->validate([
             'password' => 'required|current_password',
+            'code' => 'required|string|size:6',
         ]);
 
         $user = $request->user();
+
+        if (!$user->hasEnabledTwoFactor()) {
+            throw ValidationException::withMessages([
+                'code' => 'Two-factor authentication is not enabled.',
+            ]);
+        }
+
+        $valid = Google2FA::verifyKey($user->google2fa_secret, $request->code);
+
+        if (!$valid) {
+            throw ValidationException::withMessages([
+                'code' => 'The provided two-factor authentication code was invalid.',
+            ]);
+        }
+
         $user->disableTwoFactor();
 
         // Clear any existing 2FA session verification
