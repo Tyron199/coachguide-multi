@@ -26,7 +26,7 @@ class SupportController extends Controller
         $validated = $request->validate([
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:5000',
-            'attachments.*' => 'nullable|file|max:10240', // 10MB max per file
+            'attachments.*' => 'nullable|image|max:10240', // Only images, 10MB max per file
         ]);
 
         $user = $request->user();

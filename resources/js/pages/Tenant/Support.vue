@@ -161,7 +161,9 @@ const canSubmit = computed(() => {
 
                         <!-- File Attachments -->
                         <div class="space-y-2">
-                            <Label>Attachments (optional)</Label>
+                            <Label>Image Attachments (optional)</Label>
+                            <p class="text-xs text-muted-foreground">You can attach screenshots or images to help
+                                explain your issue</p>
                             <div class="space-y-3">
                                 <Button type="button" variant="outline" @click="fileInput?.click()"
                                     class="w-full sm:w-auto">
@@ -169,7 +171,7 @@ const canSubmit = computed(() => {
                                     Add Files
                                 </Button>
                                 <input ref="fileInput" type="file" multiple @change="handleFileSelect" class="hidden"
-                                    accept="image/*,application/pdf,.doc,.docx,.txt" />
+                                    accept="image/*" />
 
                                 <!-- File List -->
                                 <div v-if="files.length > 0" class="space-y-2">

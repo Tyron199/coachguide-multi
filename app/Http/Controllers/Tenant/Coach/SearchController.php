@@ -61,6 +61,10 @@ class SearchController extends Controller
         ['title' => 'Appearance', 'url' => 'tenant.settings.appearance'],
         ['title' => 'Calendar Integrations', 'url' => 'tenant.settings.calendar-integrations'],
         ['title' => 'Two-Factor Authentication', 'url' => 'tenant.settings.two-factor.show'],
+        ['title' => 'Support', 'url' => 'tenant.support'],
+        ['title' => 'Contact Support', 'url' => 'tenant.support'],
+        ['title' => 'Help', 'url' => 'tenant.support'],
+        ['title' => 'Feedback', 'url' => 'tenant.support'],
         // Admin Navigation (only show if user has admin role)
         ['title' => 'Manage Coaches', 'url' => 'tenant.admin.coaches.index', 'admin_only' => true],
         ['title' => 'Manage Administrators', 'url' => 'tenant.admin.administrators.index', 'admin_only' => true],
