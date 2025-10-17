@@ -1,5 +1,6 @@
 <template>
-    <PageLayout :sidebar-nav-items="sidebarNavItems" title="Administrators" description="Manage your administrators">
+    <PageLayout :sidebar-nav-items="sidebarNavItems" title="Administrators" description="Manage your administrators"
+        :sidebar-width="14">
         <slot />
     </PageLayout>
 
