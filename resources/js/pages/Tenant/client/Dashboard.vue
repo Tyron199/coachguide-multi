@@ -39,6 +39,7 @@ interface Props {
     }>;
     quickStats: {
         totalSessions: number;
+        sessionsToday: number;
         tasksDueThisWeek: number;
         tasksCompletedThisMonth: number;
     };
@@ -197,7 +198,7 @@ const getStatusLabel = (status: string) => {
                             <div class="text-3xl font-bold text-emerald-900 dark:text-emerald-100">{{
                                 props.quickStats.totalSessions }}</div>
                             <p class="text-sm text-emerald-600/80 dark:text-emerald-300/80 mt-1">
-                                All time
+                                {{ props.quickStats.sessionsToday }} scheduled today
                             </p>
                         </CardContent>
                     </Card>

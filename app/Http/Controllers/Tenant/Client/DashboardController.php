@@ -17,9 +17,9 @@ class DashboardController extends Controller
     {
         $client = auth()->user();
         
-        // Upcoming Sessions (next 5)
+        // Upcoming Sessions (next 5) - includes currently active sessions
         $upcomingSessions = CoachingSession::where('client_id', $client->id)
-            ->where('scheduled_at', '>', now())
+            ->where('end_at', '>', now())
             ->with(['coach:id,name'])
             ->orderBy('scheduled_at', 'asc')
             ->limit(5)
@@ -52,9 +52,16 @@ class DashboardController extends Controller
                 ];
             });
         
-        // Quick Stats - Total Sessions Completed
+        // Quick Stats - Total Sessions Completed (only count sessions where end_at has passed)
         $totalSessions = CoachingSession::where('client_id', $client->id)
             ->whereNotNull('end_at')
+            ->where('end_at', '<=', now())
+            ->count();
+        
+        // Quick Stats - Sessions Scheduled Today
+        $sessionsToday = CoachingSession::where('client_id', $client->id)
+            ->whereDate('scheduled_at', today())
+            ->where('scheduled_at', '>', now())
             ->count();
         
         // Quick Stats - Tasks Due This Week
@@ -94,6 +101,7 @@ class DashboardController extends Controller
             'outstandingTasks' => $outstandingTasks,
             'quickStats' => [
                 'totalSessions' => $totalSessions,
+                'sessionsToday' => $sessionsToday,
                 'tasksDueThisWeek' => $tasksDueThisWeek,
                 'tasksCompletedThisMonth' => $tasksCompletedThisMonth,
             ],
