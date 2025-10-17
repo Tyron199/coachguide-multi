@@ -22,13 +22,7 @@
                             Archive Client
                         </Button>
 
-                        <!-- Schedule Session Button -->
-                        <Link :href="createSession({ query: { client_id: client.id } }).url" v-if="!client.archived">
-                        <Button v-if="can.update" variant="outline">
-                            <Calendar class="mr-2 h-4 w-4" />
-                            Schedule Session
-                        </Button>
-                        </Link>
+
 
                         <!-- Impersonate Button -->
                         <Button v-if="canImpersonate && !client.archived" variant="outline"
@@ -36,6 +30,14 @@
                             <UserCog class="mr-2 h-4 w-4" />
                             Impersonate Client
                         </Button>
+
+                        <!-- Schedule Session Button -->
+                        <Link :href="createSession({ query: { client_id: client.id } }).url" v-if="!client.archived">
+                        <Button v-if="can.update">
+                            <Calendar class="mr-2 h-4 w-4" />
+                            Schedule Session
+                        </Button>
+                        </Link>
 
                         <!-- Delete Button (only for archived clients with delete permission) -->
                         <Button v-if="client.archived && can.delete" variant="destructive" @click="handleDeleteClick">
