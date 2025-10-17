@@ -7,7 +7,7 @@ import { BreadcrumbItem } from '@/types';
 import { dashboard } from "@/routes/tenant";
 import { index as sessionsIndex } from '@/actions/App/Http/Controllers/Tenant/Client/SessionController';
 import { show as taskShow } from '@/actions/App/Http/Controllers/Tenant/Client/TaskController';
-import { Calendar, Clock, User, CheckSquare, AlertCircle, ChevronRight } from 'lucide-vue-next';
+import { Calendar, Clock, User, CheckSquare, ChevronRight } from 'lucide-vue-next';
 
 interface Task {
     id: number;

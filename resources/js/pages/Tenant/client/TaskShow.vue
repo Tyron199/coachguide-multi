@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { BreadcrumbItem } from '@/types';
 import { dashboard } from "@/routes/tenant";
@@ -14,7 +13,7 @@ import { index as tasksIndex } from '@/actions/App/Http/Controllers/Tenant/Clien
 import { store as submitTask, destroy as deleteSubmission } from '@/actions/App/Http/Controllers/Tenant/Client/TaskActionController';
 import { show as sessionShow } from '@/actions/App/Http/Controllers/Tenant/Client/SessionController';
 import {
-    CheckSquare, Clock, User, Calendar, AlertCircle,
+    CheckSquare, Clock, User, Calendar,
     Upload, X, FileIcon, Download, Trash2
 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
@@ -164,9 +163,9 @@ const getStatusLabel = (status: string) => {
 const handleDeleteSubmission = async (actionId: number) => {
     const confirmed = await alertConfirm({
         title: 'Delete Submission?',
-        text: 'Are you sure you want to delete this submission? All attached files will be removed. This action cannot be undone.',
-        confirmButtonText: 'Delete',
-        cancelButtonText: 'Cancel',
+        description: 'Are you sure you want to delete this submission? All attached files will be removed. This action cannot be undone.',
+        confirmText: 'Delete',
+        cancelText: 'Cancel',
     });
 
     if (confirmed) {

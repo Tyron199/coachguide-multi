@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import UserInfo from '@/components/UserInfo.vue';
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { logout, support } from '@/routes/tenant';
+import { logout } from '@/routes/tenant';
 import { edit } from '@/routes/tenant/profile';
 import type { User } from '@/types';
 import { Link, router } from '@inertiajs/vue3';
-import { LogOut, Settings, MessageSquare } from 'lucide-vue-next';
+import { LogOut, Settings } from 'lucide-vue-next';
 
 interface Props {
     user: User;
