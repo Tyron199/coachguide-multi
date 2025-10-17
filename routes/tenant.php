@@ -56,6 +56,14 @@ Route::post('support', [\App\Http\Controllers\Tenant\SupportController::class, '
     ->middleware(['auth', 'verified', 'two-factor'])
     ->name('support.store');
 
+Route::post('impersonate/{user}', [\App\Http\Controllers\Tenant\ImpersonationController::class, 'start'])
+    ->middleware(['auth', 'verified', 'two-factor'])
+    ->name('impersonate.start');
+
+Route::post('impersonate/stop', [\App\Http\Controllers\Tenant\ImpersonationController::class, 'stop'])
+    ->middleware(['auth', 'verified', 'two-factor'])
+    ->name('impersonate.stop');
+
 require __DIR__.'/tenant/settings.php';
 require __DIR__.'/tenant/auth.php';
 require __DIR__.'/tenant/coach.php';

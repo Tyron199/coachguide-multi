@@ -52,6 +52,10 @@ class HandleInertiaRequests extends Middleware
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user()?->toInertia(),
+                'impersonating' => session()->has('impersonator_id') ? [
+                    'original_user_id' => session('impersonator_id'),
+                    'current_user_name' => $request->user()?->name,
+                ] : null,
             ],
             'tenant' => tenant() ? [
                 'id' => tenant('id'),

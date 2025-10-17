@@ -29,6 +29,14 @@
                             Schedule Session
                         </Button>
                         </Link>
+
+                        <!-- Impersonate Button -->
+                        <Button v-if="canImpersonate && !client.archived" variant="outline"
+                            @click="handleImpersonateClick">
+                            <UserCog class="mr-2 h-4 w-4" />
+                            Impersonate Client
+                        </Button>
+
                         <!-- Delete Button (only for archived clients with delete permission) -->
                         <Button v-if="client.archived && can.delete" variant="destructive" @click="handleDeleteClick">
                             <Trash2 class="mr-2 h-4 w-4" />
@@ -146,20 +154,22 @@
 </template>
 
 <script setup lang="ts">
-import { Head, router, Link } from '@inertiajs/vue3';
+import { Head, router, Link, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ClientLayout from '@/layouts/client/Layout.vue';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { type BreadcrumbItem, type Client } from '@/types';
+import { type BreadcrumbItem, type Client, type AppPageProps } from '@/types';
 import clients from '@/routes/tenant/coach/clients';
 import { destroy as destroyClientAction, archive as archiveClientAction, unarchive as unarchiveClientAction } from '@/actions/App/Http/Controllers/Tenant/Coach/ClientController';
-import { Edit, Archive, ArchiveRestore, Trash2, Calendar } from 'lucide-vue-next';
+import { Edit, Archive, ArchiveRestore, Trash2, Calendar, UserCog } from 'lucide-vue-next';
 import companies from '@/routes/tenant/coach/companies';
 import { Badge } from '@/components/ui/badge';
 import { alertConfirm } from '@/plugins/alert';
 import PageHeader from '@/components/PageHeader.vue';
 import { create as createSession } from '@/actions/App/Http/Controllers/Tenant/Coach/CoachingSessionController';
+import impersonate from '@/routes/tenant/impersonate';
+import { computed } from 'vue';
 
 
 const props = defineProps<{
@@ -169,6 +179,23 @@ const props = defineProps<{
         delete: boolean;
     };
 }>();
+
+const page = usePage<AppPageProps>();
+
+const canImpersonate = computed(() => {
+    const user = page.props.auth.user;
+    const isImpersonating = page.props.auth.impersonating;
+
+    // Cannot impersonate if already impersonating
+    if (isImpersonating) return false;
+
+    // Can impersonate if user is a coach or admin and has update permission
+    if (user && (user.roles.includes('coach') || user.roles.includes('admin')) && props.can.update) {
+        return true;
+    }
+
+    return false;
+});
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -237,6 +264,21 @@ const handleDeleteClick = async () => {
 
     if (confirmed) {
         router.visit(destroyClientAction(props.client.id));
+    }
+};
+
+const handleImpersonateClick = async () => {
+    const confirmed = await alertConfirm({
+        title: 'Impersonate Client',
+        description: `You are about to impersonate ${props.client.name}. You will see the platform from their perspective. You can stop impersonating at any time using the banner at the top of the page.`,
+        confirmText: 'Start Impersonating',
+        variant: 'default'
+    });
+
+    if (confirmed) {
+        router.post(impersonate.start(props.client.id).url, {}, {
+            preserveScroll: false
+        });
     }
 };
 </script>

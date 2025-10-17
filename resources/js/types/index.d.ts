@@ -3,6 +3,10 @@ import type { LucideIcon } from 'lucide-vue-next';
 
 export interface Auth {
     user: User;
+    impersonating?: {
+        original_user_id: number;
+        current_user_name: string;
+    } | null;
 }
 
 export interface BreadcrumbItem {

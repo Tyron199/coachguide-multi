@@ -27,6 +27,13 @@
                             Send Invitation
                         </Button>
 
+                        <!-- Impersonate Button -->
+                        <Button v-if="canImpersonate && !coach.archived" variant="outline"
+                            @click="handleImpersonateClick">
+                            <UserCog class="mr-2 h-4 w-4" />
+                            Impersonate Coach
+                        </Button>
+
                         <!-- Delete Button (only for archived coaches with delete permission) -->
                         <Button v-if="coach.archived && can.delete" variant="destructive" @click="handleDeleteClick">
                             <Trash2 class="mr-2 h-4 w-4" />
@@ -147,13 +154,13 @@
 </template>
 
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import CoachesLayout from '@/layouts/coaches/Layout.vue';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type AppPageProps } from '@/types';
 import coaches from '@/routes/tenant/admin/coaches';
 import {
     Edit,
@@ -161,11 +168,14 @@ import {
     ArchiveRestore,
     Mail,
     Trash2,
-    Users
+    Users,
+    UserCog
 } from 'lucide-vue-next';
 import PageHeader from '@/components/PageHeader.vue';
 import { formatDate } from '@/lib/utils';
 import { alertConfirm } from '@/plugins/alert';
+import impersonate from '@/routes/tenant/impersonate';
+import { computed } from 'vue';
 
 interface Client {
     id: number;
@@ -203,6 +213,23 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const page = usePage<AppPageProps>();
+
+const canImpersonate = computed(() => {
+    const user = page.props.auth.user;
+    const isImpersonating = page.props.auth.impersonating;
+
+    // Cannot impersonate if already impersonating
+    if (isImpersonating) return false;
+
+    // Can impersonate if user is an admin and has update permission
+    if (user && user.roles.includes('admin') && props.can.update) {
+        return true;
+    }
+
+    return false;
+});
 
 const handleSendInvitation = async () => {
     const confirmed = await alertConfirm({
@@ -260,6 +287,21 @@ const handleDeleteClick = async () => {
     if (confirmed) {
         router.delete(coaches.destroy(props.coach.id).url, {
             preserveScroll: true
+        });
+    }
+};
+
+const handleImpersonateClick = async () => {
+    const confirmed = await alertConfirm({
+        title: 'Impersonate Coach',
+        description: `You are about to impersonate ${props.coach.name}. You will see the platform from their perspective. You can stop impersonating at any time using the banner at the top of the page.`,
+        confirmText: 'Start Impersonating',
+        variant: 'default'
+    });
+
+    if (confirmed) {
+        router.post(impersonate.start(props.coach.id).url, {}, {
+            preserveScroll: false
         });
     }
 };
