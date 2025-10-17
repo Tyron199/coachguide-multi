@@ -32,12 +32,12 @@ defineProps<Props>();
             Settings
             </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem :as-child="true">
+        <!-- <DropdownMenuItem :as-child="true">
             <Link class="block w-full" :href="support()" prefetch as="button">
             <MessageSquare class="mr-2 h-4 w-4" />
             Support
             </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> -->
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">
