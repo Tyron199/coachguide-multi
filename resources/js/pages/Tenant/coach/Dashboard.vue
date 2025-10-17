@@ -135,123 +135,96 @@ const getDateLabel = (dateString: string) => {
     <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-            <div class="flex h-full flex-1 flex-col gap-8 rounded-xl p-6">
+        <div class="min-h-screen bg-background">
+            <div class="flex h-full flex-1 flex-col gap-6 p-6 max-w-7xl mx-auto">
 
                 <!-- Welcome Section -->
-                <div
-                    class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-8 backdrop-blur-sm">
-                    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
-                    <div class="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-                        <div class="space-y-2">
-                            <h1
-                                class="text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
-                                Welcome back! 👋
-                            </h1>
-                            <p class="text-lg text-muted-foreground max-w-2xl">
-                                Here's what's happening with your coaching practice today.
-                            </p>
-                        </div>
-                        <div class="flex flex-col gap-3 sm:flex-row">
-                            <Link :href="createClient().url">
-                            <Button
-                                class="h-11 px-6 shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105">
-                                <Plus class="mr-2 h-4 w-4" />
-                                Add Client
-                            </Button>
-                            </Link>
-                            <Link :href="createSession().url">
-                            <Button variant="outline"
-                                class="h-11 px-6 border-2 transition-all duration-200 hover:shadow-lg hover:scale-105">
-                                <Plus class="mr-2 h-4 w-4" />
-                                Schedule Session
-                            </Button>
-                            </Link>
-                        </div>
+                <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center pb-2">
+                    <div class="space-y-1">
+                        <h1 class="text-3xl font-semibold tracking-tight text-foreground">
+                            Welcome back
+                        </h1>
+                        <p class="text-sm text-muted-foreground">
+                            Here's what's happening with your coaching practice today
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 sm:flex-row">
+                        <Link :href="createClient().url">
+                        <Button size="sm">
+                            <Plus class="mr-2 h-4 w-4" />
+                            Add Client
+                        </Button>
+                        </Link>
+                        <Link :href="createSession().url">
+                        <Button variant="outline" size="sm">
+                            <Plus class="mr-2 h-4 w-4" />
+                            Schedule Session
+                        </Button>
+                        </Link>
                     </div>
                 </div>
 
                 <!-- Key Metrics -->
-                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                    <Card
-                        class="group relative overflow-hidden border-0 bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-950/30 dark:to-blue-900/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        </div>
-                        <CardHeader class="relative flex flex-row items-center justify-between space-y-0 pb-3">
-                            <CardTitle class="text-sm font-semibold text-blue-700 dark:text-blue-300">Active Clients
-                            </CardTitle>
-                            <div class="rounded-full bg-blue-500/20 p-2">
-                                <Users class="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    <Card class="border shadow-sm hover:shadow-md transition-shadow">
+                        <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle class="text-sm font-medium text-muted-foreground">Active Clients</CardTitle>
+                            <div class="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
+                                <Users class="h-4 w-4 text-primary" />
                             </div>
                         </CardHeader>
-                        <CardContent class="relative">
-                            <div class="text-3xl font-bold text-blue-900 dark:text-blue-100">{{
-                                props.dashboardStats.activeClients }}</div>
-                            <p class="text-sm text-blue-600/80 dark:text-blue-300/80 mt-1">
+                        <CardContent>
+                            <div class="text-2xl font-semibold text-foreground">{{ props.dashboardStats.activeClients }}
+                            </div>
+                            <p class="text-xs text-muted-foreground mt-1">
                                 Total active clients
                             </p>
                         </CardContent>
                     </Card>
 
-                    <Card
-                        class="group relative overflow-hidden border-0 bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-950/30 dark:to-green-900/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        </div>
-                        <CardHeader class="relative flex flex-row items-center justify-between space-y-0 pb-3">
-                            <CardTitle class="text-sm font-semibold text-green-700 dark:text-green-300">Sessions This
-                                Week</CardTitle>
-                            <div class="rounded-full bg-green-500/20 p-2">
-                                <Calendar class="h-5 w-5 text-green-600 dark:text-green-400" />
+                    <Card class="border shadow-sm hover:shadow-md transition-shadow">
+                        <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle class="text-sm font-medium text-muted-foreground">This Week</CardTitle>
+                            <div class="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
+                                <Calendar class="h-4 w-4 text-primary" />
                             </div>
                         </CardHeader>
-                        <CardContent class="relative">
-                            <div class="text-3xl font-bold text-green-900 dark:text-green-100">{{
+                        <CardContent>
+                            <div class="text-2xl font-semibold text-foreground">{{
                                 props.dashboardStats.upcomingSessions.thisWeek }}</div>
-                            <p class="text-sm text-green-600/80 dark:text-green-300/80 mt-1">
+                            <p class="text-xs text-muted-foreground mt-1">
                                 {{ props.dashboardStats.upcomingSessions.today }} scheduled today
                             </p>
                         </CardContent>
                     </Card>
 
-                    <Card
-                        class="group relative overflow-hidden border-0 bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-950/30 dark:to-orange-900/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        </div>
-                        <CardHeader class="relative flex flex-row items-center justify-between space-y-0 pb-3">
-                            <CardTitle class="text-sm font-semibold text-orange-700 dark:text-orange-300">Outstanding
-                                Actions</CardTitle>
-                            <div class="rounded-full bg-orange-500/20 p-2">
-                                <CheckSquare class="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                    <Card class="border shadow-sm hover:shadow-md transition-shadow">
+                        <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle class="text-sm font-medium text-muted-foreground">Outstanding</CardTitle>
+                            <div class="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
+                                <CheckSquare class="h-4 w-4 text-primary" />
                             </div>
                         </CardHeader>
-                        <CardContent class="relative">
-                            <div class="text-3xl font-bold text-orange-900 dark:text-orange-100">{{
+                        <CardContent>
+                            <div class="text-2xl font-semibold text-foreground">{{
                                 props.dashboardStats.outstandingActions }}</div>
-                            <p class="text-sm text-orange-600/80 dark:text-orange-300/80 mt-1">
+                            <p class="text-xs text-muted-foreground mt-1">
                                 Tasks pending or in progress
                             </p>
                         </CardContent>
                     </Card>
 
-                    <Card
-                        class="group relative overflow-hidden border-0 bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/30 dark:to-purple-900/20 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        </div>
-                        <CardHeader class="relative flex flex-row items-center justify-between space-y-0 pb-3">
-                            <CardTitle class="text-sm font-semibold text-purple-700 dark:text-purple-300">CPD Hours
-                            </CardTitle>
-                            <div class="rounded-full bg-purple-500/20 p-2">
-                                <GraduationCap class="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                    <Card class="border shadow-sm hover:shadow-md transition-shadow">
+                        <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle class="text-sm font-medium text-muted-foreground">CPD Hours</CardTitle>
+                            <div class="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
+                                <GraduationCap class="h-4 w-4 text-primary" />
                             </div>
                         </CardHeader>
-                        <CardContent class="relative">
-                            <div class="text-3xl font-bold text-purple-900 dark:text-purple-100">{{
-                                props.dashboardStats.cpdHours }}h</div>
-                            <p class="text-sm text-purple-600/80 dark:text-purple-300/80 mt-1">
+                        <CardContent>
+                            <div class="text-2xl font-semibold text-foreground">{{ props.dashboardStats.cpdHours }}h
+                            </div>
+                            <p class="text-xs text-muted-foreground mt-1">
                                 {{ Math.max(0, props.dashboardStats.monthlyTarget - props.dashboardStats.cpdHours) }}h
                                 remaining this month
                             </p>
@@ -260,72 +233,62 @@ const getDateLabel = (dateString: string) => {
                 </div>
 
                 <!-- Main Content Grid -->
-                <div class="grid gap-8 lg:grid-cols-2">
+                <div class="grid gap-6 lg:grid-cols-2">
 
                     <!-- Upcoming Sessions -->
-                    <Card class="border-0 shadow-xl bg-gradient-to-br from-background to-muted/30 backdrop-blur-sm">
+                    <Card class="border shadow-sm">
                         <CardHeader class="pb-4">
                             <div class="flex items-center justify-between">
                                 <div class="space-y-1">
-                                    <CardTitle class="text-xl font-bold flex items-center gap-2">
-                                        <div class="rounded-full bg-green-500/20 p-2">
-                                            <Calendar class="h-5 w-5 text-green-600 dark:text-green-400" />
-                                        </div>
-                                        Upcoming Sessions
-                                    </CardTitle>
-                                    <CardDescription class="text-base">Your next coaching appointments</CardDescription>
+                                    <CardTitle class="text-lg font-semibold">Upcoming Sessions</CardTitle>
+                                    <CardDescription class="text-sm">Your next coaching appointments</CardDescription>
                                 </div>
                                 <Link :href="indexSessions().url">
-                                <Button variant="outline" size="sm"
-                                    class="shadow-md hover:shadow-lg transition-all duration-200">
+                                <Button variant="outline" size="sm">
                                     <Eye class="mr-2 h-4 w-4" />
                                     View All
                                 </Button>
                                 </Link>
                             </div>
                         </CardHeader>
-                        <CardContent class="space-y-4">
+                        <CardContent class="space-y-3">
                             <div v-if="props.upcomingSessions.length === 0"
                                 class="text-center text-muted-foreground py-12">
-                                <Calendar class="h-12 w-12 mx-auto mb-4 opacity-50" />
-                                <p class="text-lg font-medium">No upcoming sessions scheduled</p>
+                                <Calendar class="h-10 w-10 mx-auto mb-3 opacity-40" />
+                                <p class="font-medium">No upcoming sessions</p>
                                 <p class="text-sm">Schedule your first session to get started</p>
                             </div>
                             <div v-for="session in props.upcomingSessions" :key="session.id"
-                                class="group relative overflow-hidden rounded-xl border transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
-                                :class="{
-                                    'border-green-500 bg-gradient-to-r from-green-50 to-green-100/50 dark:from-green-950/30 dark:to-green-900/20 shadow-lg': session.is_active,
-                                    'border-border bg-card hover:border-primary/50': !session.is_active
+                                class="group rounded-lg border bg-card p-4 transition-all hover:shadow-md" :class="{
+                                    'border-primary bg-primary/5': session.is_active,
+                                    'hover:border-primary/50': !session.is_active
                                 }">
-                                <div v-if="session.is_active"
-                                    class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent"></div>
-                                <div class="relative flex items-center justify-between p-4">
+                                <div class="flex items-center justify-between">
                                     <div class="flex-1 space-y-2">
-                                        <div class="flex items-center gap-3">
-                                            <span class="font-semibold text-lg">{{ session.client.name }}</span>
-                                            <Badge v-if="session.is_active" variant="default"
-                                                class="text-xs animate-pulse bg-green-500 hover:bg-green-600">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-foreground">{{ session.client.name }}</span>
+                                            <Badge v-if="session.is_active" class="text-xs animate-pulse">
                                                 LIVE
                                             </Badge>
-                                            <Badge variant="outline" class="text-xs border-primary/50 text-primary">
+                                            <Badge variant="outline" class="text-xs">
                                                 {{ getSessionTypeLabel(session.session_type) }}
                                             </Badge>
                                         </div>
-                                        <div class="flex items-center gap-6 text-sm text-muted-foreground">
-                                            <div class="flex items-center gap-2">
-                                                <Calendar class="h-4 w-4" />
+                                        <div class="flex items-center gap-4 text-xs text-muted-foreground">
+                                            <div class="flex items-center gap-1.5">
+                                                <Calendar class="h-3.5 w-3.5" />
                                                 {{ getDateLabel(session.scheduled_at) }}
                                             </div>
-                                            <div class="flex items-center gap-2">
-                                                <Clock class="h-4 w-4" />
+                                            <div class="flex items-center gap-1.5">
+                                                <Clock class="h-3.5 w-3.5" />
                                                 {{ formatTime(session.scheduled_at) }}
                                             </div>
-                                            <span class="font-medium">{{ session.duration }}min</span>
+                                            <span>{{ session.duration }} min</span>
                                         </div>
                                     </div>
                                     <Link :href="showSession(session.id).url">
                                     <Button variant="ghost" size="sm"
-                                        class="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                        class="opacity-0 group-hover:opacity-100 transition-opacity">
                                         <ArrowRight class="h-4 w-4" />
                                     </Button>
                                     </Link>
@@ -335,62 +298,52 @@ const getDateLabel = (dateString: string) => {
                     </Card>
 
                     <!-- Outstanding Actions -->
-                    <Card class="border-0 shadow-xl bg-gradient-to-br from-background to-muted/30 backdrop-blur-sm">
+                    <Card class="border shadow-sm">
                         <CardHeader class="pb-4">
                             <div class="flex items-center justify-between">
                                 <div class="space-y-1">
-                                    <CardTitle class="text-xl font-bold flex items-center gap-2">
-                                        <div class="rounded-full bg-orange-500/20 p-2">
-                                            <CheckSquare class="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                                        </div>
-                                        Outstanding Actions
-                                    </CardTitle>
-                                    <CardDescription class="text-base">Tasks requiring attention</CardDescription>
+                                    <CardTitle class="text-lg font-semibold">Outstanding Actions</CardTitle>
+                                    <CardDescription class="text-sm">Tasks requiring attention</CardDescription>
                                 </div>
                                 <Link :href="coachingTasks.index().url">
-                                <Button variant="outline" size="sm"
-                                    class="shadow-md hover:shadow-lg transition-all duration-200">
+                                <Button variant="outline" size="sm">
                                     <Eye class="mr-2 h-4 w-4" />
                                     View All
                                 </Button>
                                 </Link>
                             </div>
                         </CardHeader>
-                        <CardContent class="space-y-4">
+                        <CardContent class="space-y-3">
                             <div v-if="props.outstandingActions.length === 0"
                                 class="text-center text-muted-foreground py-12">
-                                <CheckSquare class="h-12 w-12 mx-auto mb-4 opacity-50" />
-                                <p class="text-lg font-medium">No outstanding actions</p>
-                                <p class="text-sm">All caught up! Great work</p>
+                                <CheckSquare class="h-10 w-10 mx-auto mb-3 opacity-40" />
+                                <p class="font-medium">No outstanding actions</p>
+                                <p class="text-sm">All caught up</p>
                             </div>
                             <div v-for="action in props.outstandingActions" :key="action.id"
-                                class="group relative overflow-hidden rounded-xl border transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
-                                :class="{
-                                    'border-orange-500 bg-gradient-to-r from-orange-50 to-orange-100/50 dark:from-orange-950/30 dark:to-orange-900/20 shadow-lg': action.status === 'review',
-                                    'border-border bg-card hover:border-primary/50': action.status !== 'review'
+                                class="group rounded-lg border bg-card p-4 transition-all hover:shadow-md" :class="{
+                                    'border-primary bg-primary/5': action.status === 'review',
+                                    'hover:border-primary/50': action.status !== 'review'
                                 }">
-                                <div v-if="action.status === 'review'"
-                                    class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-transparent"></div>
-                                <div class="relative flex items-center justify-between p-4">
+                                <div class="flex items-center justify-between">
                                     <div class="flex-1 space-y-2">
-                                        <div class="flex items-center gap-3">
-                                            <span class="font-semibold text-lg">{{ action.title }}</span>
-                                            <Badge v-if="action.status === 'review'" variant="default"
-                                                class="text-xs bg-orange-500 hover:bg-orange-600 animate-pulse">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-medium text-foreground">{{ action.title }}</span>
+                                            <Badge v-if="action.status === 'review'" class="text-xs animate-pulse">
                                                 NEEDS REVIEW
                                             </Badge>
                                         </div>
-                                        <div class="flex items-center gap-6 text-sm text-muted-foreground">
-                                            <span class="font-medium">{{ action.client }}</span>
-                                            <div class="flex items-center gap-2">
-                                                <Calendar class="h-4 w-4" />
+                                        <div class="flex items-center gap-4 text-xs text-muted-foreground">
+                                            <span>{{ action.client }}</span>
+                                            <div class="flex items-center gap-1.5">
+                                                <Calendar class="h-3.5 w-3.5" />
                                                 Due {{ formatDate(action.due_date) }}
                                             </div>
                                         </div>
                                     </div>
                                     <Link :href="showTask(action.id).url">
                                     <Button variant="ghost" size="sm"
-                                        class="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                        class="opacity-0 group-hover:opacity-100 transition-opacity">
                                         <ArrowRight class="h-4 w-4" />
                                     </Button>
                                     </Link>
@@ -401,52 +354,31 @@ const getDateLabel = (dateString: string) => {
                 </div>
 
                 <!-- Quick Stats -->
-                <Card class="border-0 shadow-xl bg-gradient-to-br from-background to-muted/30 backdrop-blur-sm">
-                    <CardHeader class="pb-6">
-                        <CardTitle class="text-2xl font-bold flex items-center gap-3">
-                            <div class="rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-3">
-                                <TrendingUp class="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <Card class="border shadow-sm">
+                    <CardHeader class="pb-4">
+                        <CardTitle class="text-lg font-semibold flex items-center gap-2">
+                            <div class="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
+                                <TrendingUp class="h-4 w-4 text-primary" />
                             </div>
-                            Quick Stats - This Month
+                            Monthly Statistics
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div class="grid gap-6 md:grid-cols-3">
-                            <div
-                                class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-950/30 dark:to-blue-900/20 p-6 text-center transition-all duration-300 hover:shadow-lg hover:scale-105">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                </div>
-                                <div class="relative">
-                                    <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">{{
-                                        props.quickStats.sessionsCompleted }}</div>
-                                    <div class="text-sm font-medium text-blue-700 dark:text-blue-300">Sessions Completed
-                                    </div>
-                                </div>
+                        <div class="grid gap-4 md:grid-cols-3">
+                            <div class="rounded-lg border bg-card p-6 text-center hover:shadow-md transition-shadow">
+                                <div class="text-3xl font-semibold text-foreground mb-1">{{
+                                    props.quickStats.sessionsCompleted }}</div>
+                                <div class="text-sm text-muted-foreground">Sessions Completed</div>
                             </div>
-                            <div
-                                class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-950/30 dark:to-green-900/20 p-6 text-center transition-all duration-300 hover:shadow-lg hover:scale-105">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                </div>
-                                <div class="relative">
-                                    <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">{{
-                                        props.quickStats.contractsSigned }}</div>
-                                    <div class="text-sm font-medium text-green-700 dark:text-green-300">New Contracts
-                                        Signed</div>
-                                </div>
+                            <div class="rounded-lg border bg-card p-6 text-center hover:shadow-md transition-shadow">
+                                <div class="text-3xl font-semibold text-foreground mb-1">{{
+                                    props.quickStats.contractsSigned }}</div>
+                                <div class="text-sm text-muted-foreground">New Contracts Signed</div>
                             </div>
-                            <div
-                                class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-950/30 dark:to-purple-900/20 p-6 text-center transition-all duration-300 hover:shadow-lg hover:scale-105">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                </div>
-                                <div class="relative">
-                                    <div class="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">{{
-                                        props.quickStats.completionRate }}%</div>
-                                    <div class="text-sm font-medium text-purple-700 dark:text-purple-300">Action
-                                        Completion Rate</div>
-                                </div>
+                            <div class="rounded-lg border bg-card p-6 text-center hover:shadow-md transition-shadow">
+                                <div class="text-3xl font-semibold text-foreground mb-1">{{
+                                    props.quickStats.completionRate }}%</div>
+                                <div class="text-sm text-muted-foreground">Action Completion Rate</div>
                             </div>
                         </div>
                     </CardContent>
