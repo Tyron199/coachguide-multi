@@ -136,7 +136,7 @@ const getDateLabel = (dateString: string) => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="min-h-screen bg-background">
-            <div class="flex h-full flex-1 flex-col gap-6 p-6 max-w-7xl mx-auto">
+            <div class="flex h-full flex-1 flex-col gap-6 p-6  mx-auto">
 
                 <!-- Welcome Section -->
                 <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center pb-2">

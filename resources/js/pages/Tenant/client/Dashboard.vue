@@ -141,7 +141,7 @@ const getStatusLabel = (status: string) => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="min-h-screen bg-background">
-            <div class="flex h-full flex-1 flex-col gap-6 p-6 max-w-7xl mx-auto">
+            <div class="flex h-full flex-1 flex-col gap-6 p-6  mx-auto">
 
                 <!-- Welcome Section -->
                 <div class="space-y-1 pb-2">
